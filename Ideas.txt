@@ -1,3 +1,4 @@
+	OO design
 Town---->String name
 FoodPlace--->Menu menu
 	Pizzeria extends FoodPlace
