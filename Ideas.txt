@@ -1,0 +1,31 @@
+Town---->String name
+FoodPlace--->Menu menu
+	Pizzeria extends FoodPlace
+	Bistro extends FoodPlace
+	SushiBar extends FoodPlace
+	ChineseRestaurant extends FoodPlace
+	SweetShop extends FoodPlace
+Menu---->Meal[] meals,Beverage[] beverages
+Meal--->int price,String name,int quantity
+	Pizza extends Meal ---> int radius,String size // big,small,family
+	Soup extends Meal
+	Salad extends Meal
+	Dessert extends Meal
+		Cake extends Dessert---->String shape,String decoration
+		Pancake extends Dessert------>String[] ingredients
+Beverage--->String name,int price,int quantity
+	Juice extends Beverage 
+	Beer extends Beverage--->boolean isDark
+	Water extends Beverage---->boolean isSpring
+
+********************
+Login---->String userName,String password
+
+Registration---->String userName,String password,String name,String surname,String email(email validation!!!),Date date,Address address
+
+Address------>Town town,String street,int number,String entry,String phone(phone validation)
+
+*********************
+
+User----->makePurchase(FoodPlace foodplace,Address address),searchFoodPlace(Town town),searchMeal(FoodPlace foodPlace)
+
