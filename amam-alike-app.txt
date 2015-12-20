@@ -1,0 +1,78 @@
+
+
+3 osnovni prozoreca -
+ - pre-login
+ - post-login
+ - sled kato si izbral zavedenie
+
+
+    ==== PRELOGIN ====
+
+ -== golqmo pole v sredata s random iastiq ot random zavedeniq ( ili drugo koeto da reklamira funkcionalnosta na nasheto prilojenie)
+
+  ---== bar s buttoni nad poleto ==--- 
+
+ 1vi buton -= restoranti - smenq poleto s iastiata -> s kartinki(log-a) na restorantite i kratko info za tqh kato rabotno vreme, user rating,adress i t.n.
+
+ 2ri buton -= user guide - smenq poleto s iastiata -> pole kudeto izrejdame kratuk guide kak se polzva nasheto prilojenie ,kato primeri - kak da se registrirame, kak da si setnem adress ,kak da poruchame i t.n.
+
+ 3ti buton -= registraciq - 
+ 3.1. - izvejda prozorec (nad poleto s iastiq) - user , pass , email za registraciq 
+ 3.2. (sled registraciata) - poleto za izbirane na default adress za dostavka - sled suzdavane -> izvejd post-login
+  
+ 4ti buton -= login - pole kudeto da se vuvedat user-pass 
+-> izvejda spisyk sys zapazeni addressi da se izbere adress koito shte polzvame (ako sa poveche ot 1) ,
+- ako e samo 1 -> postlogin
+
+
+    ====== POSTLOGIN ======
+     
+  -== golqmo pole v sredata s restoranti ,koito obslujvat raiona , koito obslujvat izbraniq ot nas adree (sled login ) 
+ - sled click na restorant izvejda stranicata mu (menu , chesto izbirani v tozi restoranti i t.n.   -- 3tiq osnoven prozorec) ==-    
+
+
+  ---=== bar s butoni nad poleto ===---
+
+ 1vi buton - search s opcii za restoranti ili iastiq 
+- zamenq default poleto za post-login
+
+ 2ri buton - bucker - pokazva izbrani iastiq do momenta 
+- mogat da budat samo ot 1 restorant 
+- s pole sus svoboden text za doplynitelni otochneniq 
+- zamenq default poleto za post-login
+
+ 3ti buton - arhiv na poruchki - kudeto se pazqt stari nashi poruchki
+- zamenq default poleto za post-login 
+- simple spisyk s data,chas,zavedenie, suma 
+- pri click na nqkoi ot spisaka izvejda podrobno info - kakvo e poruchano i stoinost na vsqko iastie
+
+ 4ti buton - adressi na user-a - 
+- zamenq default poleto za post-login 
+- spisuk s adressite koito e zapazil usera 
+- vuzmojnost za vuvejdane na nov adress
+
+ 5ti profile - profile managment -> smenqne na parola -> mail -> etc
+ 
+
+ 6ti buton - izhod kum pre-login stranicata
+
+
+         =========IZBRAN RESTORANT=========
+
+ - zapazva se bara s butoni ot POSTLOGIN
+
+
+ izliza sipsak v lqvo sus vidove iastiq,napitki
+______
+SALATI      |     poleto kudeto bqha restorantite na postlogin-a e zamesteno 
+______      |     sus spisak ot qstiq ot izbranata kategoriq , koqto sme clicknali 
+Supi        |     v dqsno. Vseki restorant ima Default kategoriq ,koqto otgovarq 
+______      |     na negoviq vid. Picariite otvarqt direktno -pici- i t.n.
+Pileshko    |     
+________    |     pri click na nqkoe qstie - otvarq prozorec za potvurdjenie i izbor na golemina
+Svinvsko    |     
+________    |     nai-otdolo ima golqm buton - PORUCHAI - koito otvarq bucket(ot butonite v bara ot gore) 
+ETC               kudeto potvurjdavame che sme gotovi za poruchkata, sled potvurjdenie se prashta zaqvka kum
+                  restoranta i se zapisva v arhiva na klienta.
+                   
+
