@@ -16,7 +16,7 @@ public class User {
 	private List<Order> ordersArchiveList;
 	private List<Restaurant> favoriteRestaurantsList;
 	private List<Product> favoriteMealsList;
-	private List<Product> cart;
+	private Cart cart;
 	
 	private int favMealsNumber = 0;
 	
@@ -27,7 +27,7 @@ public class User {
 			boolean isRegistered, String mobilePhone,
 			List<Order> ordersArchiveList,
 			List<Restaurant> favoriteRestaurantsList,
-			List<Product> favoriteMealsList, List<Product> cart) {
+			List<Product> favoriteMealsList, Cart cart) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -154,10 +154,6 @@ public class User {
 	}
 
 
-	public List<Product> getBasket() {
-		return this.cart;
-	}
-
 
 	public int getFavMealsNumber() {
 		return this.favMealsNumber;
@@ -177,16 +173,6 @@ public class User {
 		//TODO: how does one login in his profile
 	}
 	
-	void addToCart(Product product){
-		this.cart.add(product);
-	}
-	void removeFromCart(){
-		this.cart.remove(cart.size() - 1);
-	}
-	
-	void emptyCart(){
-		this.cart.clear();
-	}
 	
 	void rateProduct(Product product, int rating){
 		product.setRating(rating);
