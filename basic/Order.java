@@ -4,19 +4,18 @@ import java.util.*;
 
 
 public class Order {
-	private List<Product> meals;
+	private ArrayList<Meal> meals;
 	private String date;
 	private double price;
-	public Order(List<Product> meals, String date, double price) {
-		super();
+	public Order(ArrayList<Meal> meals, String date, double price) {
 		this.meals = meals;
 		this.date = date;
 		this.price = price;
 	}
-	public List<Product> getMeals() {
+	public ArrayList<Meal> getMeals() {
 		return meals;
 	}
-	public void addMeal(Product meal) {
+	public void addMeal(Meal meal) {
 		this.meals.add(meal);
 	}
 	public String getDate() {

@@ -1,6 +1,6 @@
 package basic;
 
-import java.util.List;
+import java.util.ArrayList;
 
 
 public class User {
@@ -10,37 +10,30 @@ public class User {
 	private String email;
 	private String firstName;
 	private String lastName;
-	private List<Address> addressesList;
+	private ArrayList<Address> addressesArrayList;
 	private boolean isRegistered;
 	private String mobilePhone;
-	private List<Order> ordersArchiveList;
-	private List<Restaurant> favoriteRestaurantsList;
-	private List<Product> favoriteMealsList;
+	private ArrayList<Order> ordersArchiveArrayList;
+	private ArrayList<Restaurant> favoriteRestaurantsList;
+	private ArrayList<Meal> favoriteMealsList;
 	private Cart cart;
+	
 	
 	private int favMealsNumber = 0;
 	
 	
 	
 	public User(String username, String password, String email,
-			String firstName, String lastName, List<Address> addressesList,
-			boolean isRegistered, String mobilePhone,
-			List<Order> ordersArchiveList,
-			List<Restaurant> favoriteRestaurantsList,
-			List<Product> favoriteMealsList, Cart cart) {
-		super();
+			String firstName, String lastName, ArrayList<Address> addressesArrayList,
+			boolean isRegistered, String mobilePhone) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.addressesList = addressesList;
+		this.addressesArrayList = addressesArrayList;
 		this.isRegistered = isRegistered;
 		this.mobilePhone = mobilePhone;
-		this.ordersArchiveList = ordersArchiveList;
-		this.favoriteRestaurantsList = favoriteRestaurantsList;
-		this.favoriteMealsList = favoriteMealsList;
-		this.cart = cart;
 	}
 
 	
@@ -94,13 +87,13 @@ public class User {
 	}
 
 
-	public List<Address> getAddresses() {
-		return this.addressesList;
+	public ArrayList<Address> getAddresses() {
+		return this.addressesArrayList;
 	}
 
 
 	public void setAddress(Address address) {
-		this.addressesList.add(address);
+		this.addressesArrayList.add(address);
 	}
 
 
@@ -124,17 +117,17 @@ public class User {
 	}
 
 
-	public List<Order> getOrdersArchive() {
-		return this.ordersArchiveList;
+	public ArrayList<Order> getOrdersArchive() {
+		return this.ordersArchiveArrayList;
 	}
 
 
 	public void setOrdersArchive(Order order) {
-		this.ordersArchiveList.add(order);
+		this.ordersArchiveArrayList.add(order);
 	}
 
 
-	public List<Restaurant> getFavoriteRestaurants() {
+	public ArrayList<Restaurant> getFavoriteRestaurants() {
 		return this.favoriteRestaurantsList;
 	}
 
@@ -144,12 +137,12 @@ public class User {
 	}
 
 
-	public List<Product> getFavoriteMeals() {
+	public ArrayList<Meal> getFavoriteMeals() {
 		return this.favoriteMealsList;
 	}
 
 
-	public void setFavoriteMeals(Product meal) {
+	public void setFavoriteMeals(Meal meal) {
 		this.favoriteMealsList.add(meal);
 	}
 
@@ -174,12 +167,27 @@ public class User {
 	}
 	
 	
-	void rateProduct(Product product, int rating){
-		product.setRating(rating);
-		product.setTimesRated();
+	void rateMeal(Meal Meal, int rating){
+		Meal.setRating(rating);
+		Meal.setTimesRated();
 	}
 	
-	void search(){
-		
+	void search(Meal Meal){
+		boolean isMeal = false;
+		for(Restaurant restaurant:Site.getAllRestaurants()){
+			if(restaurant.getMeals().contains(Meal)){
+				isMeal = true;
+				System.out.println(Meal);
+			}
+		}
+		if(!isMeal){
+			System.out.println("No " + Meal + " found.");
+		}
 	}
+
+
+	public Cart getCart() {
+		return cart;
+	}
+
 }

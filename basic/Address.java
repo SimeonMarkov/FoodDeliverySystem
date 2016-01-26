@@ -4,7 +4,6 @@ public class Address {
 	private String neighbourhood;
 	private String fullAddress;
 	public Address(String neighbourhood, String fullAddress) {
-		super();
 		this.neighbourhood = neighbourhood;
 		this.fullAddress = fullAddress;
 	}

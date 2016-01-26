@@ -1,33 +1,58 @@
 package basic;
 
+import java.util.ArrayList;
+
 public class Restaurant {
 	private String name;
 	private Address address;
 	private String phoneNumber;
+	private ArrayList<Meal> meals;
+	
 	public Restaurant(String name, Address address, String phoneNumber) {
-		super();
-		this.name = name;
-		this.address = address;
-		this.phoneNumber = phoneNumber;
+		this.setName(name);
+		this.setAddress(address);
+		this.setPhoneNumber(phoneNumber);
+		this.meals = new ArrayList<Meal>();
 	}
+
+	
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
-		this.name = name;
+	private void setName(String name) {
+		if(name != null){
+			this.name = name;
+		}
 	}
 	public Address getAddress() {
 		return address;
 	}
-	public void setAddress(Address address) {
-		this.address = address;
+	private void setAddress(Address address) {
+		if(address != null){
+			this.address = address;
+		}
 	}
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+	private void setPhoneNumber(String phoneNumber) {
+		if(phoneNumber.matches("08[0-9]{8}")){
+			this.phoneNumber = phoneNumber;
+		}
 	}
+	
+	public ArrayList<Meal> getMeals(){
+		return this.meals;
+	}
+	
+	public void addMeal(Meal meal){
+		this.meals.add(meal);
+	}
+	
+	public void removeMeal(Meal meal){
+		this.meals.remove(meal);
+	}
+
 	
 	
 }

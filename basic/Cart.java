@@ -1,24 +1,24 @@
 package basic;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Cart {
-	List<Product> products;
+	ArrayList<Meal> products;
 	
 
 
-	public List<Product> getBasket() {
+	public ArrayList<Meal> getBasket() {
 		return this.products;
 	}
 	
-	void addToproducts(Product product){
+	void addToproducts(Meal product){
 		this.products.add(product);
 	}
 	void removeFromproducts(){
 		this.products.remove(products.size() - 1);
 	}
 	
-	void emptyproducts(){
+	void emptyCart(){
 		this.products.clear();
 	}
 	
