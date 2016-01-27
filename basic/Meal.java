@@ -5,11 +5,11 @@ package basic;
 public class Meal implements Comparable<Meal>{ //TODO: the old class Product is called Meal now;also, we created Enum called Product,for keeping ingredients as constants
 	private String name;
 	private double price;
-	private String category;
+	private MealType category;
 	private double rating;
 	private int timesRated;
 	private Product[] ingredients; //TODO: A meal has ingredients
-	public Meal(String name, double price, String category) {
+	public Meal(String name, double price, MealType category) {
 		this.name = name;
 		this.price = price;
 		this.category = category;
@@ -40,10 +40,10 @@ public class Meal implements Comparable<Meal>{ //TODO: the old class Product is 
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	public String getCategory() {
+	public MealType getCategory() {
 		return category;
 	}
-	public void setCategory(String category) {
+	public void setCategory(MealType category) {
 		this.category = category;
 	}
 
