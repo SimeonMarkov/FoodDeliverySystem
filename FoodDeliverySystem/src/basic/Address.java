@@ -1,16 +1,17 @@
 package basic;
 
 public class Address {
-	private String neighbourhood;
+	private Neighbourhood neighbourhood;
 	private String fullAddress;
-	public Address(String neighbourhood, String fullAddress) {
+	
+	public Address(Neighbourhood neighbourhood, String fullAddress) {
 		this.neighbourhood = neighbourhood;
 		this.fullAddress = fullAddress;
 	}
-	public String getNeighbourhood() {
+	public Neighbourhood getNeighbourhood() {
 		return neighbourhood;
 	}
-	public void setNeighbourhood(String neighbourhood) {
+	public void setNeighbourhood(Neighbourhood neighbourhood) {
 		this.neighbourhood = neighbourhood;
 	}
 	public String getFullAddress() {

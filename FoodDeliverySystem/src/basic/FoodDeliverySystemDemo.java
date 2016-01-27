@@ -12,8 +12,8 @@ public class FoodDeliverySystemDemo {
 		Site site = Site.getSiteInstance();
 		
 		//create 2 restaurants
-		Restaurant djumaq = new Restaurant("Djumaq", new Address("Stud.grad","ul.Atanas Manchev 52"), "0889203441");
-		Restaurant priKiko = new Restaurant("Pri Kiko", new Address("Center","bul.Hristo Botev 154"), "0884392112");
+		Restaurant djumaq = new Restaurant("Djumaq", new Address(Neighbourhood.DRUZHBA ,"ul.Atanas Manchev 52"), "0889203441");
+		Restaurant priKiko = new Restaurant("Pri Kiko", new Address(Neighbourhood.OBORISHTE ,"bul.Hristo Botev 154"), "0884392112");
 		
 		//add the restaurants to the site
 		site.addRestaurant(djumaq);
