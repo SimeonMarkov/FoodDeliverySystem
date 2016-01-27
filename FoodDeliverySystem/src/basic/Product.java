@@ -1,0 +1,5 @@
+package basic;
+
+public enum Product{
+	TOMATOES,CHEESE,PORK,CHICKEN,CUCUMBERS,PICKLES,PAPRIKA
+}
