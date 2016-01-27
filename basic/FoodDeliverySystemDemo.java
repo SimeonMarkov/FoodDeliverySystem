@@ -20,10 +20,10 @@ public class FoodDeliverySystemDemo {
 		
 		
 		//create some Meals(meals)
-		Meal meal1 = new Meal("Pile s oriz", 5.60, "Osnovni");
-		Meal meal2 = new Meal("Pile bez oriz", 5.60, "Osnovni");
-		Meal meal3 = new Meal("Super mandja s grozde", 2.30, "Predqstiq");
-		Meal someMeal = new Meal("Grozdova", 8.30, "Napitki");
+		Meal meal1 = new Meal("Pile s oriz", 5.60, MealType.CHICKEN);
+		Meal meal2 = new Meal("Pile bez oriz", 5.60, MealType.CHICKEN);
+		Meal meal3 = new Meal("Super mandja s grozde", 2.30, MealType.ALAMINUT);
+		Meal someMeal = new Meal("Grozdova", 8.30, MealType.STRONG_ALCOHOL);
 		
 		
 		
