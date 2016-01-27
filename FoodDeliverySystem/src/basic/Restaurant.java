@@ -46,12 +46,14 @@ public class Restaurant {
 	}
 	
 	public void addMeal(Meal meal){
+		//TODO: how to add the ingredients for our meal first,then add the meal itself to the restaurant's menu?
 		this.meals.add(meal);
 	}
 	
 	public void removeMeal(Meal meal){
 		this.meals.remove(meal);
 	}
+	
 
 	
 	

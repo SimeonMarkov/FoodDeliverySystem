@@ -1,5 +1,7 @@
 package basic;
 
+import java.util.ArrayList;
+
 
 
 public class Meal implements Comparable<Meal>{ 
@@ -8,12 +10,13 @@ public class Meal implements Comparable<Meal>{
 	private MealType category;
 	private double rating;
 	private int timesRated;
-	private Product[] ingredients; 
+	private ArrayList<Product> ingredients ; 
 	public Meal(String name, double price, MealType category) {
 		this.name = name;
 		this.price = price;
 		this.category = category;
 		this.timesRated = 0;
+		this.ingredients = new ArrayList<Product>();
 	}
 	
 	public void setTimesRated(){
@@ -53,7 +56,11 @@ public class Meal implements Comparable<Meal>{
 	}
 	
 	public String toString(){
-		return name + " " + price + " " + category;
+		return name + " " + ingredients + " " + price + " " + category;
+	}
+	
+	public void addIngredients(Product product){
+		this.ingredients.add(product);
 	}
 
 }

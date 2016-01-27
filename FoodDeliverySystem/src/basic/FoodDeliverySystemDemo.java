@@ -12,13 +12,14 @@ public class FoodDeliverySystemDemo {
 		Site site = Site.getSiteInstance();
 		
 		//create 2 restaurants
-		Restaurant djumaq = new Restaurant("Djumaq", new Address(Neighbourhood.DRUZHBA ,"ul.Atanas Manchev 52"), "0889203441");
-		Restaurant priKiko = new Restaurant("Pri Kiko", new Address(Neighbourhood.OBORISHTE ,"bul.Hristo Botev 154"), "0884392112");
+		Restaurant djumaq = new Restaurant("Djumaq", new Address(Neighbourhood.DRUZHBA ,"\"ul.Atanas Manchev 52\""), "0889203441");
+		Restaurant priKiko = new Restaurant("Pri Kiko", new Address(Neighbourhood.OBORISHTE ,"\"bul.Hristo Botev 154\""), "0884392112");
 		
 		//add the restaurants to the site
 		site.addRestaurant(djumaq);
 		site.addRestaurant(priKiko);
 		
+		System.out.println(djumaq.getAddress());
 		
 		//create some Meals(meals)
 		Meal meal1 = new Meal("Pile s oriz", 5.60, MealType.CHICKEN);
@@ -33,7 +34,10 @@ public class FoodDeliverySystemDemo {
 		djumaq.addMeal(meal3);
 		
 		priKiko.addMeal(meal1);
-		
+
+		//printing a meal with its name,ingredients,price and category
+		//TODO:see the TODO: for addMeal() in Restaurant class and fix the empty ingredients list
+		System.out.println(meal2);
 		
 		System.out.println("Na \"Djumaq\" menuto:");
 		System.out.println(djumaq.getMeals());
