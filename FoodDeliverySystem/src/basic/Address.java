@@ -24,7 +24,7 @@ public class Address {
 	}
 	
 	public String toString(){ //TODO:Overriden toString() for addresses
-		return this.neighbourhood + "," + this.fullAddress;
+		return "Neighbourhood: " + this.neighbourhood + "\n Address: " + this.fullAddress;
 	}
 	
 }

@@ -56,7 +56,7 @@ public class Meal implements Comparable<Meal>{
 	}
 	
 	public String toString(){
-		return name + " " + ingredients + " " + price + " " + category;
+		return name + "\n Category: " + category + "\n Ingredients: " + ingredients + "\n Price: " + price;
 	}
 	
 	public void addIngredients(Product product){

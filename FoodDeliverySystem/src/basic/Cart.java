@@ -14,8 +14,8 @@ public class Cart {
 	void addToproducts(Meal product){
 		this.products.add(product);
 	}
-	void removeFromproducts(){
-		this.products.remove(products.size() - 1);
+	void removeFromproducts(Meal meal){
+		this.products.remove(meal);
 	}
 	
 	void emptyCart(){
