@@ -7,6 +7,8 @@ public class Restaurant {
 	private Address address;
 	private String phoneNumber;
 	private ArrayList<Meal> meals;
+	private ArrayList<Neighbourhood> servedRegion;
+    
 	
 	public Restaurant(String name, Address address, String phoneNumber) {
 		this.setName(name);
@@ -14,7 +16,13 @@ public class Restaurant {
 		this.setPhoneNumber(phoneNumber);
 		this.meals = new ArrayList<Meal>();
 	}
-
+    
+	public void addToServedRegion(Neighbourhood nbh) {
+		this.servedRegion.add(nbh);
+	}
+	public ArrayList<Neighbourhood> getServedRegion() {
+		return this.servedRegion;
+	}
 	
 	public String getName() {
 		return name;
