@@ -137,11 +137,14 @@ public class User {
 		this.favMealsNumber = favMealsNumber;
 	}
 
-	static User register(String username,String password,String email,String firstName,String lastName,ArrayList<Address> addressesArrayList,boolean isRegistered,String mobilePhone,String securityQuestion,String securityAnswer) {
+	static User register(String username, String password, String email, String firstName, String lastName,
+			ArrayList<Address> addressesArrayList, boolean isRegistered, String mobilePhone, String securityQuestion,
+			String securityAnswer) {
 		// TODO: how does one make a registration Rado : tova ne e li nashiq
 		// konstruktor?
-		
-		return new User(username, password, email, firstName, lastName, addressesArrayList, isRegistered, mobilePhone, securityQuestion, securityAnswer);
+
+		return new User(username, password, email, firstName, lastName, addressesArrayList, isRegistered, mobilePhone,
+				securityQuestion, securityAnswer);
 	}
 
 	String logIn() {
@@ -169,11 +172,12 @@ public class User {
 	}
 
 	private void retypePassword() {
-		int count = 1; // he already typed the password wrong once,that's why he's RETYPING
+		int count = 1; // he already typed the password wrong once,that's why
+						// he's RETYPING
 		String password = "";
 		do {
 			password = sc.nextLine();
-			if(!password.equals(getPassword())){
+			if (!password.equals(getPassword())) {
 				System.out.println("Greshna parola, molq vuvedete korektna parola!");
 				count++;
 			}
@@ -222,6 +226,11 @@ public class User {
 
 	public Cart getCart() {
 		return cart;
+	}
+
+	public void makeOrder() {
+		ordersArchiveArrayList.add(new Order(cart.getBasket(), cart.getTotalPrice()));
+		cart.emptyCart();
 	}
 
 }
