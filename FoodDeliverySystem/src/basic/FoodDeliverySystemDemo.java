@@ -27,7 +27,7 @@ public class FoodDeliverySystemDemo {
 		Meal meal3 = new Meal("Super mandja s grozde", 2.30, MealType.ALAMINUT);
 		Meal someMeal = new Meal("Grozdova", 8.30, MealType.STRONG_ALCOHOL);
 		
-		
+		System.out.println();
 		
 		djumaq.addMeal(meal1);
 		djumaq.addMeal(meal2);
