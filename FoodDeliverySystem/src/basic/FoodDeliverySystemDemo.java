@@ -22,10 +22,10 @@ public class FoodDeliverySystemDemo {
 		System.out.println(djumaq.getAddress());
 		
 		//create some Meals(meals)
-		Meal meal1 = new Meal("Pile s oriz", 5.60, MealType.CHICKEN);
-		Meal meal2 = new Meal("Pile bez oriz", 5.60, MealType.CHICKEN);
-		Meal meal3 = new Meal("Super mandja s grozde", 2.30, MealType.ALAMINUT);
-		Meal someMeal = new Meal("Grozdova", 8.30, MealType.STRONG_ALCOHOL);
+		Meal meal1 = new Meal("Pile s oriz", 5.60, Meal.MealType.CHICKEN);
+		Meal meal2 = new Meal("Pile bez oriz", 5.60, Meal.MealType.CHICKEN);
+		Meal meal3 = new Meal("Super mandja s grozde", 2.30, Meal.MealType.ALAMINUT);
+		Meal someMeal = new Meal("Grozdova", 8.30, Meal.MealType.STRONG_ALCOHOL);
 		
 		System.out.println("------------------");
 		
@@ -38,12 +38,15 @@ public class FoodDeliverySystemDemo {
 		//printing a meal with its name,ingredients,price and category
 		//TODO:see the TODO: for addMeal() in Restaurant class and fix the empty ingredients list
 		System.out.println(meal2);
+		meal1.getIgredients().add(new Ingredient(Ingredient.IngredientsNames.CUCUMBERS));
+		System.out.println(meal1);
 		
 		System.out.println("Na \"Djumaq\" menuto:");
 		System.out.println(djumaq.getMeals());
 		System.out.println("Chakai da go sortirame malko po cena,de:");
 		Collections.sort(djumaq.getMeals());
 		System.out.println(djumaq.getMeals());
+		
 		
 		User user1 = User.register("username", "password", "simeon.markov1994@gmail.com", "Simeon", "Markov", new ArrayList<Address>(), true, "0889342343", "Where", "There");
 		System.out.println(user1.logIn());
