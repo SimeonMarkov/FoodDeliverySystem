@@ -44,6 +44,9 @@ public class User {
 	public class Cart {
 		ArrayList<Meal> products;
 		double totalPrice;
+		Cart() {
+			products = new ArrayList<Meal>();
+		}
 	}
 	
 	public ArrayList<Meal> getBasket() {
