@@ -3,7 +3,6 @@ package basic;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
 public class FoodDeliverySystemDemo {
 	
 	public static void main(String[] args) {
