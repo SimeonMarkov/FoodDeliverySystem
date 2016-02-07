@@ -8,6 +8,8 @@ public class Restaurant {
 	private String phoneNumber;
 	private ArrayList<Meal> meals;
 	private ArrayList<Neighbourhood> servedRegion;
+	
+	
     
 	
 	public Restaurant(String name, Address address, String phoneNumber) {

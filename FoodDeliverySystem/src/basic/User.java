@@ -39,7 +39,36 @@ public class User {
 		this.addressesArrayList = addressesArrayList;
 		this.setRegistered(isRegistered);
 		this.mobilePhone = mobilePhone;
+		this.cart = new Cart();
 	}
+	public class Cart {
+		ArrayList<Meal> products;
+		double totalPrice;
+		
+		private Cart() {
+			products = new ArrayList<Meal>();
+		}
+	}
+	
+	public ArrayList<Meal> getBasket() {
+		return this.cart.products;
+	}
+	void addProductInCart(Meal product) {
+		this.cart.products.add(product);
+		this.cart.totalPrice += product.getPrice();
+	}
+	void removeProductFromCart(Meal meal) {
+		this.cart.products.remove(meal);
+		this.cart.totalPrice -= meal.getPrice();
+	}
+	void emptyCart() {
+		this.cart.products.clear();
+		this.cart.totalPrice = 0;
+	}
+	double getTotalPriceOfCart() {
+		return cart.totalPrice;
+	}
+	
 
 	public String getUsername() {
 		return this.username;
@@ -229,8 +258,8 @@ public class User {
 	}
 
 	public void makeOrder() {
-		ordersArchiveArrayList.add(new Order(cart.getBasket(), cart.getTotalPrice()));
-		cart.emptyCart();
+		ordersArchiveArrayList.add(new Order(getBasket(), getTotalPriceOfCart()));
+		emptyCart();
 	}
 
 }
