@@ -13,28 +13,25 @@ CREATE TABLE neighbourhood (
 	PRIMARY KEY (neighbourhood_id)
 	);
     
-CREATE TABLE address (
-    address_id INT (5) UNSIGNED NOT NULL AUTO_INCREMENT,
-	full_address VARCHAR(250),
-    neighbourhood_id INT(5) UNSIGNED NOT NULL,
-	PRIMARY KEY (address_id),
-    CONSTRAINT c_neighbourhood_id FOREIGN KEY (neighbourhood_id) REFERENCES neighbourhood(neighbourhood_id)
-	);
+
 
 CREATE TABLE users (
 	user_id VARCHAR(40) NOT NULL, /* tova e username-a */
     user_pass VARCHAR(40) NOT NULL,
+    email VARCHAR(50) NOT NULL,
     secret_question VARCHAR(200) NOT NULL,
     secret_answer VARCHAR(200) NOT NULL,
-	PRIMARY KEY (user_id)
+	PRIMARY KEY (user_id,email)
 	);
 
-CREATE TABLE user_addresses (
-	user_id VARCHAR(40) NOT NULL, 
-    address_id INT (5) UNSIGNED NOT NULL,
-	CONSTRAINT c_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
-    CONSTRAINT c_address_id FOREIGN KEY (address_id) REFERENCES address(address_id),
-    index (user_id)
+CREATE TABLE address (
+    address_id INT (5) UNSIGNED NOT NULL AUTO_INCREMENT,
+	full_address VARCHAR(250),
+    neighbourhood_id INT(5) UNSIGNED NOT NULL,
+    user_id VARCHAR(40),
+	PRIMARY KEY (address_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (neighbourhood_id) REFERENCES neighbourhood(neighbourhood_id)
 	);
 
 CREATE TABLE meal_type (
@@ -54,6 +51,7 @@ CREATE TABLE ingredients (
 	meal_name VARCHAR(50),
     price DECIMAL(6,2),
     meal_type_id INT (5) UNSIGNED NOT NULL,
+    photo BLOB,
 	PRIMARY KEY (meal_id),
     CONSTRAINT c_meal_type_id FOREIGN KEY (meal_type_id) REFERENCES meal_type(meal_type_id)
 	);
@@ -71,6 +69,7 @@ CREATE TABLE restaurant (
 	restaurant_name VARCHAR(50),
     phone_number VARCHAR(20),
     address_id INT (5) UNSIGNED NOT NULL,
+    photo BLOB,
     PRIMARY KEY (restaurant_id),
     FOREIGN KEY (address_id) REFERENCES address(address_id)
     );
