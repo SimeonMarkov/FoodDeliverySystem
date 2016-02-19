@@ -21,7 +21,7 @@ CREATE TABLE users (
     email VARCHAR(50) NOT NULL,
     secret_question VARCHAR(200) NOT NULL,
     secret_answer VARCHAR(200) NOT NULL,
-	PRIMARY KEY (user_id,email)
+	PRIMARY KEY (user_id)
 	);
 
 CREATE TABLE address (
