@@ -1,12 +1,17 @@
 package basic;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class FoodDeliverySystemDemo {
 	
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
 		//from this instance,we can have access to multiple restaurants
 		Site site = Site.getSiteInstance();
 		
@@ -51,5 +56,8 @@ public class FoodDeliverySystemDemo {
 		System.out.println(user1.logIn());
 		
 		user1.search(someMeal);
+		
+		DBManager db = DBManager.getInstance();
+		
 	}
 }
