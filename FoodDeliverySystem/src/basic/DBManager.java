@@ -15,8 +15,16 @@ public class DBManager {
 	
 	private DBManager() throws FileNotFoundException, IOException, SQLException {
 		try{
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hr","root","root");
-			executeSqlScript(conn, new File("DB/fd-db-scheme.sql"));
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				System.out.println("Error:No such driver imported!");
+			}
+			final String url = "jdbc:mysql://localhost:3306/hr";
+			final String user = "root";
+			final String pass = "root";
+			Connection conn = DriverManager.getConnection(url,user,pass);
+			executeSqlScript(conn, new File("D:/FoodDeliverySystem/DB/fd-db-scheme.sql"));
 		}
 		catch(SQLException e){
 			e.printStackTrace();
