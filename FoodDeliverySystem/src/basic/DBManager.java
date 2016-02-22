@@ -24,7 +24,7 @@ public class DBManager {
 			final String user = "root";
 			final String pass = "root";
 			Connection conn = DriverManager.getConnection(url,user,pass);
-			executeSqlScript(conn, new File("D:/FoodDeliverySystem/DB/fd-db-scheme.sql"));
+			executeSqlScript(conn, new File("../../../DB/fd-db-scheme.sql"));
 		}
 		catch(SQLException e){
 			e.printStackTrace();
