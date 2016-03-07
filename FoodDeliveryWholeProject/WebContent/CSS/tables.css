@@ -1,0 +1,14 @@
+table {
+	width:650px;
+	height:550px;
+	border:1px solid black;
+	border-collapse:collapse;
+}
+
+td {
+	
+	border:1px solid black;
+	width:216px;
+	height:180px;
+}
+

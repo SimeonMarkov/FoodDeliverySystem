@@ -1,0 +1,72 @@
+.cartMeal {
+	
+	background-color:#CDD379;
+	border: solid #000000;
+	border-width: 1px;
+	width: 650px;
+	height: 100px;
+	margin-top:2px;
+	
+		}
+	.mealName {
+		vertical-align:text-top;
+		    height:60px;
+			font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	        font-size: 18px;
+			margin-left: 8px;
+			
+				}
+	.mealIngredients {
+	margin-top: 40px;
+	vertical-align: bottom;
+	text-align:left;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	text-align: left;
+ 	}
+	.divIngredients {
+	vertical-align:bottom;
+	margin-top:20px;
+	margin-left:10px;
+	}
+	.divPrice {
+	border:solid #777147;
+	border-width:1px;
+	padding-top:1px;
+	padding-bottom:1px;
+	background-color:#C9C36D;
+	}
+	.divPrice a{
+	text-decoration:none;
+	color:black;
+	}
+	
+	.imgMeals {
+	height:90;
+	width:90;
+	vertical-align:top;
+	margin-top:5px;
+	margin-left:5px;
+	}
+	.orderButton {
+	height: 18px;
+	width: 65px;
+	float: none;
+	margin-right:10px;
+	}
+	.cartCol1 {
+	width:90px;
+	height:90px;
+	}
+	.cartCol2 {
+	width:470px;
+	height:90px; 
+	vertical-align:top;
+	}
+	
+	.cartCol3 {
+		width:100px; 
+		height:90px;
+		vertical-align:bottom;
+		text-align:center;
+	}

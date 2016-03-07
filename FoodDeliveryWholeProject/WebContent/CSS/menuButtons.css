@@ -1,0 +1,30 @@
+#Menu {
+	width:150px;
+	background-color:#E99812;
+	
+}
+#Menu ul {
+	
+margin-top:150px;
+padding:0;
+
+}
+#Menu li {
+list-style-type:none;
+float:left;
+display:block;
+width:150px;
+height:50px;
+text-align:center;
+line-height:45px;
+font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size:17px;
+
+}
+#Menu a {
+text-decoration:none;
+color:#F7F7F7;
+}
+#Menu li:Hover {
+background-color:#6E4837;
+}

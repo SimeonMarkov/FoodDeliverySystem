@@ -1,0 +1,90 @@
+body {
+
+	background: linear-gradient(to bottom right, white, gold);
+}
+
+#Container {
+	width:800px;
+	height:auto;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:21px;
+	margin-bottom:31px;
+}
+
+#Buttons {
+	list-style-type:none;
+	padding:0;
+	margin:0;
+	position:relative;
+	height:50px;
+	background-color:#C16845;
+}
+
+#Buttons ul li{
+	
+	display:inline-block;
+}
+
+#Buttons ul li:hover{
+	background-color:#C16900;
+	
+	
+}
+
+#Buttons ul li a,visited{
+	color:white;
+	display:block;
+	text-decoration:none;
+}
+
+#Buttons ul li:hover ul{
+	display:block;
+	background-color:#C16845;
+	
+}
+
+#Buttons ul ul{
+	
+	display:none;
+	position:absolute;
+}
+
+#Header {
+	height:150px;
+	background-image:url(../images/meal_images/800x150_headerMix.jpg);
+	border-radius:20px 20px 0px 0px;
+	}
+#Menu {
+width:150px;
+height:auto !important;
+min-height:800px;
+
+background-color:#0CE6E9;
+float:left;
+}
+#MainBody {
+width:650px;
+height:auto !important;
+min-height:600px;
+
+background-color:#EDD70A;
+float:right;
+}
+#Footer {
+height:100px;
+background-image:url(../images/meal_images/800x150_stretch_saladHeader.jpg);
+clear:both;
+border-radius:0px 0px 20px 20px;
+}
+
+
+
+#Menu a {
+  display: list-item;
+  list-style-type: none;
+}
+
+	
+	
+	

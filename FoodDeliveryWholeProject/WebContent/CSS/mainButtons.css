@@ -1,0 +1,29 @@
+#Buttons {
+	height:50px;
+	background-color:#C16845;
+	
+}
+#Buttons ul {
+margin:0;
+padding:0;
+
+}
+#Buttons li {
+list-style-type:none;
+float:left;
+display:block;
+width:133.3px;
+height:50px;
+text-align:center;
+line-height:45px;
+font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size:17px;
+
+}
+#Buttons a {
+text-decoration:none;
+color:#F7F7F7;
+}
+#Buttons li:Hover {
+background-color:#6E4837;
+}
