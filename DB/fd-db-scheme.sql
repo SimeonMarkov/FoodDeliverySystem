@@ -66,9 +66,10 @@ CREATE TABLE meal_ingredients (
     
 CREATE TABLE restaurant (
 	restaurant_id INT (5) UNSIGNED NOT NULL AUTO_INCREMENT,
-	restaurant_name VARCHAR(50),
-    phone_number VARCHAR(20),
+	restaurant_name VARCHAR(50) NOT NULL,
+    phone_number VARCHAR(20) NOT NULL,
     address_id INT (5) UNSIGNED NOT NULL,
+    email VARCHAR(30) NOT NULL,
     photo BLOB,
     PRIMARY KEY (restaurant_id),
     FOREIGN KEY (address_id) REFERENCES address(address_id)
