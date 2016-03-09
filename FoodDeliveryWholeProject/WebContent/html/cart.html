@@ -9,16 +9,30 @@
 <title>FoodDelivery Cart</title>
 <style type="text/css">
 
-#quantity,#quantity1,#quantity2{
+#quantity{
 	width:30px;
 	height:20px;
 	text-align:center;
 }
 
-.button{
+.inc{
 	width:34px;
 	height:20px;
 	background-color:gold;
+}
+
+.dec{
+	width:34px;
+	height:20px;
+	background-color:gold;
+}
+
+.button{
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    text-align:center;
+    display: inline-block;
+    cursor: pointer;
 }
 
 .quantityMenu{
@@ -40,52 +54,23 @@ text-align: right;
 padding-right: 20px;}
 
 </style>
-
+<script src="../JS/jquery-2.2.0.min.js"></script>
 <script>
 
-	function setQuantity(button){
-		var oldValue = parseInt(document.getElementById("quantity").value);
-		if(button.value == "+"){
-			oldValue += 1;
-			document.getElementById("quantity").value = oldValue;
-		}
-		else{
-			if(oldValue > 0){
-				oldValue -= 1;
-				document.getElementById("quantity").value = oldValue;
-			}
-		}
+	$( document ).ready(function() {
+		$(".inc").click(function() {
+		    updateValue(this, 1);
+		});
+		$(".dec").click(function() {
+		    updateValue(this, -1);
+		});
+	});
+
+	function updateValue(obj, delta) {
+	    var item = $(obj).parent().find("input");
+	    var newValue = parseInt(item.val(), 10) + delta;
+	    item.val(Math.max(newValue, 0));
 	}
-	/*
-	function setQuantity1(button){
-		var oldValue = parseInt(document.getElementById("quantity1").value);
-		if(button.value == "+"){
-			oldValue += 1;
-			document.getElementById("quantity1").value = oldValue;
-		}
-		else{
-			if(oldValue > 0){
-				oldValue -= 1;
-				document.getElementById("quantity1").value = oldValue;
-			}
-		}
-	}
-	
-	function setQuantity2(button){
-		var oldValue = parseInt(document.getElementById("quantity2").value);
-		if(button.value == "+"){
-			oldValue += 1;
-			document.getElementById("quantity2").value = oldValue;
-		}
-		else{
-			if(oldValue > 0){
-				oldValue -= 1;
-				document.getElementById("quantity2").value = oldValue;
-			}
-		}
-	}
-	*/
-	
 	
 </script>
 </head>
@@ -131,9 +116,9 @@ padding-right: 20px;}
 			
             <td class="cartCol3">
 				<div class="quantityMenu"> 
-					<input class="button" type="button" value="+"  style="cursor:pointer;" onclick="setQuantity(this)"></input><br />
-					<input id="quantity" type="text" value="1"></input><br />
-					<input class="button" type="button" value="&ndash;" style="cursor:pointer;" onclick="setQuantity(this)"></input>
+					<div class="inc button" style="cursor:pointer;">+</div><br />
+					<input id="quantity" name="quantity" type="text" value="1"></input><br />
+					<div class="dec button" style="cursor:pointer;">-</div>
 				</div>
              <div class="divPrice">
                <span>Цена: 12.56 </span>
@@ -161,10 +146,10 @@ padding-right: 20px;}
             <td class="cartCol3">
 			
 			<div class="quantityMenu"> 
-					<input class="button" type="button" value="+" style="cursor:pointer;" onclick="setQuantity(this)"></input><br />
-					<input id="quantity1" type="text" value="1"></input><br />
-					<input class="button" type="button" value="&ndash;" style="cursor:pointer;" onclick="setQuantity(this)"></input>
-				</div>
+				<div class="inc button" style="cursor:pointer;">+</div><br />
+				<input id="quantity" name="quantity" type="text" value="1"></input><br />
+				<div class="dec button" style="cursor:pointer;">-</div>
+			</div>
              <div class="divPrice">
                <span>Цена: 12.56 </span>
             	
@@ -189,10 +174,38 @@ padding-right: 20px;}
             </td>
             <td class="cartCol3">
 			<div class="quantityMenu"> 
-					<input class="button" type="button" value="+" style="cursor:pointer;"  onclick="setQuantity(this)"></input><br />
-					<input id="quantity2" type="text" value="1"></input><br />
-					<input class="button" type="button" value="&ndash;" style="cursor:pointer;" onclick="setQuantity(this)"></input>
-				</div>
+				<div class="inc button" style="cursor:pointer;">+</div><br />
+				<input id="quantity" name="quantity" type="text" value="1"></input><br />
+				<div class="dec button" style="cursor:pointer;">-</div>
+			</div>
+             <div class="divPrice">
+               <span>Цена: 12.56 </span>
+            	
+            </div>
+            </td>
+            
+        </tr>     
+    </table>
+        <table class="cartMeal">
+    	<tr>
+        	<td class="cartCol1">
+            <img src="images/meal_images/meat.jpg" alt="" width="90" height="90">
+            </td>
+            <td class="cartCol2" >
+            <div>
+            <span class="mealName"> Име на ястие </span>
+            <br>
+            </div><div class="divIngredients">
+            <span class="mealIngredients"> Съставки: ala,bala,nica</span>
+            </div> 
+			
+            </td>
+            <td class="cartCol3">
+			<div class="quantityMenu"> 
+				<div class="inc button" style="cursor:pointer;">+</div><br />
+				<input id="quantity" name="quantity" type="text" value="1"></input><br />
+				<div class="dec button" style="cursor:pointer;">-</div>
+			</div>
              <div class="divPrice">
                <span>Цена: 12.56 </span>
             	
@@ -216,6 +229,7 @@ padding-right: 20px;}
   <div id="Footer"></div>
 
 </div>
+
 	
 </body>
 </html>
