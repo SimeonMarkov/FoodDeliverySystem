@@ -2,7 +2,6 @@
 <html>
 <head>
 <link href="../CSS/mainBody.css" rel="stylesheet" type="text/css" />
-<link href="../CSS/800px.css" rel="stylesheet" type="text/css"  media="screen and (max-width: 800px)" />
 <link href="../CSS/mainButtons.css" rel="stylesheet" type="text/css" />
 <link href="../CSS/menuButtons.css" rel="stylesheet" type="text/css" />
 <link href="../CSS/regFields.css" rel="stylesheet" type="text/css"/>
@@ -35,10 +34,10 @@
 	
 	<fieldset  style="border:0px solid black;">
 		<caption><b>Registration</b></caption>
-		<form action="http://www.example.com/login/" method="post">
+		<form action="../SignupServlet" method="post">
 		<div class="form">
 			<label for="username" class="title">Username:</label>
-			<input type="text" name="username" required="required" /></title><br />
+			<input type="text" name="username" required="required" /><br />
 		</div>
 		<div class="form">	
 			<label for="password"  class="title">Password:</label>
@@ -46,7 +45,7 @@
 		</div>	
 		<div class="form">
 			<label for="email" class="title">Email:</label>
-			<input type="email" name="email" required="required" /></title><br />
+			<input type="email" name="email" required="required" /><br />
 		</div>
 		<div class="form">
 			<label for="question"  class="title">Secret question:</label>
@@ -57,30 +56,30 @@
 			<input type="text" name="answer" required="required" /><br />
 		</div>
          <fieldset  style="border:0px solid black;">
-         <hr style="margin-left:25px;margin-right:25px;">
-    <caption><b>Адрес</b></caption>
-    <datalist id="kvartal">
-    <option value="Борово">
-    <option value="Дружба">
-    <option value="Надежда">
-    <option value="Гео Милев">
-    <option value="Хаджи Димитър">
-    </datalist> 
+	         <hr style="margin-left:25px;margin-right:25px;">
+		    <caption><b>Адрес</b></caption>
+		    <datalist id="kvartal">
+		    <option value="Борово">
+		    <option value="Дружба">
+		    <option value="Надежда">
+		    <option value="Гео Милев">
+		    <option value="Хаджи Димитър">
+		    </datalist> 
     
     
     
-     <div style="margin-top:5px;">
+		     <div style="margin-top:5px;">
+		    
+		    <label for="kvartal1" class="kvartal">Квартал</label>
+		    <input list="kvartal" name="kvartal1" required ><br><br>
+		    <label for="address1" class="kvartal">Adress</label>
     
-    <label for="kvartal1" class="kvartal">Квартал</label>
-    <input list="kvartal" name="kvartal1" required ><br><br>
-    <label for="address1" class="kvartal">Adress</label>
-    
-    <textarea  class="addressField" name="address1" value="Борово" rows="5" cols="60" required> </textarea>
-    <br>
-    </div>
-    </fieldset>
+		    <textarea  class="addressField" name="address1" value="Борово" rows="5" cols="60" required> </textarea>
+		    <br>
+		    </div>
+    	</fieldset>
 		<div class="form">
-        	<input type="submit" value="Submit" name="submit" style="font-size:20px; letter-spacing:2px; width:102px;height:30px;border:1px solid #8C8153;background-color:#C16845;color:#F0EFDF; float:right;cursor:pointer;"/>
+        	<input type="submit" value="Submit" style="font-size:20px; letter-spacing:2px; width:102px;height:30px;border:1px solid #8C8153;background-color:#C16845;color:#F0EFDF; float:right;cursor:pointer;"/>
 		</div>
 	 		
 		</form>

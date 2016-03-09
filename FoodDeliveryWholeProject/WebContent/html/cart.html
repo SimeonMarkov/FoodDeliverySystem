@@ -2,7 +2,6 @@
 <html>
 <head>
 <link href="../CSS/mainBody.css" rel="stylesheet" type="text/css" />
-<link href="../CSS/800px.css" rel="stylesheet" type="text/css"  media="screen and (max-width: 800px)" />
 <link href="../CSS/mainButtons.css" rel="stylesheet" type="text/css" />
 <link href="../CSS/menuButtons.css" rel="stylesheet" type="text/css" />
 <link href="../CSS/meals.css" rel="stylesheet" type="text/css" />
@@ -57,7 +56,7 @@ padding-right: 20px;}
 			}
 		}
 	}
-	
+	/*
 	function setQuantity1(button){
 		var oldValue = parseInt(document.getElementById("quantity1").value);
 		if(button.value == "+"){
@@ -85,6 +84,7 @@ padding-right: 20px;}
 			}
 		}
 	}
+	*/
 	
 	
 </script>
@@ -106,8 +106,8 @@ padding-right: 20px;}
 			</ul>
 		</li>
 		
-		<li><a href="profile.html">Profile</a></li>
-		<li><a href="home.html">Logout</a></li>
+		<li><a href="profile.jsp">Profile</a></li>
+		<li><a href="logout.jsp">Logout</a></li>
 		</ul>      
     </div>  
 	<div id="Menu">
@@ -161,9 +161,9 @@ padding-right: 20px;}
             <td class="cartCol3">
 			
 			<div class="quantityMenu"> 
-					<input class="button" type="button" value="+" style="cursor:pointer;" onclick="setQuantity1(this)"></input><br />
+					<input class="button" type="button" value="+" style="cursor:pointer;" onclick="setQuantity(this)"></input><br />
 					<input id="quantity1" type="text" value="1"></input><br />
-					<input class="button" type="button" value="&ndash;" style="cursor:pointer;" onclick="setQuantity1(this)"></input>
+					<input class="button" type="button" value="&ndash;" style="cursor:pointer;" onclick="setQuantity(this)"></input>
 				</div>
              <div class="divPrice">
                <span>Цена: 12.56 </span>
@@ -189,9 +189,9 @@ padding-right: 20px;}
             </td>
             <td class="cartCol3">
 			<div class="quantityMenu"> 
-					<input class="button" type="button" value="+" style="cursor:pointer;"  onclick="setQuantity2(this)"></input><br />
+					<input class="button" type="button" value="+" style="cursor:pointer;"  onclick="setQuantity(this)"></input><br />
 					<input id="quantity2" type="text" value="1"></input><br />
-					<input class="button" type="button" value="&ndash;" style="cursor:pointer;" onclick="setQuantity2(this)"></input>
+					<input class="button" type="button" value="&ndash;" style="cursor:pointer;" onclick="setQuantity(this)"></input>
 				</div>
              <div class="divPrice">
                <span>Цена: 12.56 </span>
@@ -210,12 +210,11 @@ padding-right: 20px;}
      <p>Адрес: ул.Бай Благой 26, бл.56, вх.А, ет.5, ап.24</p>
      
     </div>   
-    <input type="button" value="ПОТВЪРДИ ПОРЪЧКА" name="order" style="width:602px;margin-left:25px;margin-right:25px;margin-top:10px;border:solid #8C8153;border-width:1px;padding-top:10px;padding-bottom:10px;background-color:#C16845;color:#F0EFDF;cursor:pointer;"">
+    <input type="button" value="ПОТВЪРДИ ПОРЪЧКА" name="order" style="width:602px;margin-left:25px;margin-right:25px;margin-top:10px;border:solid #8C8153;border-width:1px;padding-top:10px;padding-bottom:10px;background-color:#C16845;color:#F0EFDF;cursor:pointer;">
       
   </div>
   <div id="Footer"></div>
 
-</div>
 </div>
 	
 </body>
