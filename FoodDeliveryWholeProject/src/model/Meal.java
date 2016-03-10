@@ -32,6 +32,9 @@ public class Meal implements Comparable<Meal> {
 		this.timesRated = 0;
 		this.ingredients = new ArrayList<Ingredient>();
 	}
+	public Meal() {
+		ingredients = new ArrayList<>();
+	}
 
 	public void setTimesRated() {
 		this.timesRated++;
@@ -49,8 +52,9 @@ public class Meal implements Comparable<Meal> {
 		return this.name;
 	}
 
-	public void setName(String name) {
+	public Meal setName(String name) {
 		this.name = name;
+		return this;
 	}
 
 	public ArrayList<Ingredient> getIgredients(){
@@ -61,8 +65,9 @@ public class Meal implements Comparable<Meal> {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public Meal setPrice(double price) {
 		this.price = price;
+		return this;
 	}
 
 	public MealType getCategory() {
@@ -77,14 +82,22 @@ public class Meal implements Comparable<Meal> {
 	public int compareTo(Meal o) {
 		return (int) (price - o.price);
 	}
-
+	public String ingradientsToString() {
+		StringBuilder allIngredientsWithNames = new StringBuilder();
+		String r = "";
+		for(Ingredient i : ingredients){
+			allIngredientsWithNames.append(r+i.getName());
+			r=", ";
+		}
+		return allIngredientsWithNames.toString();
+	}
 	public String toString() {
 		StringBuilder allIngredientsWithNames = new StringBuilder("[");
 		if(!ingredients.isEmpty()){
 			for(int i = 0; i < ingredients.size() - 1; i++){
-				allIngredientsWithNames.append(ingredients.get(i).getIngredientName() + ",");
+				allIngredientsWithNames.append(ingredients.get(i).getName() + ",");
 			}
-			allIngredientsWithNames.append(ingredients.get(ingredients.size() - 1).getIngredientName()); 
+			allIngredientsWithNames.append(ingredients.get(ingredients.size() - 1).getName()); 
 		}
 		allIngredientsWithNames.append("]");
 		return name + "\n Category: " + category + "\n Ingredients: " + allIngredientsWithNames + "\n Price: " + price;
