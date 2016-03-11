@@ -44,7 +44,6 @@ public class SignupServlet extends HttpServlet {
 		String email = request.getParameter("email"); 
 		String secretQuestion = request.getParameter("question"); 
 		String secretAnswer = request.getParameter("answer"); 
-		User newUser = new User(username, password, email, secretQuestion, secretAnswer);
 		try{
 			for(User u : IUserDAO.getDAO(DataSource.DB).getAllUsers()){
 				if(u.getUsername().equals(username) || u.getEmail().equals(email)){
@@ -66,7 +65,7 @@ public class SignupServlet extends HttpServlet {
 			}
 				
 			IUserDAO dao = DBUserDAO.getInstance();
-			System.out.println(dao);
+			User newUser = new User(username, password, email, secretQuestion, secretAnswer);
 			dao.addUser(newUser);
 			response.sendRedirect("html/layout.html");
 			
