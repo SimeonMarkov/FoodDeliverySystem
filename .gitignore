@@ -13,3 +13,4 @@ FoodDeliveryWholeProject/.metadata/.plugins/org.eclipse.jdt.core/variablesAndCon
 FoodDeliveryWholeProject/.metadata/.plugins/org.eclipse.jdt.ui/OpenTypeHistory.xml
 FoodDeliveryWholeProject/.metadata/.plugins/org.eclipse.jdt.ui/QualifiedTypeNameHistory.xml
 FoodDeliveryWholeProject/.metadata/.plugins/org.eclipse.m2e.logback.configuration/0.log
+*.class
