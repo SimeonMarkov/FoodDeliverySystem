@@ -1,5 +1,7 @@
+<%@page import="model.dao.DBNeighbourhoodDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html>
 <head>
@@ -63,20 +65,20 @@
          <fieldset  style="border:0px solid black;">
          <hr style="margin-left:25px;margin-right:25px;">
     <caption><b>Адрес</b></caption>
-    <datalist id="kvartal">
-    <option value="Борово">
-    <option value="Дружба">
-    <option value="Надежда">
-    <option value="Гео Милев">
-    <option value="Хаджи Димитър">
-    </datalist> 
+    
+    
+    
     
     
     
      <div style="margin-top:5px;">
     
     <label for="kvartal1" class="kvartal">Квартал</label>
-    <input list="kvartal" name="kvartal1" required ><br><br>
+    <select id="kvartal">
+    <c:forEach var="i" begin="1" end="7">
+    <option value="${i}">${i}</option>
+    </c:forEach>
+    </select> <br><br>
     <label for="address1" class="kvartal">Adress</label>
     
     <textarea  class="addressField" name="address1" value="Борово" rows="5" cols="60" required> </textarea>
