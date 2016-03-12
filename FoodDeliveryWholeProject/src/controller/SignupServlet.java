@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +13,7 @@ import model.User;
 import model.dao.DBNeighbourhoodDAO;
 import model.dao.DBUserDAO;
 import model.dao.IUserDAO;
+import model.dao.INeighbourhoodDAO;
 import model.dao.IUserDAO.DataSource;
 
 /**
@@ -66,15 +66,18 @@ public class SignupServlet extends HttpServlet {
 				} 
 			}
 				
-			IUserDAO dao = DBUserDAO.getInstance();
+			IUserDAO userDao = DBUserDAO.getInstance();
 			User newUser = new User(username, password, email, secretQuestion, secretAnswer);
-			dao.addUser(newUser);
+			userDao.addUser(newUser);
+			String neighbourhood = request.getParameter("neighbourhoodOptions");
+			String fullAddress = request.getParameter("fullAddress");
+			userDao.addAddress(newUser,neighbourhood,fullAddress);
 			response.sendRedirect("html/layout.html");
 			
 			
 		}
 		catch(SQLException e){
-			response.getWriter().append("Something went wrong with the connection");
+			response.sendRedirect("html/ShowError.jsp");
 		}
 	}
 }

@@ -134,4 +134,32 @@ public class DBUserDAO implements IUserDAO {
 		return rv;
 	}
 
+	@Override
+	public boolean addAddress(User newUser, String neighbourhood, String fullAddress) {
+		boolean success = true;
+		String neighbourhoodQuery = "SELECT neighbourhood_id FROM fd_db.neighbourhood WHERE neighbourhood_name = ?";
+		int neighbourhood_id = 0;
+		try(PreparedStatement preparedStatement = manager.getConnection().prepareStatement(neighbourhoodQuery);){
+			preparedStatement.setString(1, neighbourhood);
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				neighbourhood_id = rs.getInt(1); 
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		String query = "INSERT INTO fd_db.ADDRESS (full_address, neighbourhood_id, user_id) VALUES (?, ?, ?);";
+		try (PreparedStatement st = manager.getConnection().prepareStatement(query);) {
+			st.setString(1, fullAddress);
+			st.setInt(2, neighbourhood_id);
+			st.setString(3, newUser.getUsername());
+			st.execute();
+		} catch (SQLException e) {
+			success = false;
+		}
+		return success;
+	}
+
 }

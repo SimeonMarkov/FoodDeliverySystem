@@ -30,4 +30,6 @@ public interface IUserDAO {
 
 	public ArrayList<Order> getOrdersArchiveDB(String username);
 
+	public boolean addAddress(User newUser, String neighbourhood,String fullAddress);
+
 }
