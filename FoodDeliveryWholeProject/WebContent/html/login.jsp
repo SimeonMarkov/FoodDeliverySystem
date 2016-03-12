@@ -35,7 +35,7 @@
 	<fieldset  style="border:0px solid black;">
 		<caption><b>Login</b></caption>
 		<form action="../LoginServlet" method="post">
-		<% if(request.getAttribute("loginError") == null) {%>
+		<% if(session.getAttribute("loginError") != null) {%>
 		<p style="color: red;">Грешно потребителско име или парола! </p>
 		<% } %>
 		<div class="form">

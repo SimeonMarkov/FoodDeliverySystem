@@ -53,22 +53,18 @@ public class LoginServlet extends HttpServlet {
 					return;
 				}
 			}
-			request.setAttribute("loginError", true);
-			if ((Boolean) request.getAttribute("loginError")) {
-				for(User u : IUserDAO.getDAO(DataSource.DB).getAllUsers()){
-					if(u.getUsername().equals(username)){
-						session.setAttribute("failLog", u);
-						System.out.println(((User)session.getAttribute("failLog")).getUsername() + " failed");
-						response.sendRedirect("html/login.jsp");
-						break;
-					}
-					else{
-						response.sendRedirect("html/login.jsp");
-						break;
-					}
+			session.setAttribute("loginError", true);
+			for (User u : IUserDAO.getDAO(DataSource.DB).getAllUsers()) {
+				if (u.getUsername().equals(username)) {
+					session.setAttribute("failLog", u);
+					System.out.println(((User) session.getAttribute("failLog"))
+							.getUsername() + " failed");
+					response.sendRedirect("html/login.jsp");
+					return;
 				}
-				System.out.println("No such user in database!");
 			} 
+			System.out.println("No such user in database!");
+			response.sendRedirect("html/login.jsp");
 		} catch (SQLException e) {
 			response.getWriter().append("<h1>Something went wrong!</h1>");
 		}
