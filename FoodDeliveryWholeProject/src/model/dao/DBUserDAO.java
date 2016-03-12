@@ -155,7 +155,7 @@ public class DBUserDAO implements IUserDAO {
 			st.setString(1, fullAddress);
 			st.setInt(2, neighbourhood_id);
 			st.setString(3, newUser.getUsername());
-			st.execute();
+			st.executeUpdate();
 		} catch (SQLException e) {
 			success = false;
 		}
