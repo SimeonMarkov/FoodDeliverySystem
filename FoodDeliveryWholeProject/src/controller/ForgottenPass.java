@@ -47,12 +47,15 @@ public class ForgottenPass extends HttpServlet {
 						response.sendRedirect("html/email_verification.jsp");
 						return;
 					}
+					else{
+						session.setAttribute("wrongAnswer", true);
+						response.sendRedirect("html/lostpass.jsp");
+						return;
+					}
 				}
 			}
-			request.setAttribute("missingUser", true);
-			if((Boolean)request.getAttribute("missingUser")){
-				response.sendRedirect("html/lostpass.jsp");
-			}
+			session.setAttribute("missingUser", true);
+			response.sendRedirect("html/lostpass.jsp");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
