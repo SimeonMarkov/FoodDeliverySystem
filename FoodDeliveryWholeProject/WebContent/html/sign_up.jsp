@@ -5,10 +5,10 @@
 <!doctype html>
 <html>
 <head>
-<link href="../CSS/mainBody.css" rel="stylesheet" type="text/css" />
-<link href="../CSS/mainButtons.css" rel="stylesheet" type="text/css" />
-<link href="../CSS/menuButtons.css" rel="stylesheet" type="text/css" />
-<link href="../CSS/regFields.css" rel="stylesheet" type="text/css"/>
+<link href="${pageContext.request.contextPath}/CSS/mainBody.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/CSS/mainButtons.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/CSS/menuButtons.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/CSS/regFields.css" rel="stylesheet" type="text/css"/>
 <meta charset="utf-8">
 <title>Food Delivery Login</title>
 <style type="text/css">
@@ -38,13 +38,13 @@
 	
 	<fieldset  style="border:0px solid black;">
 		<caption><b>Registration</b></caption>
-		<form action="../SignupServlet" method="post">
+		<form action="${pageContext.request.contextPath}/SignupServlet" method="post">
 		
 		
 		<div class="form">
 			<label for="username" class="title">Username:</label>
 			<input type="text" name="username" required="required" />
-			<% if(request.getAttribute("usernameError") == null) { %><label style="color: red;">*Потребителското име е заето</label><br /><% } request.removeAttribute("usernameError"); %>
+			<% if(request.getAttribute("usernameError") != null) { %><label style="color: red;">*Потребителското име е заето</label><br /><% } request.removeAttribute("usernameError"); %>
 		</div>
 		<div class="form">	
 			<label for="password"  class="title">Password:</label>
@@ -52,7 +52,7 @@
 		</div>	
 		<div class="form">
 			<label for="email" class="title">Email:</label>
-			<input type="email" name="email" required="required" /><% if(request.getAttribute("emailError") == null) { %><label style="color: red;">*Имейлът вече е зает</label><br /><% }request.removeAttribute("emailError"); %><br />
+			<input type="email" name="email" required="required" /><% if(request.getAttribute("emailError") != null) { %><label style="color: red;">*Имейлът вече е зает</label><br /><% }request.removeAttribute("emailError"); %><br />
 		</div>
 		<div class="form">
 			<label for="question"  class="title">Secret question:</label>
@@ -75,12 +75,12 @@
     <% request.setAttribute("neighbourhoods", DBNeighbourhoodDAO.getInstance().getAllNeighbourhoods()); %>
     <select>
 		<c:forEach var="n" items="${requestScope.neighbourhoods}">
-		   <option><c:out value="${n}"/><option>
+		   <option  value="${n}" ><c:out value="${n}"></c:out><option>
 		</c:forEach>
 	</select><br><br>
     <label for="address1" class="kvartal">Adress</label>
     
-    <textarea  class="addressField" name="address1" value="Борово" rows="5" cols="60" required> </textarea>
+    <textarea  class="addressField" name="address1" rows="5" cols="60" required> </textarea>
     <br>
     </div>
     </fieldset>
