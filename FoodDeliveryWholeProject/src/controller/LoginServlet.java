@@ -62,6 +62,10 @@ public class LoginServlet extends HttpServlet {
 						response.sendRedirect("html/login.jsp");
 						break;
 					}
+					else{
+						response.sendRedirect("html/login.jsp");
+						break;
+					}
 				}
 				System.out.println("No such user in database!");
 			} 
