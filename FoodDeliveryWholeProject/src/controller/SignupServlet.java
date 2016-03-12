@@ -52,14 +52,14 @@ public class SignupServlet extends HttpServlet {
 					if(u.getUsername().equals(username)){
 						request.setAttribute("usernameError", true);
 						if((Boolean) request.getAttribute("usernameError")){
-							response.sendRedirect("html/sign_up.jsp");
+							request.getRequestDispatcher("html/sign_up.jsp").forward(request, response);
 							return;
 						}
 					}
-					if(u.getEmail().equals(email)){
+					else{
 						request.setAttribute("emailError", true);
 						if((Boolean) request.getAttribute("emailError")){
-							response.sendRedirect("html/sign_up.jsp");
+							request.getRequestDispatcher("html/sign_up.jsp").forward(request, response);
 							return;
 						}
 					}
