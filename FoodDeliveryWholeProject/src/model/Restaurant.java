@@ -1,78 +1,113 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
+import model.dao.IRestaurantDAO;
+import model.dao.IRestaurantDAO.DataSource;
 
 public class Restaurant {
 	private String name;
 	private Address address;
 	private String phoneNumber;
 	private String email;
+	private ArrayList<String> types;
 	private ArrayList<Meal> meals;
 	private ArrayList<Neighbourhood> servedRegion;
-	
-	
-    
-	
+	private long restId;
+
+	public Restaurant() {
+		meals = new ArrayList<>();
+		servedRegion = new ArrayList<>();
+		types = new ArrayList<>();
+	}
+
 	public Restaurant(String name, Address address, String phoneNumber, String email) {
+		this();
 		this.setName(name);
 		this.setAddress(address);
 		this.setPhoneNumber(phoneNumber);
 		this.setEmail(email);
-		this.meals = new ArrayList<Meal>();
 	}
-    
+
+	public void addType(String s) {
+		this.types.add(s);
+	}
+	public static ArrayList<Restaurant> getAllRestaurants() {
+		return (ArrayList<Restaurant>) IRestaurantDAO.getDAO(DataSource.DB).getAllRestaurants();
+	}
+
+	public String getTypes() {
+		return String.join(", ", types);
+	}
+
+	public long getRestId() {
+		return restId;
+	}
+
+	public Restaurant setRestId(long restId) {
+		this.restId = restId;
+		return this;
+	}
+
 	private void setEmail(String email) {
-		//TODO:validate email!!!
+		// TODO:validate email!!!
 		this.email = email;
-		
+
 	}
 
 	public void addToServedRegion(Neighbourhood nbh) {
 		this.servedRegion.add(nbh);
 	}
+
 	public ArrayList<Neighbourhood> getServedRegion() {
 		return this.servedRegion;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	private void setName(String name) {
-		if(name != null){
+
+	public Restaurant setName(String name) {
+		if (name != null) {
 			this.name = name;
 		}
+		return this;
 	}
+
 	public Address getAddress() {
 		return address;
 	}
-	private void setAddress(Address address) {
-		if(address != null){
+
+	public Restaurant setAddress(Address address) {
+		if (address != null) {
 			this.address = address;
 		}
+		return this;
 	}
+
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
+
 	private void setPhoneNumber(String phoneNumber) {
-		if(phoneNumber.matches("08[0-9]{8}")){
+		if (phoneNumber.matches("08[0-9]{8}")) {
 			this.phoneNumber = phoneNumber;
 		}
 	}
-	
-	public ArrayList<Meal> getMeals(){
-		return this.meals;
+
+	public ArrayList<Meal> getMeals() {
+		return (ArrayList<Meal>) Collections.unmodifiableList(this.meals);
 	}
-	
-	public void addMeal(Meal meal){
-		//TODO: how to add the ingredients for our meal first,then add the meal itself to the restaurant's menu?
+
+	public void addMeal(Meal meal) {
+		// TODO: how to add the ingredients for our meal first,then add the meal
+		// itself to the restaurant's menu?
 		this.meals.add(meal);
 	}
-	
-	public void removeMeal(Meal meal){
+
+	public void removeMeal(Meal meal) {
 		this.meals.remove(meal);
 	}
-	
 
-	
-	
 }
