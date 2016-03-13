@@ -8,18 +8,7 @@
     <welcome-file>default.html</welcome-file>
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
-<<<<<<< HEAD
-<<<<<<< HEAD
     <welcome-file>home.jsp</welcome-file>
   </welcome-file-list>
-=======
-    <welcome-file>html/home.html</welcome-file>
-    
-  <welcome-file>home.jsp</welcome-file></welcome-file-list>
->>>>>>> Welcome page added + changes in home.html
-=======
-    <welcome-file>html/home.html</welcome-file>
-    
-  <welcome-file>home.jsp</welcome-file></welcome-file-list>
->>>>>>> 2902dfae8690bd8a5610f0c9d9403f1cbc3b48d3
+   
 </web-app>
