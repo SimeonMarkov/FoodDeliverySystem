@@ -36,6 +36,16 @@ public class Restaurant {
 	public static ArrayList<Restaurant> getAllRestaurants() {
 		return (ArrayList<Restaurant>) IRestaurantDAO.getDAO(DataSource.DB).getAllRestaurants();
 	}
+	public static ArrayList<Restaurant> getAllRestaurantsByType(long id) {
+		return (ArrayList<Restaurant>) IRestaurantDAO.getDAO(DataSource.DB).getAllRestaurantsByType(id);
+	}
+	public static ArrayList<Restaurant> getAllRestaurantsByHoodByType(long id,long hoodId) {
+		return (ArrayList<Restaurant>) IRestaurantDAO.getDAO(DataSource.DB).getAllRestaurantsByHoodByType(id,hoodId);
+	}
+	public static ArrayList<Restaurant> getAllRestaurantsByHood(long id) {
+		return (ArrayList<Restaurant>) IRestaurantDAO.getDAO(DataSource.DB).getAllRestaurantsByHood(id);
+	}
+	
 
 	public String getTypes() {
 		return String.join(", ", types);

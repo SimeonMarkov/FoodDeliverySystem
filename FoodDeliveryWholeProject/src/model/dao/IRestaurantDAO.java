@@ -6,6 +6,7 @@ import java.util.List;
 
 import model.Order;
 import model.Restaurant;
+import model.RestaurantType;
 import model.User;
 import model.dao.IUserDAO.DataSource;
 
@@ -31,5 +32,7 @@ public interface IRestaurantDAO {
 	List<Restaurant> getAllRestaurantsByHood(long id);
 
 	List<Restaurant> getAllRestaurantsByHoodByType(long typeId, long hoodId);
+	
+	List<RestaurantType> getAllRestaurantTypes();
 
 }

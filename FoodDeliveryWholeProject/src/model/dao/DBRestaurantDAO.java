@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Restaurant;
+import model.RestaurantType;
 import model.User;
 import model.db.DBManager;
 
@@ -48,10 +49,10 @@ public class DBRestaurantDAO implements IRestaurantDAO {
 		String query = String.join("\n",
 				"SELECT r.restaurant_id,r.restaurant_name,r.photo,rt.restaurant_type_id,rt.restaurant_type_name",
 				"FROM restaurant r join restaurant_by_type rbt on(rbt.restaurant_id=r.restaurant_id)",
-				"join restaurant_type rt on (rbt.restaurant_type_id=rt.restaurant_type_id)" ,
+				"join restaurant_type rt on (rbt.restaurant_type_id=rt.restaurant_type_id)",
 				"where EXISTS(select 1 from restaurant_by_type where restaurant_id = r.restaurant_id and restaurant_type_id=?);");
 		List<Restaurant> rv = new ArrayList<>();
-		try (PreparedStatement pst = manager.getConnection().prepareStatement(query)){
+		try (PreparedStatement pst = manager.getConnection().prepareStatement(query)) {
 			pst.setLong(1, id);
 			rv = getByResultSet(pst.executeQuery());
 		} catch (SQLException e) {
@@ -68,26 +69,26 @@ public class DBRestaurantDAO implements IRestaurantDAO {
 		Restaurant r = null;
 		Long oldID = -1l;
 		while (result.next()) {
-			if(result.getLong(1)!=oldID) {
+			if (result.getLong(1) != oldID) {
 				r = new Restaurant().setName(result.getString(2)).setRestId(result.getLong(1));
-				oldID=result.getLong(1);
+				oldID = result.getLong(1);
 				rv.add(r);
 			}
 			r.addType(result.getString(5));
 		}
-		
+
 		return rv;
 	}
 
 	@Override
-	public List<Restaurant> getAllRestaurantsByHood(long id)  {
+	public List<Restaurant> getAllRestaurantsByHood(long id) {
 		String query = String.join("\n",
 				"SELECT r.restaurant_id,r.restaurant_name,r.photo,rt.restaurant_type_id,rt.restaurant_type_name",
 				"FROM restaurant r join restaurant_by_type rbt on(rbt.restaurant_id=r.restaurant_id)",
-				"join restaurant_type rt on (rbt.restaurant_type_id=rt.restaurant_type_id)" ,
+				"join restaurant_type rt on (rbt.restaurant_type_id=rt.restaurant_type_id)",
 				"where EXISTS(select 1 from serviced_neighbourhoods where restaurant_id = r.restaurant_id and neighbourhood_id=?);");
 		List<Restaurant> rv = new ArrayList<>();
-		try (PreparedStatement pst = manager.getConnection().prepareStatement(query)){
+		try (PreparedStatement pst = manager.getConnection().prepareStatement(query)) {
 			pst.setLong(1, id);
 			rv = getByResultSet(pst.executeQuery());
 		} catch (SQLException e) {
@@ -97,18 +98,36 @@ public class DBRestaurantDAO implements IRestaurantDAO {
 	}
 
 	@Override
-	public List<Restaurant> getAllRestaurantsByHoodByType(long typeId, long hoodId)  {
+	public List<Restaurant> getAllRestaurantsByHoodByType(long typeId, long hoodId) {
 		String query = String.join("\n",
 				"SELECT r.restaurant_id,r.restaurant_name,r.photo,rt.restaurant_type_id,rt.restaurant_type_name",
 				"FROM restaurant r join restaurant_by_type rbt on(rbt.restaurant_id=r.restaurant_id)",
-				"join restaurant_type rt on (rbt.restaurant_type_id=rt.restaurant_type_id)" ,
-				"where EXISTS(select 1 from serviced_neighbourhoods where restaurant_id = r.restaurant_id and neighbourhood_id=?)" ,
+				"join restaurant_type rt on (rbt.restaurant_type_id=rt.restaurant_type_id)",
+				"where EXISTS(select 1 from serviced_neighbourhoods where restaurant_id = r.restaurant_id and neighbourhood_id=?)",
 				"and EXISTS(select 1 from restaurant_by_type where restaurant_id = r.restaurant_id and restaurant_type_id=?);");
 		List<Restaurant> rv = new ArrayList<>();
-		try (PreparedStatement pst = manager.getConnection().prepareStatement(query)){
+		try (PreparedStatement pst = manager.getConnection().prepareStatement(query)) {
 			pst.setLong(1, hoodId);
 			pst.setLong(2, typeId);
 			rv = getByResultSet(pst.executeQuery());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rv;
+	}
+
+	@Override
+	public List<RestaurantType> getAllRestaurantTypes() {
+		String query = "select restaurant_type_id,restaurant_type_name from restaurant_type;";
+
+		List<RestaurantType> rv = new ArrayList<>();
+		try (Statement st = manager.getConnection().createStatement()) {
+			ResultSet result = st.executeQuery(query);
+			if (result != null) {
+				while (result.next()) {
+					rv.add(new RestaurantType(result.getLong(1), result.getString(2)));
+				}
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
