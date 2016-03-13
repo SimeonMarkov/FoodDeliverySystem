@@ -37,6 +37,7 @@ public class DBNeighbourhoodDAO implements INeighbourhoodDAO{
 			return neighbourhoods;
 		}
 		while (result.next()) {
+			System.out.println(result.getString(1));
 			neighbourhoods.add(result.getString(1));
 		}
 		st.close();

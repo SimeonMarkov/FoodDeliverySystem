@@ -72,6 +72,7 @@ public class SignupServlet extends HttpServlet {
 			String neighbourhood = request.getParameter("neighbourhoodOptions");
 			String fullAddress = request.getParameter("fullAddress");
 			userDao.addAddress(newUser,neighbourhood,fullAddress);
+			request.getSession().setAttribute("loggedUser", newUser);
 			response.sendRedirect("html/layout.html");
 			
 			
