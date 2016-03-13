@@ -1,4 +1,5 @@
 <%@page import="model.dao.DBNeighbourhoodDAO"%>
+<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -73,10 +74,10 @@
      <div style="margin-top:5px;">
     
     <label for="kvartal1" class="kvartal">Квартал</label>
-    <% request.setAttribute("neighbourhoods", DBNeighbourhoodDAO.getInstance().getAllNeighbourhoods()); %>
+    <% request.setAttribute("neighbourhoods", DBNeighbourhoodDAO.getInstance().getAllNeighbourhoods());System.out.println(((List<String>)request.getAttribute("neighbourhoods")).size()); %>
     <select name="neighbourhoodOptions">
 		<c:forEach var="n" items="${requestScope.neighbourhoods}">
-		   <option  value="${n}" ><c:out value="${n}"></c:out><option>
+		   <option  value="${n}" ><c:out value="${n}"></c:out></option>
 		</c:forEach>
 	</select><br><br>
     <label for="address1" class="kvartal">Adress</label>
