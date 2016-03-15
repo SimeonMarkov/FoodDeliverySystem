@@ -74,7 +74,7 @@ public class SignupServlet extends HttpServlet {
 			
 		}
 		catch(SQLException e){
-			response.sendRedirect("html/ShowError.jsp");
+			//response.sendRedirect("html/ShowError.jsp");
 		}
 	}
 }

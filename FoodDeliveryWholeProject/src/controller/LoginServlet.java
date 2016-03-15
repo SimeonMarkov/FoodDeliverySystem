@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 				if(u.getUsername().equals(username) && u.getPassword().equals(password)){
 					session.setAttribute("loggedUser", u);
 					session.removeAttribute("loginError");
-					System.out.println(((User)session.getAttribute("loggedUser")).getUsername() + " logged in");
+					System.out.println(((User)session.getAttribute("loggedUser")).getUsername() + " logged in with addresses" + ((User)session.getAttribute("loggedUser")).getAddresses());
 					response.sendRedirect("html/layout.html");
 					return;
 				}

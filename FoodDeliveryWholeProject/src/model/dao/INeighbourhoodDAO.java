@@ -15,6 +15,8 @@ public interface INeighbourhoodDAO {
 	
 	List<String> getAllNeighbourhoods() throws SQLException;
 	
+	void loadNeighbourhoods() throws SQLException;
+	
 	static INeighbourhoodDAO getDAO(DataSource ds) {
 		switch (ds) {
 		case DB:
@@ -23,6 +25,8 @@ public interface INeighbourhoodDAO {
 			throw new IllegalArgumentException();
 		}
 	}
+	
+	
 
 
 }
