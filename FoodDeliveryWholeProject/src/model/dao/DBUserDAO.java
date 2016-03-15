@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
-
+import model.Address;
 import model.Ingredient;
 import model.Meal;
 import model.Order;
@@ -159,6 +158,7 @@ public class DBUserDAO implements IUserDAO {
 			st.setInt(2, neighbourhood_id);
 			st.setString(3, newUser.getUsername());
 			st.executeUpdate();
+			newUser.addAddress(new Address(neighbourhood,fullAddress));
 		} catch (SQLException e) {
 			success = false;
 		}
