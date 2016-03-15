@@ -1,8 +1,10 @@
 package model.dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import model.Order;
 import model.User;
 
 public interface IUserDAO {
@@ -25,5 +27,9 @@ public interface IUserDAO {
 	}
 
 	void updateUser(User loggedUser, String newPassword, String email);
+
+	public ArrayList<Order> getOrdersArchiveDB(String username);
+
+	public boolean addAddress(User newUser, String neighbourhood,String fullAddress);
 
 }

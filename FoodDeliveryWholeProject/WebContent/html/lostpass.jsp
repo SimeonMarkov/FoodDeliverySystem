@@ -40,7 +40,9 @@
     <caption><b>Забравена парола</b></caption>
          <form action="../ForgottenPass" method="post">
          <div class="form">	
-         
+         	<% if(session.getAttribute("wrongAnswer") != null){%>
+         	<label style="color: red">Грешен таен отговор!</label><br><br>
+         	<%} %>
 			<label for="username"  class="title">Username:</label>
 			<input type="text" name="username" value="<%= ((User)session.getAttribute("failLog")).getUsername() %>" readonly>  <br>
 		</div>

@@ -1,12 +1,15 @@
+<%@page import="model.dao.DBNeighbourhoodDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page errorPage="ShowError.jsp" %>
 <!doctype html>
 <html>
 <head>
-<link href="../CSS/mainBody.css" rel="stylesheet" type="text/css" />
-<link href="../CSS/mainButtons.css" rel="stylesheet" type="text/css" />
-<link href="../CSS/menuButtons.css" rel="stylesheet" type="text/css" />
-<link href="../CSS/regFields.css" rel="stylesheet" type="text/css"/>
+<link href="${pageContext.request.contextPath}/CSS/mainBody.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/CSS/mainButtons.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/CSS/menuButtons.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/CSS/regFields.css" rel="stylesheet" type="text/css"/>
 <meta charset="utf-8">
 <title>Food Delivery Login</title>
 <style type="text/css">
@@ -42,7 +45,9 @@
 		<div class="form">
 			<label for="username" class="title">Username:</label>
 			<input type="text" name="username" required="required" />
-			<% if(request.getAttribute("usernameError") == null) { %><label style="color: red;">*Потребителското име е заето</label><br /><% } request.removeAttribute("usernameError"); %>
+			<c:if test="${!empty requestScope.usernameError}">
+				<label style="color: red;">*Потребителското име е заето</label><br />
+			</c:if>
 		</div>
 		<div class="form">	
 			<label for="password"  class="title">Password:</label>
@@ -50,7 +55,7 @@
 		</div>	
 		<div class="form">
 			<label for="email" class="title">Email:</label>
-			<input type="email" name="email" required="required" /><% if(request.getAttribute("emailError") == null) { %><label style="color: red;">*Имейлът вече е зает</label><br /><% }request.removeAttribute("emailError"); %><br />
+			<input type="email" name="email" required="required" /><% if(request.getAttribute("emailError") != null) { %><label style="color: red;">*Имейлът вече е зает</label><br /><% }request.removeAttribute("emailError"); %><br />
 		</div>
 		<div class="form">
 			<label for="question"  class="title">Secret question:</label>
@@ -63,23 +68,22 @@
          <fieldset  style="border:0px solid black;">
          <hr style="margin-left:25px;margin-right:25px;">
     <caption><b>Адрес</b></caption>
-    <datalist id="kvartal">
-    <option value="Борово">
-    <option value="Дружба">
-    <option value="Надежда">
-    <option value="Гео Милев">
-    <option value="Хаджи Димитър">
-    </datalist> 
+    
     
     
     
      <div style="margin-top:5px;">
     
     <label for="kvartal1" class="kvartal">Квартал</label>
-    <input list="kvartal" name="kvartal1" required ><br><br>
+    <% request.setAttribute("neighbourhoods", DBNeighbourhoodDAO.getInstance().getAllNeighbourhoods()); %>
+    <select name="neighbourhoodOptions">
+		<c:forEach var="n" items="${requestScope.neighbourhoods}">
+		   <option  value="${n}" ><c:out value="${n}"></c:out></option>
+		</c:forEach>
+	</select><br><br>
     <label for="address1" class="kvartal">Adress</label>
     
-    <textarea  class="addressField" name="address1" value="Борово" rows="5" cols="60" required> </textarea>
+    <textarea  class="addressField" name="fullAddress" rows="5" cols="60" required> </textarea>
     <br>
     </div>
     </fieldset>

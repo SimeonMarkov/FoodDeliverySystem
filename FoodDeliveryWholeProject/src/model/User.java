@@ -3,6 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import model.dao.IUserDAO;
+import model.dao.IUserDAO.DataSource;
+
 public class User {
 
 	private String username;
@@ -24,14 +27,22 @@ public class User {
 	public User(String username, String password, String email,
 			String securityQuestion,
 			String securityAnswer) {
+		this();
 		this.setUsername(username);
 		this.setPassword(password);
 		this.securityQuestion = securityQuestion;
 		this.securityAnswer = securityAnswer;
 		this.email = email;
 		this.setRegistered(isRegistered);
-		this.cart = new Cart();
 	}
+	public User(){
+		addressesArrayList = new ArrayList<>();
+		ordersArchiveArrayList = new ArrayList<>();
+		favoriteMealsList = new ArrayList<>();
+		favoriteRestaurantsList = new ArrayList<>();
+		cart = new Cart();
+	}
+	
 	public class Cart {
 		ArrayList<Meal> products;
 		double totalPrice;
@@ -40,7 +51,13 @@ public class User {
 			products = new ArrayList<Meal>();
 		}
 	}
-	
+	public User(String uid) {
+		this();
+		username=uid;
+	}
+	public void refreshOrders() {
+		ordersArchiveArrayList = IUserDAO.getDAO(DataSource.DB).getOrdersArchiveDB(username);
+	}
 	public ArrayList<Meal> getBasket() {
 		return this.cart.products;
 	}
@@ -89,8 +106,9 @@ public class User {
 		return this.addressesArrayList;
 	}
 
-	public void addAddress(Address address) {
+	public User addAddress(Address address) {
 		this.addressesArrayList.add(address);
+		return this;
 	}
 
 	public boolean isRegistered() {

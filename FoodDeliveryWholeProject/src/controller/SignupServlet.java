@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.User;
+import model.dao.DBNeighbourhoodDAO;
 import model.dao.DBUserDAO;
 import model.dao.IUserDAO;
+import model.dao.INeighbourhoodDAO;
 import model.dao.IUserDAO.DataSource;
 
 /**
@@ -28,52 +30,51 @@ public class SignupServlet extends HttpServlet {
         super();
     }
 
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter("username"); 
+		String username = request.getParameter("username").trim(); 
 		String password = request.getParameter("password"); 
-		String email = request.getParameter("email"); 
-		String secretQuestion = request.getParameter("question"); 
-		String secretAnswer = request.getParameter("answer"); 
-		User newUser = new User(username, password, email, secretQuestion, secretAnswer);
+		String email = request.getParameter("email").trim(); 
+		String secretQuestion = request.getParameter("question").trim(); 
+		String secretAnswer = request.getParameter("answer").trim(); 
 		try{
 			for(User u : IUserDAO.getDAO(DataSource.DB).getAllUsers()){
 				if(u.getUsername().equals(username) || u.getEmail().equals(email)){
 					if(u.getUsername().equals(username)){
 						request.setAttribute("usernameError", true);
-						if((Boolean) request.getAttribute("usernameError")){
-							response.sendRedirect("html/sign_up.jsp");
-							return;
-						}
+						request.getRequestDispatcher("html/sign_up.jsp").forward(request, response);
+						return;
 					}
-					if(u.getEmail().equals(email)){
-						request.setAttribute("emailError", true);
-						if((Boolean) request.getAttribute("emailError")){
-							response.sendRedirect("html/sign_up.jsp");
-							return;
-						}
+					else{
+						request.getRequestDispatcher("html/sign_up.jsp").forward(request, response);
+						return;
 					}
 				} 
 			}
 				
-			IUserDAO dao = DBUserDAO.getInstance();
-			System.out.println(dao);
-			dao.addUser(newUser);
+			IUserDAO userDao = DBUserDAO.getInstance();
+			User newUser = new User(username, password, email, secretQuestion, secretAnswer);
+			userDao.addUser(newUser);
+			request.getSession().setAttribute("loggedUser", newUser);
+			System.out.println(((User)request.getSession().getAttribute("loggedUser")).getUsername() + " logged in");
+			String neighbourhood = request.getParameter("neighbourhoodOptions");
+			String fullAddress = request.getParameter("fullAddress");
+			userDao.addAddress(newUser,neighbourhood,fullAddress);
 			response.sendRedirect("html/layout.html");
 			
 			
 		}
 		catch(SQLException e){
-			response.getWriter().append("Something went wrong with the connection");
+			response.sendRedirect("html/ShowError.jsp");
 		}
 	}
 }

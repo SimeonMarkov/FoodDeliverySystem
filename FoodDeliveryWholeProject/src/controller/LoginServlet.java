@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter("username");
+		String username = request.getParameter("username").trim();
 		String password = request.getParameter("password");
 		HttpSession session = request.getSession();
 		//TODO:what's the way to handle a fucking session? -> session.setMaxInactiveInterval(10);
@@ -48,25 +48,27 @@ public class LoginServlet extends HttpServlet {
 			for(User u : IUserDAO.getDAO(DataSource.DB).getAllUsers()){
 				if(u.getUsername().equals(username) && u.getPassword().equals(password)){
 					session.setAttribute("loggedUser", u);
+					session.removeAttribute("loginError");
 					System.out.println(((User)session.getAttribute("loggedUser")).getUsername() + " logged in");
 					response.sendRedirect("html/layout.html");
 					return;
 				}
 			}
-			request.setAttribute("loginError", true);
-			if ((Boolean) request.getAttribute("loginError")) {
-				for(User u : IUserDAO.getDAO(DataSource.DB).getAllUsers()){
-					if(u.getUsername().equals(username)){
-						session.setAttribute("failLog", u);
-						System.out.println(((User)session.getAttribute("failLog")).getUsername() + " failed");
-						response.sendRedirect("html/login.jsp");
-						break;
-					}
+			session.setAttribute("loginError", true);
+			for (User u : IUserDAO.getDAO(DataSource.DB).getAllUsers()) {
+				if (u.getUsername().equals(username)) {
+					session.setAttribute("failLog", u);
+					System.out.println(((User) session.getAttribute("failLog"))
+							.getUsername() + " failed");
+					response.sendRedirect("html/login.jsp");
+					return;
 				}
-				System.out.println("No such user in database!");
 			} 
+			System.out.println("No such user in database!");
+			session.removeAttribute("failLog");
+			response.sendRedirect("html/login.jsp");
 		} catch (SQLException e) {
-			response.getWriter().append("<h1>Something went wrong!</h1>");
+			response.sendRedirect("html/ShowError.jsp");
 		}
 	}
 

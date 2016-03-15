@@ -19,7 +19,7 @@
    <ul>
         <li><a href="layout.html">Home</a></li>
 		<li><a href="search.html">Search</a></li>
-		<li><a href="cart.html">Cart</a></li>
+		<li><a href="cart.jsp">Cart</a></li>
 		<li><a href="archive.html">Archive</a>
 			<ul>
 				<li><a href="archive.html">My archive</a></li>
@@ -39,7 +39,7 @@
     <caption><b>Profile</b></caption>
          <div class="form">
 			<label for="username"  class="title">Username:</label>
-			<input type="text" name="username" value="<% out.println(((User)request.getSession().getAttribute("loggedUser")).getUsername()); %>" readonly> <br>
+			<input type="text" name="username" value="<%= session.getAttribute("loggedUser") != null ? ((User)session.getAttribute("loggedUser")).getUsername() : "KK" %>" readonly> <br>
 		</div>
     	<div class="form">	
 			<label for="Old password"  class="title">Old password:</label>
@@ -56,7 +56,8 @@
 		
         <div class="form">
 			<label for="email" class="title">Email:</label>
-			<input type="email" name="email" required="required" value="<% out.println(((User)request.getSession().getAttribute("loggedUser")).getEmail()); %>"/><br />
+			<% if(session.getAttribute("loggedUser") == null){ response.sendRedirect("ShowError.jsp");} %>
+			<input type="email" name="email" required="required" value="<%= session.getAttribute("loggedUser") != null ? ((User)session.getAttribute("loggedUser")).getEmail() : "KK"  %>"/><br />
 		</div>
    </fieldset>
    <br><br><hr />

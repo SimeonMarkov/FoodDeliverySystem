@@ -6,50 +6,8 @@
 <%@ page import="javax.mail.internet.*,javax.activation.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ page import="model.dao.DBUserDAO" %>
-<%
-   String result = null;
-   // Recipient's email ID needs to be mentioned.
-   final String from = "simeon.markov1994@gmail.com";
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-   // Sender's email ID needs to be mentioned
-   String to = ((User)session.getAttribute("failLog")).getEmail();
-
-        final String password = "BadjanakA;34889413"; 
-        final String newUserPassword = UUID.randomUUID().toString().substring(0,UUID.randomUUID().toString().indexOf("-"));
-        DBUserDAO.getInstance().updateUser((User)session.getAttribute("failLog"), newUserPassword, to);
-
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", true);
-        props.put("mail.smtp.starttls.enable", true);
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-		
-        Session ses = Session.getInstance(props, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(from, password);
-            }
-        });
-
-        try {
-
-            Message message = new MimeMessage(ses);
-            message.setFrom(new InternetAddress(from));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-            message.setSubject("Testing Subject");
-            message.setText("Здравейте," + ((User) session.getAttribute("failLog")).getUsername() + ".\nНовата Ви парола е " + newUserPassword);
-
-            System.out.println("Sending");
-
-            Transport.send(message);
-
-            System.out.println("Done");
-            result = "An email with a new password has been sent to " + ((User)session.getAttribute("failLog")).getEmail();
-
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            out.println("Oops,something went wrong!");
-        }
-%>
 <!doctype html>
 <html>
 <head>
@@ -83,7 +41,8 @@
      
 	<div id="Menu" style="min-height:950px"></div>
 	<div id="MainBody">
-		<p><% out.println(result); %></p>
+		<p>An email wih a new password has been sent to <c:out value="${sessionScope.email}"/>.</p>
+		<% response.setHeader("Refresh", "7; url=home.html"); %>
 	</div>
      <div id="Footer"></div>
 
