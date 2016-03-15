@@ -15,6 +15,7 @@ public class User {
 	private String email;
 	private ArrayList<Address> addressesArrayList;
 	private Address choosenAddress;   // pri login i izbor na address SETNI TOVA
+	
 	private boolean isRegistered;
 	private boolean validLogIn;
 	private String mobilePhone;
@@ -69,6 +70,12 @@ public class User {
 	void removeProductFromCart(Meal meal) {
 		this.cart.products.remove(meal);
 		this.cart.totalPrice -= meal.getPrice();
+	}
+	public Address getChoosenAddress() {
+		return choosenAddress;
+	}
+	public void setChoosenAddress(Address choosenAddress) {
+		this.choosenAddress = choosenAddress;
 	}
 	void emptyCart() {
 		this.cart.products.clear();
