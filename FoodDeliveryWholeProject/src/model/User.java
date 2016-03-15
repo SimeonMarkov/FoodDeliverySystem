@@ -14,6 +14,7 @@ public class User {
 	private String securityAnswer;
 	private String email;
 	private ArrayList<Address> addressesArrayList;
+	private Address choosenAddress;   // pri login i izbor na address SETNI TOVA
 	private boolean isRegistered;
 	private boolean validLogIn;
 	private String mobilePhone;
