@@ -1,17 +1,17 @@
 package model;
 
 public class Address {
-	private Neighbourhood neighbourhood;
+	private String neighbourhood;
 	private String fullAddress;
 	
-	public Address(Neighbourhood neighbourhood, String fullAddress) {
+	public Address(String neighbourhood, String fullAddress) {
 		this.setNeighbourhood(neighbourhood);
 		this.setFullAddress(fullAddress);
 	}
-	public Neighbourhood getNeighbourhood() {
+	public String getNeighbourhood() {
 		return neighbourhood;
 	}
-	private void setNeighbourhood(Neighbourhood neighbourhood) {
+	private void setNeighbourhood(String neighbourhood) {
 		this.neighbourhood = neighbourhood;
 	}
 	public String getFullAddress() {
