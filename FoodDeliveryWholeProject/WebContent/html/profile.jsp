@@ -1,6 +1,8 @@
 <%@ page import="model.User"%>
+<%@ page import="model.dao.DBNeighbourhoodDAO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html>
 <head>
@@ -46,12 +48,28 @@
 							readonly> <br>
 					</div>
 					<div class="form">
-						<label for="Old password" class="title">Old password:</label> 
-						<input type="password" name="Old password" required /><%if(session.getAttribute("wrongPass") != null){ %> <label style="color: red;">Грешна текуща парола!</label><%}session.removeAttribute("wrongPass"); %><br />
+						<label for="Old password" class="title">Old password:</label> <input
+							type="password" name="Old password" required />
+						<%
+							if (session.getAttribute("wrongPass") != null) {
+						%>
+						<label style="color: red;">Грешна текуща парола!</label>
+						<%
+							}
+							session.removeAttribute("wrongPass");
+						%><br />
 					</div>
 					<div class="form">
 						<label for="New password" class="title">New password:</label> <input
-							type="password" name="New password" required /> <%if(session.getAttribute("mismatchPass") != null){ %> <label style="color: red">Двете пароли се различават!</label><%}session.removeAttribute("mismatchPass"); %><br />
+							type="password" name="New password" required />
+						<%
+							if (session.getAttribute("mismatchPass") != null) {
+						%>
+						<label style="color: red">Двете пароли се различават!</label>
+						<%
+							}
+							session.removeAttribute("mismatchPass");
+						%><br />
 					</div>
 					<div class="form">
 						<label for="Retype new password" class="title">Retype new
@@ -71,8 +89,7 @@
 					.getAttribute("loggedUser")).getEmail() : "NaN"%>" /><br />
 					</div>
 				</fieldset>
-				<br>
-				<br>
+				<br> <br>
 				<hr />
 				<fieldset style="border: 0px solid black;">
 					<caption>
@@ -88,10 +105,10 @@
 					<div style="margin-top: 5px; height: 180px;">
 
 						<label class="kvartal">Избран</label> <input type="radio"
-							name="izbran" checked> <br>
-						<br> <label for="kvartal1" class="kvartal">Квартал</label> <input
-							list="kvartal" name="kvartal1" value="Борово"><br>
-						<br> <label for="address1" class="kvartal">Adress</label>
+							name="izbran" checked> <br> <br> <label
+							for="kvartal1" class="kvartal">Квартал</label> <input
+							list="kvartal" name="kvartal1" value="Борово"><br> <br>
+						<label for="address1" class="kvartal">Adress</label>
 
 						<textarea class="addressField" name="address1" rows="5" cols="60"> ул.Бай Благой 26, бл.56, вх.А, ет.5, ап.24</textarea>
 						<br>
@@ -100,10 +117,10 @@
 					<div style="margin-top: 5px; height: 180px;">
 
 						<label class="kvartal">Избран</label> <input type="radio"
-							name="izbran"> <br>
-						<br> <label for="kvartal1" class="kvartal">Квартал</label> <input
-							list="kvartal" name="kvartal1" value="Дружба"><br>
-						<br> <label for="address1" class="kvartal">Adress</label>
+							name="izbran"> <br> <br> <label for="kvartal1"
+							class="kvartal">Квартал</label> <input list="kvartal"
+							name="kvartal1" value="Дружба"><br> <br> <label
+							for="address1" class="kvartal">Adress</label>
 
 						<textarea class="addressField" name="address1" rows="5" cols="60">ул.Баба Злата 54 , бл.32 , вх.Б , ап.35 </textarea>
 						<br>
@@ -111,22 +128,30 @@
 					<hr style="margin-left: 25px; margin-right: 25px;">
 
 					<div style="margin-top: 5px;">
-						<label class="kvartal">Избран</label> <input type="radio"
-							name="izbran"> <br>
-						<br> <label for="kvartal1" class="kvartal">Квартал</label> <input
-							list="kvartal" name="kvartal1"><br>
+
+						<label for="kvartal1" class="kvartal">Квартал</label>
+						<%
+							request.setAttribute("neighbourhoods", DBNeighbourhoodDAO
+									.getInstance().getAllNeighbourhoods());
+						%>
+						<select name="neighbourhoodOptions">
+							<c:forEach var="n" items="${requestScope.neighbourhoods}">
+								<option value="${n}"><c:out value="${n}"></c:out></option>
+							</c:forEach>
+						</select><br>
 						<br> <label for="address1" class="kvartal">Adress</label>
 
-						<textarea class="addressField" name="address1" rows="5" cols="60"></textarea>
+						<textarea class="addressField" name="fullAddress" rows="5"
+							cols="60" required> </textarea>
 						<br>
 					</div>
 				</fieldset>
 
-				<br>
-				<br>
+				<br> <br>
 				<hr>
 				<div class="form">
-					<input type="submit" value="Запази" name="submit" style="font-size: 20px; letter-spacing: 2px; width: 102px; height: 30px; border: 1px solid #8C8153; background-color: #C16845; color: #F0EFDF; float: right; cursor: pointer;"/>
+					<input type="submit" value="Запази" name="submit"
+						style="font-size: 20px; letter-spacing: 2px; width: 102px; height: 30px; border: 1px solid #8C8153; background-color: #C16845; color: #F0EFDF; float: right; cursor: pointer;" />
 				</div>
 			</form>
 		</div>
