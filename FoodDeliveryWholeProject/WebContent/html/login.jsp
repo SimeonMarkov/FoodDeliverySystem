@@ -15,6 +15,7 @@
 
 
 </style>
+
 </head>
 
 <body>
@@ -27,7 +28,7 @@
 		<li><a href="search2.html">Search</a></li>
 		<li><a href="faq.html">Guide</a></li>		
 		<li><a href="sign_up.jsp">Register</a></li>
-		<li><a href="login.jsp">Login</a></li>
+		<li><a href="login.html">Login</a></li>
 		</ul>            
     </div>  
 	<div id="Menu" style="min-height:950px"></div>
@@ -45,7 +46,7 @@
 		</div>
 		<div class="form">	
 			<label for="password"  class="title">Password:</label>
-			<input type="password" name="password" required="required" /><br />
+			<input type="password" id="password" name="password" required="required" />
 		</div>	
          <br>
         <a href="sign_up.jsp" style="margin-left:140px;">Създай нов акаунт</a>

@@ -38,19 +38,17 @@ public class ProfileServlet extends HttpServlet{
 					if(u.getUsername().equals(username) && u.getPassword().equals(oldPassword)){
 						IUserDAO.getDAO(DataSource.DB).updateUser(u,retypePass,email);
 						PrintWriter out = response.getWriter();
-						out.println("<html><body onload=\"myFunction()\">");
-						out.println("<script>function myFunction(){alert(\"Good job," + ((User) request.getSession().getAttribute("loggedUser")).getUsername() + ",you have just changed your password!\");}</script>");
-						out.println("</body></html>");
+						request.getSession().removeAttribute("wrongPass");
+						request.getSession().removeAttribute("mismatchPass");
 						response.setHeader("Refresh", "0.2;url=html/layout.html");
 						return;
 					}
 				}
 				
 				PrintWriter out = response.getWriter();
-				out.println("<html><body onload=\"myFunction()\">");
-				out.println("<script>function myFunction(){alert(\"Sorry," + ((User) request.getSession().getAttribute("loggedUser")).getUsername() + ",you typed your current password not right!\");}</script>");
-				out.println("</body></html>");
+				request.getSession().setAttribute("wrongPass", true);
 				response.setHeader("Refresh", "0.2;url=html/profile.jsp");
+				
 				
 				
 				
@@ -61,9 +59,7 @@ public class ProfileServlet extends HttpServlet{
 		}
 		else{
 			PrintWriter out = response.getWriter();
-			out.println("<html><body onload=\"myFunction()\">");
-			out.println("<script>function myFunction(){alert(\"Sorry," + ((User) request.getSession().getAttribute("loggedUser")).getUsername() + ",but passwords do not match!\");}</script>");
-			out.println("</body></html>");
+			request.getSession().setAttribute("mismatchPass", true);
 			response.setHeader("Refresh", "0.2;url=html/profile.jsp");
 		}
 		

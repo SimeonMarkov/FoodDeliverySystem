@@ -65,8 +65,8 @@ public class LoginServlet extends HttpServlet {
 				}
 			} 
 			System.out.println("No such user in database!");
-			session.removeAttribute("failLog");
 			response.sendRedirect("html/login.jsp");
+			session.removeAttribute("failLog");
 		} catch (SQLException e) {
 			response.sendRedirect("html/ShowError.jsp");
 		}
