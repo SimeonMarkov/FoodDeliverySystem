@@ -41,23 +41,40 @@
 	
 	<fieldset  style="border:0px solid black;">
 		<caption><b>Registration</b></caption>
-		<form action="../SignupServlet" method="post">
+		<form action="${pageContext.request.contextPath}/SignupServlet" method="post">
 		
 		
 		<div class="form">
 			<label for="username" class="title">Username:</label>
 			<input type="text" name="username" required="required" />
-			<c:if test="${!empty requestScope.usernameError}">
+			<c:if test="${!empty sessionScope.usernameError}">
 				<label style="color: red;">*Потребителското име е заето</label><br />
 			</c:if>
+			<c:remove var="usernameError" scope="session" />
 		</div>
 		<div class="form">	
 			<label for="password"  class="title">Password:</label>
-			<input type="password" name="password" required="required" /><br />
+			<input type="password" name="password" required="required" />
+			<c:if test="${!empty sessionScope.weakPassword}">
+				<label style="color: red;">*Паролата е слаба</label>
+			</c:if>
+			<c:remove var="weakPassword" scope="session" />
+			
+			<br />
 		</div>	
 		<div class="form">
 			<label for="email" class="title">Email:</label>
-			<input type="email" name="email" required="required" /><% if(request.getAttribute("emailError") != null) { %><label style="color: red;">*Имейлът вече е зает</label><br /><% }request.removeAttribute("emailError"); %><br />
+			<input type="email" name="email" required="required" />
+			
+			<c:if test="${!empty sessionScope.usedEmailError}">
+				<label style="color: red;">*Имейлът вече е зает</label><br />
+			</c:if>
+			<c:remove var="usedEmailError" scope="session" />
+			
+			<c:if test="${!empty sessionScope.invalidEmailError}">
+				<label style="color: red;">*Имейлът не е валиден</label><br />
+			</c:if>
+			<c:remove var="invalidEmailError" scope="session" />
 		</div>
 		<div class="form">
 			<label for="question"  class="title">Secret question:</label>

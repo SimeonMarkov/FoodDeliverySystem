@@ -57,33 +57,116 @@
 </style>
 <script src="../JS/jquery-2.2.0.min.js"></script>
 <script>
-
-	$( document ).ready(function() {
+	$(document).ready(function() {
 		$(".inc").click(function() {
-		    updateValue(this, 1);
+			updateValue(this, 1);
 		});
 		$(".dec").click(function() {
-		    updateValue(this, -1);
+			updateValue(this, -1);
 		});
 	});
 
 	function updateValue(obj, delta) {
-	    var item = $(obj).parent().find("input");
-	    var newValue = parseInt(item.val(), 10) + delta;
-	    item.val(Math.max(newValue, 1));
+		var item = $(obj).parent().find("input");
+		var newValue = parseInt(item.val(), 10) + delta;
+		item.val(Math.max(newValue, 1));
 	}
-	
+
 	$(document).ready(function() {
-	    $('.closeButton').on('click', function(e) { 
-	        removeMeal(this);
-	    });
+		$('.closeButton').on('click', function(e) {
+			removeMeal(this);
+		});
 	});
-	
-	function removeMeal(obj){
-	    $(obj).closest('table').remove();
+
+	function removeMeal(obj) {
+		$(obj).closest('table').remove();
 	}
-	
-	
+</script>
+<script>
+	(function() {
+		"use strict";
+
+		var $products = $("#products"), $total = $("#total");
+
+		function updateTotal(addVal) {
+			var current = parseFloat($total.html());
+			$total.html(current + addVal);
+		}
+
+		function buttonEvent(btnClass, sign) {
+			$products
+					.on(
+							"click",
+							btnClass,
+							function() {
+								var $this = $(this), $num = $this
+										.siblings(".num"), num = parseInt($num
+										.html()), newNum = num + 1 * sign, initPrice, $price, price;
+
+								if (newNum <= 0) {
+									return;
+								}
+
+								$price = $this.siblings(".price");
+								price = parseFloat($price.html());
+								initPrice = $price.data("initial");
+
+								$num.html(newNum);
+								$price.html(price + (initPrice * sign));
+								updateTotal(initPrice * sign);
+							});
+		}
+
+		function bindEvents() {
+			buttonEvent(".plus", 1);
+			buttonEvent(".minus", -1);
+		}
+
+		function renderProducts(products) {
+			var total = 0;
+
+			products.forEach(function(prod) {
+				var $product = $("<div>").addClass("product").data("name",
+						prod.name), $name = $("<div>").addClass("name").html(
+						prod.name), $price = $("<div>").addClass("price").data(
+						"initial", prod.price).html(prod.price), $num = $(
+						"<div>").addClass("num").html(prod.num), $plusBtn = $(
+						"<button>").addClass("plus").html("+"), $minusBtn = $(
+						"<button>").addClass("minus").html("-");
+
+				$product.append($name, $price, $num, $plusBtn, $minusBtn);
+				$products.append($product);
+
+				total += prod.price;
+			});
+
+			$total.html(total);
+		}
+
+		function getProducts() {
+			// Simulating AJAX request
+			setTimeout(function() {
+				var products = [ {
+					name : "musaka",
+					price : 15,
+					num : 1
+				}, {
+					name : "pacha",
+					price : 11.5,
+					num : 1
+				}, {
+					name : "pizza",
+					price : 5.5,
+					num : 1
+				} ];
+
+				renderProducts(products);
+			}, 0);
+		}
+
+		bindEvents(); // Binding events before rendering
+		getProducts(); // Renderering the products
+	}());
 </script>
 </head>
 
@@ -95,7 +178,8 @@
 			<ul>
 				<li><a href="layout.html">Home</a></li>
 				<li><a href="search.html">Search</a></li>
-				<li><a href="cart.jsp">Cart [${sessionScope.loggedUser.getCartSize()}] </a></li>
+				<li><a href="cart.jsp">Cart
+						[${sessionScope.loggedUser.getCartSize()}] </a></li>
 				<li><a href="archive.html">Archive</a>
 					<ul>
 						<li><a href="archive.html">My archive</a></li>
@@ -118,8 +202,10 @@
 							alt="" width="90" height="90"></td>
 						<td class="cartCol2">
 							<div>
-								<span class="mealName"> Име на ястие ${item}</span>
-								<input class="closeButton" type="button" style="position: relative; left:260px; background-color: gold;" value="x"/> <br>
+								<span class="mealName"> Име на ястие ${item}</span> <input
+									class="closeButton" type="button"
+									style="position: relative; left: 260px; background-color: gold;"
+									value="x" /> <br>
 							</div>
 							<div class="divIngredients">
 								<span class="mealIngredients"> Съставки: ala,bala,nica</span>
@@ -136,7 +222,7 @@
 								<span>Цена: 12.56 </span>
 							</div>
 						</td>
-					
+
 					</tr>
 				</table>
 			</c:forEach>
@@ -149,20 +235,29 @@
 				style="width: 600px; margin-left: 25px; margin-top: 5px; border: solid #8C8153; border-width: 1px; background-color: #C9C36D; text-align: center; padding-top: 5px; padding-bottom: 5px">
 				<span>Обща стойност: 37.68</span>
 			</div>
-			<c:forEach var="addresses" begin="1" end="3">
-			<div
-				style="width: 600px; margin-left: 25px; margin-right: 25px; margin-top: 10px; border: solid #8C8153; border-width: 1px; background: #ECE08C; text-align: center;">
-				<p>Test address value: ${addresses} <input type="radio" name="addressChoice"/></p>
-				<p>Квартал: Борово</p>
-				<p>Адрес: ул.Бай Благой 26, бл.56, вх.А, ет.5, ап.24</p>
+			<c:forEach var="address" items="${sessionScope.addressesOnLogged}">
+				<div style="margin-top: 5px; height: 180px; margin-left: 20px; cursor: pointer;">
+					<input style="margin-left: 60px;" type="radio" name="chosenAddress"
+						value="${address.getNeighbourhood()}" /><br> 
+						<label
+						for="kvartal1" class="kvartal">Квартал</label>
+						 <input type=text name="kvartal1" value="${address.getNeighbourhood()}" readonly /><br>
+					<br> <label for="address1" class="kvartal">Адрес</label>
 
-			</div>
+					<textarea class="addressField" name="address1" rows="5" cols="60"
+						readonly>${address.getFullAddress()}</textarea>
+					<br>
+				</div>
+				<hr style="margin-left: 25px; margin-right: 25px;">
 			</c:forEach>
 			<input type="button" value="ПОТВЪРДИ ПОРЪЧКА" name="order"
 				style="width: 602px; margin-left: 25px; margin-right: 25px; margin-top: 10px; border: solid #8C8153; border-width: 1px; padding-top: 10px; padding-bottom: 10px; background-color: #C16845; color: #F0EFDF; cursor: pointer;">
 
 		</div>
 		<div id="Footer"></div>
+
+		<div id="products"></div>
+		<div id="total"></div>
 
 	</div>
 

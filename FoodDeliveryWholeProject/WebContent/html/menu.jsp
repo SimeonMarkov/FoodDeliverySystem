@@ -37,12 +37,12 @@ function callAddToCart(p) {
 </head>
 
 <body>
-	<jsp:include page="/MenuServlet"></jsp:include>
-	<!--<c:if test="${notLogged}">
+	<jsp:include page="../MenuServlet"></jsp:include>
+	<c:if test="${empty sessionScope.loggeUser}">
 		<c:redirect url="login.jsp">
 			<c:param name="URL" value="${requestScope.U}?restId=${param.restId}"/>
 		</c:redirect>
-	</c:if>-->
+	</c:if>
 	<div id="Container">
 		<div id="Header"></div>
 		<div id="Buttons">
@@ -105,7 +105,7 @@ function callAddToCart(p) {
 					</tr>
 				</table>
 			</c:forEach>
-
+		<c:remove var="restId" scope="session"/>
 
 		</div>
 		<div id="Footer"></div>

@@ -16,7 +16,7 @@
 </head>
 
 <body>
-	<jsp:include page="/HomeServlet" />
+	<jsp:include page="../HomeServlet" />
 	<div id="Container">
 		<div id="Header"></div>
 		<div id="Buttons">
