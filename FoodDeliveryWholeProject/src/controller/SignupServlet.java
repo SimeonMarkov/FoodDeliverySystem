@@ -2,6 +2,8 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,11 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.Address;
 import model.User;
-import model.dao.DBNeighbourhoodDAO;
 import model.dao.DBUserDAO;
 import model.dao.IUserDAO;
-import model.dao.INeighbourhoodDAO;
 import model.dao.IUserDAO.DataSource;
 
 /**
@@ -22,7 +23,6 @@ import model.dao.IUserDAO.DataSource;
 @WebServlet("/SignupServlet")
 public class SignupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -30,6 +30,9 @@ public class SignupServlet extends HttpServlet {
         super();
     }
 
+    @Override
+    public void init() throws ServletException {
+    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -63,13 +66,17 @@ public class SignupServlet extends HttpServlet {
 				
 			IUserDAO userDao = DBUserDAO.getInstance();
 			User newUser = new User(username, password, email, secretQuestion, secretAnswer);
-			userDao.addUser(newUser);
-			request.getSession().setAttribute("loggedUser", newUser);
-			System.out.println(((User)request.getSession().getAttribute("loggedUser")).getUsername() + " logged in");
 			String neighbourhood = request.getParameter("neighbourhoodOptions");
 			String fullAddress = request.getParameter("fullAddress");
-			userDao.addAddress(newUser,neighbourhood,fullAddress);
-			response.sendRedirect("html/layout.html");
+			Address choosenAddress = new Address(neighbourhood, fullAddress);
+			request.getSession().setAttribute("loggedUser", newUser);
+			userDao.addUser((User)request.getSession().getAttribute("loggedUser")).setChoosenAddress(choosenAddress);
+			userDao.addAddress((User)request.getSession().getAttribute("loggedUser"),neighbourhood,fullAddress);
+			request.getSession().setAttribute("addr", DBUserDAO.getInstance().selectAddresses((User)request.getSession().getAttribute("loggedUser")));
+			System.out.println(request.getSession().getAttribute("loggedUser") + " signed up");
+			System.out.println(((User)request.getSession().getAttribute("loggedUser")).getUsername() + " logged in with address " + ((User)request.getSession().getAttribute("loggedUser")).getChoosenAddress());
+			System.out.println(DBUserDAO.getInstance().selectAddresses(newUser));
+			response.sendRedirect("html/chooseaddress.jsp");
 			
 			
 		}
