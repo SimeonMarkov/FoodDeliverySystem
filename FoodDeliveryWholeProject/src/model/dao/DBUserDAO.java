@@ -31,6 +31,25 @@ public class DBUserDAO implements IUserDAO {
 		return instance;
 	}
 
+	public List<Address> selectAddresses(User user){
+		List<Address> addresses = new ArrayList<Address>();
+		String query = String.join("\n", "SELECT neighbourhood_name,full_address FROM fd_db.Neighbourhood N",
+										"INNER JOIN fd_db.Address A ON N.neighbourhood_id = A.neighbourhood_id",
+										"INNER JOIN fd_db.Users U ON A.user_id = U.user_id",
+										"WHERE U.user_id = ?");
+		try(PreparedStatement stmt = manager.getConnection().prepareStatement(query)){
+			stmt.setString(1, user.getUsername());
+			ResultSet result = stmt.executeQuery();
+			while(result.next()){
+				addresses.add(new Address(result.getString(1), result.getString(2)));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return addresses;
+	}
+	
 	@Override
 	public boolean addUser(User newUser) {
 		boolean success = true;
