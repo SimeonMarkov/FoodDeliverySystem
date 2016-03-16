@@ -95,40 +95,25 @@
 					<caption>
 						<b>Адреси</b>
 					</caption>
-					<datalist id="kvartal">
-						<option value="Борово">
-						<option value="Дружба">
-						<option value="Надежда">
-						<option value="Гео Милев">
-						<option value="Хаджи Димитър">
-					</datalist>
-					<div style="margin-top: 5px; height: 180px;">
-
-						<label class="kvartal">Избран</label> <input type="radio"
-							name="izbran" checked> <br> <br> <label
-							for="kvartal1" class="kvartal">Квартал</label> <input
-							list="kvartal" name="kvartal1" value="Борово"><br> <br>
+					
+					<c:forEach var="address" items="${sessionScope.addressesOnLogged}">
+						<div style="margin-top: 5px; height: 180px; cursor: pointer;">
+						<input style="margin-left: 60px;" type="radio"
+							name="chosenAddress" value="${address.getNeighbourhood()}"/><br> <label for="kvartal1"
+							class="kvartal">Квартал</label> <input type=text name="kvartal1"
+							value="${address.getNeighbourhood()}" readonly /><br> <br>
 						<label for="address1" class="kvartal">Adress</label>
 
-						<textarea class="addressField" name="address1" rows="5" cols="60"> ул.Бай Благой 26, бл.56, вх.А, ет.5, ап.24</textarea>
+						<textarea class="addressField" name="address1" rows="5" cols="60"
+							readonly>${address.getFullAddress()}</textarea>
 						<br>
 					</div>
 					<hr style="margin-left: 25px; margin-right: 25px;">
-					<div style="margin-top: 5px; height: 180px;">
-
-						<label class="kvartal">Избран</label> <input type="radio"
-							name="izbran"> <br> <br> <label for="kvartal1"
-							class="kvartal">Квартал</label> <input list="kvartal"
-							name="kvartal1" value="Дружба"><br> <br> <label
-							for="address1" class="kvartal">Adress</label>
-
-						<textarea class="addressField" name="address1" rows="5" cols="60">ул.Баба Злата 54 , бл.32 , вх.Б , ап.35 </textarea>
-						<br>
-					</div>
-					<hr style="margin-left: 25px; margin-right: 25px;">
-
+					</c:forEach>
+					
+					
 					<div style="margin-top: 5px;">
-
+						<h3>Add address</h3>
 						<label for="kvartal1" class="kvartal">Квартал</label>
 						<%
 							request.setAttribute("neighbourhoods", DBNeighbourhoodDAO

@@ -37,6 +37,7 @@
 	<fieldset  style="border:0px solid black;">
 		<caption><b>Login</b></caption>
 		<form action="${pageContext.request.contextPath}/LoginServlet" method="post">
+		<c:set var="restId" scope="session" value="${param.restId}"/>
 		<c:if test="${!empty sessionScope.loginError}">
 			<p style="color: red;">Грешно потребителско име или парола! </p>
 		</c:if>

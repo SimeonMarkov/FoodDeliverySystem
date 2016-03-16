@@ -26,14 +26,19 @@ public class ChooseServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String currentAddressSubmitted = request.getParameter("chosenAddress");
+		request.getSession().setAttribute("currentUseAddress", currentAddressSubmitted);
+		if(request.getSession().getAttribute("restId") != null){
+			response.sendRedirect("html/menu.jsp?URL=" + request.getSession().getAttribute("restId"));
+		}
+		response.sendRedirect("html/layout.html");
+		
 	}
 
 }

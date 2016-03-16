@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 		String username = request.getParameter("username").trim();
 		String password = request.getParameter("password");
 		HttpSession session = request.getSession();
-		//TODO:what's the way to handle a fucking session? -> session.setMaxInactiveInterval(10);
+		//TODO:wat's the way to handle a fucking session? -> session.setMaxInactiveInterval(10);
 		try {
 			System.out.println(request.getSession().getId());
 			for(User u : IUserDAO.getDAO(DataSource.DB).getAllUsers()){

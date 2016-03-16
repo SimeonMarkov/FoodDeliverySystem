@@ -31,23 +31,28 @@
 		<div id="MainBody">
 
 
-		
-			<c:forEach var="address" items="${sessionScope.addressesOnLogged}">
-				<div style="margin-top: 5px; height: 180px; cursor: pointer;">
-					<input style="margin-left:60px;" type="radio" name="chosenAddress" /><br>
-					<label for="kvartal1" class="kvartal">Квартал</label> 
-					<input type = text name="kvartal1" value="${address.getNeighbourhood()}" readonly /><br> <br>
-					<label for="address1" class="kvartal">Adress</label>
+			<form action="../ChooseServlet" method="post">
+			<h2>Choose your address:</h2>
+				<c:forEach var="address" items="${sessionScope.addressesOnLogged}">
+					<div style="margin-top: 5px; height: 180px; cursor: pointer;">
+						<input style="margin-left: 60px;" type="radio"
+							name="chosenAddress" value="${address.getNeighbourhood()}"/><br> <label for="kvartal1"
+							class="kvartal">Квартал</label> <input type=text name="kvartal1"
+							value="${address.getNeighbourhood()}" readonly /><br> <br>
+						<label for="address1" class="kvartal">Adress</label>
 
-					<textarea class="addressField" name="address1" 
-						rows="5" cols="60" readonly>${address.getFullAddress()}</textarea>
-					<br>
+						<textarea class="addressField" name="address1" rows="5" cols="60"
+							readonly>${address.getFullAddress()}</textarea>
+						<br>
+					</div>
+					<hr style="margin-left: 25px; margin-right: 25px;">
+				</c:forEach>
+				<div class="form">
+					<input type="submit" value="Submit" name="submit"
+						style="font-size: 20px; letter-spacing: 2px; width: 102px; height: 30px; border: 1px solid #8C8153; background-color: #C16845; color: #F0EFDF; float: right; cursor: pointer;" />
 				</div>
-				<hr style="margin-left: 25px; margin-right: 25px;">
-			</c:forEach>
-			<div class="form">
-        		<input type="submit" value="Submit" name="submit" style="font-size:20px; letter-spacing:2px; width:102px;height:30px;border:1px solid #8C8153;background-color:#C16845;color:#F0EFDF; float:right;cursor:pointer;"/>
-			</div>
+
+			</form>
 
 		</div>
 		<div id="Footer"></div>
