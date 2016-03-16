@@ -12,7 +12,7 @@
 <link href="../CSS/menuButtons.css" rel="stylesheet" type="text/css" />
 <link href="../CSS/meals.css" rel="stylesheet" type="text/css" />
 <meta charset="utf-8">
-<title>Food Delivery Риби</title>
+<title>Food Delivery</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script>
 function callAddToCart(p) {
@@ -24,7 +24,7 @@ function callAddToCart(p) {
 		dataType : "json",
 		
 		success: function(data,textStatus,jqXHR){
-			alert("success ludnica" + " " + data.count);
+			$("#cartButton").text("Cart [" + data.count +"]");
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			alert("Something really bad happened " + textStatus + " - " + errorThrown);
@@ -38,18 +38,20 @@ function callAddToCart(p) {
 
 <body>
 	<jsp:include page="/MenuServlet"></jsp:include>
-	<!--<c:if test="${notLogged}">
+	<c:if test="${notLogged}">
 		<c:redirect url="login.jsp">
 			<c:param name="URL" value="${requestScope.U}?restId=${param.restId}"/>
 		</c:redirect>
-	</c:if>-->
+	</c:if>
 	<div id="Container">
 		<div id="Header"></div>
 		<div id="Buttons">
 			<ul>
 				<li><a href="layout.html">Home</a></li>
 				<li><a href="search.html">Search</a></li>
-				<li><a href="cart.html">Cart</a></li>
+				
+				<li><a id="cartButton" href="cart.jsp">Cart [0]</a></li>
+				
 				<li><a href="archive.html">Archive</a>
 					<ul>
 						<li><a href="archive.html">My archive</a></li>

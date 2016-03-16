@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import model.dao.DBMealDAO;
+
 public class Meal implements Comparable<Meal> {
 	
 	// public enum MealType {
@@ -22,8 +24,8 @@ public class Meal implements Comparable<Meal> {
 	private String name;
 	private double price;
 	private String category;
-	private double rating;
-	private int timesRated;
+	//private double rating;
+	//private int timesRated;
 	private ArrayList<Ingredient> ingredients;
 	
 
@@ -31,16 +33,16 @@ public class Meal implements Comparable<Meal> {
 		this.name = name;
 		this.price = price;
 		this.category = category;
-		this.timesRated = 0;
+		//this.timesRated = 0;
 		this.ingredients = new ArrayList<Ingredient>();
 	}
 	public Meal() {
 		ingredients = new ArrayList<>();
 	}
 
-	public void setTimesRated() {
-		this.timesRated++;
-	}
+//	public void setTimesRated() {
+//		this.timesRated++;
+//	}
 	public long getMealId() {
 		return mealId;
 	}
@@ -48,14 +50,23 @@ public class Meal implements Comparable<Meal> {
 		this.mealId = mealId;
 		return this;
 	}
-
-	public double getRating() {
-		return this.rating / this.timesRated;
+	
+	
+	public static Meal getMealByID(long id) {
+		return DBMealDAO.getInstance().getMeal(id);
 	}
-
-	public void setRating(double rating) {
-		this.rating += rating;
+	
+	public static ArrayList<Meal> getSearchResult(long restID, long mealTypeID, double price, ArrayList<Long> ingredients){
+		return DBMealDAO.getInstance().getSearchResult(restID, mealTypeID, price, ingredients);
 	}
+//
+//	public double getRating() {
+//		return this.rating / this.timesRated;
+//	}
+//
+//	public void setRating(double rating) {
+//		this.rating += rating;
+//	}
 
 	public String getName() {
 		return this.name;

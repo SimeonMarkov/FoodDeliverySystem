@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.Meal;
+import model.User;
+
 /**
  * Servlet implementation class AddToCartServlet
  */
@@ -25,10 +28,10 @@ public class AddToCartServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String mealId = request.getParameter("mealId");
-
-		
+		User u = (User) request.getSession().getAttribute("loggedUser");
+		u.addProductInCart(Meal.getMealByID(Long.parseLong(mealId)));
 		response.setContentType("application/json");
-		response.getWriter().write("{\"count\": 10}");
+		response.getWriter().write("{\"count\": " + u.getCartSize() + "}");
 		
 
 	}

@@ -1,5 +1,10 @@
 package model;
 
+import java.util.ArrayList;
+
+import model.dao.IMealDAO;
+import model.dao.IMealDAO.DataSource;
+
 public class Ingredient {
 
 	// public enum IngredientsNames{
@@ -21,6 +26,7 @@ public class Ingredient {
 	// return uniqueID;
 	// }
 	private String name;
+	private long id;
 
 	public Ingredient() {
 		name = "";
@@ -28,6 +34,10 @@ public class Ingredient {
 
 	public Ingredient(String name) {
 		this.name = name;
+	}
+	public Ingredient(long id,String name) {
+		this.name = name;
+		this.id = id;
 	}
 
 	public String getName() {
@@ -37,5 +47,17 @@ public class Ingredient {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	public static ArrayList<Ingredient>  getAllIngredients() {
+		return IMealDAO.getDAO(DataSource.DB).getAllIngredients();
+	}
+	
 
 }
