@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.User;
+import model.dao.DBUserDAO;
 import model.dao.IUserDAO;
 import model.dao.IUserDAO.DataSource;
 
@@ -48,8 +49,9 @@ public class LoginServlet extends HttpServlet {
 			for(User u : IUserDAO.getDAO(DataSource.DB).getAllUsers()){
 				if(u.getUsername().equals(username) && u.getPassword().equals(password)){
 					session.setAttribute("loggedUser", u);
+					session.setAttribute("addressesOnLogged", DBUserDAO.getInstance().selectAddresses(u));
 					session.removeAttribute("loginError");
-					System.out.println(((User)session.getAttribute("loggedUser")).getUsername() + " logged in with addresses" + ((User)session.getAttribute("loggedUser")).getChoosenAddress());
+					System.out.println(((User)session.getAttribute("loggedUser")).getUsername() + " logged in with addresses" + session.getAttribute("addressesOnLogged"));
 					response.sendRedirect("html/chooseaddress.jsp");
 					return;
 				}
