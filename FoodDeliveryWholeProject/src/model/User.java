@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import model.dao.DBUserDAO;
 import model.dao.IUserDAO;
 import model.dao.IUserDAO.DataSource;
 
@@ -14,8 +15,8 @@ public class User {
 	private String securityAnswer;
 	private String email;
 	private ArrayList<Address> addressesArrayList;
-	private Address choosenAddress;   // pri login i izbor na address SETNI TOVA
-	
+	private Address choosenAddress; // pri login i izbor na address SETNI TOVA
+
 	private boolean isRegistered;
 	private boolean validLogIn;
 	private String mobilePhone;
@@ -26,9 +27,7 @@ public class User {
 
 	private int favMealsNumber = 0;
 
-	public User(String username, String password, String email,
-			String securityQuestion,
-			String securityAnswer) {
+	public User(String username, String password, String email, String securityQuestion, String securityAnswer) {
 		this();
 		this.setUsername(username);
 		this.setPassword(password);
@@ -37,54 +36,71 @@ public class User {
 		this.email = email;
 		this.setRegistered(isRegistered);
 	}
-	public User(){
+
+	public User() {
 		addressesArrayList = new ArrayList<>();
 		ordersArchiveArrayList = new ArrayList<>();
 		favoriteMealsList = new ArrayList<>();
 		favoriteRestaurantsList = new ArrayList<>();
 		cart = new Cart();
 	}
-	
+
+	public void refreshAddresses() {
+		addressesArrayList = DBUserDAO.getInstance().getAddresses(this.username);
+	}
+
 	public class Cart {
 		ArrayList<Meal> products;
 		double totalPrice;
-		
+
 		private Cart() {
 			products = new ArrayList<Meal>();
 		}
 	}
+
 	public User(String uid) {
 		this();
-		username=uid;
+		username = uid;
 	}
+
 	public void refreshOrders() {
 		ordersArchiveArrayList = IUserDAO.getDAO(DataSource.DB).getOrdersArchiveDB(username);
 	}
+
 	public ArrayList<Meal> getBasket() {
 		return this.cart.products;
 	}
+
 	void addProductInCart(Meal product) {
 		this.cart.products.add(product);
 		this.cart.totalPrice += product.getPrice();
 	}
+
 	void removeProductFromCart(Meal meal) {
 		this.cart.products.remove(meal);
 		this.cart.totalPrice -= meal.getPrice();
 	}
+
+	public int getCartSize() {
+		return this.cart.products.size();
+	}
+
 	public Address getChoosenAddress() {
 		return choosenAddress;
 	}
+
 	public void setChoosenAddress(Address choosenAddress) {
 		this.choosenAddress = choosenAddress;
 	}
+
 	void emptyCart() {
 		this.cart.products.clear();
 		this.cart.totalPrice = 0;
 	}
+
 	double getTotalPriceOfCart() {
 		return cart.totalPrice;
 	}
-	
 
 	public String getUsername() {
 		return this.username;
@@ -166,13 +182,12 @@ public class User {
 	public void setFavMealsNumber(int favMealsNumber) {
 		this.favMealsNumber = favMealsNumber;
 	}
-	
+
 	void rateMeal(Meal Meal, int rating) {
 		Meal.setRating(rating);
 		Meal.setTimesRated();
 	}
 
-	
 	public Cart getCart() {
 		return cart;
 	}
@@ -181,9 +196,11 @@ public class User {
 		ordersArchiveArrayList.add(new Order(getBasket(), getTotalPriceOfCart()));
 		emptyCart();
 	}
+
 	public String getSecretQuestion() {
 		return this.securityQuestion;
 	}
+
 	public String getSecretAnswer() {
 		return this.securityAnswer;
 	}

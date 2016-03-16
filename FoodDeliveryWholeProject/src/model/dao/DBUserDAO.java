@@ -90,7 +90,8 @@ public class DBUserDAO implements IUserDAO {
 			users.add(u);
 		}
 		st.close();
-		return Collections.unmodifiableList(users);
+		return users;
+		// return Collections.unmodifiableList(users);
 	}
 
 	@Override
@@ -119,11 +120,11 @@ public class DBUserDAO implements IUserDAO {
 						rv.add(o);
 						lastOrder = result.getInt(1);
 					}
-					if(lastMeal!=result.getInt(2)){
+					if (lastMeal != result.getInt(2)) {
 						m = new Meal().setName(result.getString(6)).setPrice(result.getDouble(7));
 						o.addMeal(m);
-						lastMeal=result.getInt(2);
-						//TODO add photo to meal
+						lastMeal = result.getInt(2);
+						// TODO add photo to meal
 					}
 					m.addIngredients(new Ingredient(result.getString(9)));
 				}
@@ -141,28 +142,51 @@ public class DBUserDAO implements IUserDAO {
 		boolean success = true;
 		String neighbourhoodQuery = "SELECT neighbourhood_id FROM fd_db.neighbourhood WHERE neighbourhood_name = ?";
 		int neighbourhood_id = 0;
-		try(PreparedStatement preparedStatement = manager.getConnection().prepareStatement(neighbourhoodQuery);){
+		try (PreparedStatement preparedStatement = manager.getConnection().prepareStatement(neighbourhoodQuery);) {
 			preparedStatement.setString(1, neighbourhood);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
-				neighbourhood_id = rs.getInt(1); 
+				neighbourhood_id = rs.getInt(1);
 			}
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		String query = "INSERT INTO fd_db.ADDRESS (full_address, neighbourhood_id, user_id) VALUES (?, ?, ?);";
 		try (PreparedStatement st = manager.getConnection().prepareStatement(query);) {
 			st.setString(1, fullAddress);
 			st.setInt(2, neighbourhood_id);
 			st.setString(3, newUser.getUsername());
 			st.executeUpdate();
-			newUser.addAddress(new Address(neighbourhood,fullAddress));
+			newUser.addAddress(new Address(neighbourhood, fullAddress));
 		} catch (SQLException e) {
 			success = false;
 		}
 		return success;
+	}
+
+	@Override
+	public ArrayList<Address> getAddresses(String username) {
+		ArrayList<Address> rv = new ArrayList<>();
+		String query = String.join("\n",
+				"select a.address_id ,a.full_address,a.neighbourhood_id,n.neighbourhood_name from address a",
+				"join neighbourhood n on (n.neighbourhood_id= a.neighbourhood_id)", "where user_id = ?;");
+		try (PreparedStatement st = manager.getConnection().prepareStatement(query)) {
+			st.setString(1, username);
+			ResultSet result = st.executeQuery();
+			if (result != null) {
+				while (result.next()) {
+					rv.add(new Address().setAddressId(result.getLong(1)).setNeighbourhoodId(result.getLong(3))
+							.setNeighbourhood(result.getString(4)).setFullAddress(result.getString(2)));
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return rv;
 	}
 
 }

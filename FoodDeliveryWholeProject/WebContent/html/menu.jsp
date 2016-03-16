@@ -13,11 +13,36 @@
 <link href="../CSS/meals.css" rel="stylesheet" type="text/css" />
 <meta charset="utf-8">
 <title>Food Delivery Риби</title>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script>
+function callAddToCart(p) {
+	dataString = "mealId=" + p;
+	$.ajax({
+		type: "POST",
+		url: "../AddToCartServlet",
+		data: dataString,
+		dataType : "json",
+		
+		success: function(data,textStatus,jqXHR){
+			alert("success ludnica" + " " + data.count);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			alert("Something really bad happened " + textStatus + " - " + errorThrown);
+		}
+	});
+		
+	
+}
+</script>
 </head>
 
 <body>
 	<jsp:include page="/MenuServlet"></jsp:include>
+	<!--<c:if test="${notLogged}">
+		<c:redirect url="login.jsp">
+			<c:param name="URL" value="${requestScope.U}?restId=${param.restId}"/>
+		</c:redirect>
+	</c:if>-->
 	<div id="Container">
 		<div id="Header"></div>
 		<div id="Buttons">
@@ -73,7 +98,7 @@
 								<span>Цена: <fmt:formatNumber value="${meal.getPrice()}"
 										type="number" minFractionDigits="2" />
 								</span> <input type="button" value="Поръчай"
-									style="vertical-align: bottom; text-align: center" onclick="">
+									style="vertical-align: bottom; text-align: center" onclick="callAddToCart(${meal.getMealId()});">
 							</div>
 						</td>
 

@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Address;
 import model.Neighbourhood;
 import model.Order;
 import model.User;
@@ -32,5 +33,7 @@ public interface IUserDAO {
 	public ArrayList<Order> getOrdersArchiveDB(String username);
 
 	public boolean addAddress(User newUser, String neighbourhood,String fullAddress);
+	
+	public ArrayList<Address> getAddresses(String username);
 
 }

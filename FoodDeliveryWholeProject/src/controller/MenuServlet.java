@@ -21,6 +21,13 @@ public class MenuServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+//		if (request.getSession().getAttribute("loggedUser") == null) {
+//			request.setAttribute("notLogged", true);
+//			request.setAttribute("U", request.getRequestURL().toString());
+//			return;
+//		}
+
 		try {
 			if (request.getParameter("restId") == null) {
 				throw new IllegalArgumentException();

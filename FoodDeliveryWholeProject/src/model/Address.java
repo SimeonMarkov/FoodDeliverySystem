@@ -19,7 +19,7 @@ public class Address {
 		return neighbourhood;
 	}
 
-	private Address setNeighbourhood(String neighbourhood) {
+	public Address setNeighbourhood(String neighbourhood) {
 		this.neighbourhood = neighbourhood;
 		return this;
 	}
@@ -28,7 +28,7 @@ public class Address {
 		return fullAddress;
 	}
 
-	private Address setFullAddress(String fullAddress) {
+	public Address setFullAddress(String fullAddress) {
 		if (fullAddress != null) {
 			this.fullAddress = fullAddress;
 		}
