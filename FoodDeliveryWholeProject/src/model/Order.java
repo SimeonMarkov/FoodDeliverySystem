@@ -5,6 +5,7 @@ import java.util.*;
 
 public class Order {
 	private ArrayList<Meal> meals;
+	private Restaurant restaurant;
 
 	private Date date;
 	private double price;
@@ -21,6 +22,15 @@ public class Order {
 
 	public Date getDate() {
 		return date;
+	}
+
+	public Restaurant getRestaurant() {
+		return restaurant;
+	}
+
+	public Order setRestaurant(Restaurant restaurant) {
+		this.restaurant = restaurant;
+		return this;
 	}
 
 	public Order setDate(Date date) {

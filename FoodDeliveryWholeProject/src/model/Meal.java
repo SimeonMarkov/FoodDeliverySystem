@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import model.dao.DBMealDAO;
 
 public class Meal implements Comparable<Meal> {
-	
+
 	// public enum MealType {
 	// SALAD,SOUP,PASTA,PIZZA,ALAMINUT,BBQ,FISH,BREAD,SOUCE,DESERT,DRINKS,VEGETERIAN,OSNOVNO,
 	// // POD VIDOVE ZA NQKOI OT IASTIATA S VID MESO ILI BBQ
@@ -19,54 +19,65 @@ public class Meal implements Comparable<Meal> {
 	//
 	// }
 	//
-	
+
 	private long mealId;
 	private String name;
 	private double price;
 	private String category;
-	//private double rating;
-	//private int timesRated;
+	private String photoBytes;
+	// private double rating;
+	// private int timesRated;
 	private ArrayList<Ingredient> ingredients;
-	
 
 	public Meal(String name, double price, String category) {
 		this.name = name;
 		this.price = price;
 		this.category = category;
-		//this.timesRated = 0;
+		// this.timesRated = 0;
 		this.ingredients = new ArrayList<Ingredient>();
 	}
+
 	public Meal() {
 		ingredients = new ArrayList<>();
 	}
 
-//	public void setTimesRated() {
-//		this.timesRated++;
-//	}
+	// public void setTimesRated() {
+	// this.timesRated++;
+	// }
 	public long getMealId() {
 		return mealId;
 	}
+
 	public Meal setMealId(long mealId) {
 		this.mealId = mealId;
 		return this;
 	}
-	
-	
+
+	public Meal setPhotoBytes(String s) {
+		this.photoBytes = s;
+		return this;
+	}
+
+	public String getPhotoBytes() {
+		return this.photoBytes;
+	}
+
 	public static Meal getMealByID(long id) {
 		return DBMealDAO.getInstance().getMeal(id);
 	}
-	
-	public static ArrayList<Meal> getSearchResult(long restID, long mealTypeID, double price, ArrayList<Long> ingredients){
+
+	public static ArrayList<Meal> getSearchResult(long restID, long mealTypeID, double price,
+			ArrayList<Long> ingredients) {
 		return DBMealDAO.getInstance().getSearchResult(restID, mealTypeID, price, ingredients);
 	}
-//
-//	public double getRating() {
-//		return this.rating / this.timesRated;
-//	}
-//
-//	public void setRating(double rating) {
-//		this.rating += rating;
-//	}
+	//
+	// public double getRating() {
+	// return this.rating / this.timesRated;
+	// }
+	//
+	// public void setRating(double rating) {
+	// this.rating += rating;
+	// }
 
 	public String getName() {
 		return this.name;
@@ -77,10 +88,10 @@ public class Meal implements Comparable<Meal> {
 		return this;
 	}
 
-	public ArrayList<Ingredient> getIgredients(){
+	public ArrayList<Ingredient> getIgredients() {
 		return ingredients;
 	}
-	
+
 	public double getPrice() {
 		return price;
 	}
@@ -103,22 +114,24 @@ public class Meal implements Comparable<Meal> {
 	public int compareTo(Meal o) {
 		return (int) (price - o.price);
 	}
+
 	public String ingradientsToString() {
 		StringBuilder allIngredientsWithNames = new StringBuilder();
 		String r = "";
-		for(Ingredient i : ingredients){
-			allIngredientsWithNames.append(r+i.getName());
-			r=", ";
+		for (Ingredient i : ingredients) {
+			allIngredientsWithNames.append(r + i.getName());
+			r = ", ";
 		}
 		return allIngredientsWithNames.toString();
 	}
+
 	public String toString() {
 		StringBuilder allIngredientsWithNames = new StringBuilder("[");
-		if(!ingredients.isEmpty()){
-			for(int i = 0; i < ingredients.size() - 1; i++){
+		if (!ingredients.isEmpty()) {
+			for (int i = 0; i < ingredients.size() - 1; i++) {
 				allIngredientsWithNames.append(ingredients.get(i).getName() + ",");
 			}
-			allIngredientsWithNames.append(ingredients.get(ingredients.size() - 1).getName()); 
+			allIngredientsWithNames.append(ingredients.get(ingredients.size() - 1).getName());
 		}
 		allIngredientsWithNames.append("]");
 		return name + "\n Category: " + category + "\n Ingredients: " + allIngredientsWithNames + "\n Price: " + price;

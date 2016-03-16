@@ -15,6 +15,7 @@ public class Restaurant {
 	private ArrayList<Meal> meals;
 	private ArrayList<Neighbourhood> servedRegion;
 	private long restId;
+	private String photoBytes;
 
 	public Restaurant() {
 		meals = new ArrayList<>();
@@ -56,6 +57,16 @@ public class Restaurant {
 
 	public long getRestId() {
 		return restId;
+	}
+	
+
+	public String getPhotoBytes() {
+		return photoBytes;
+	}
+
+	public Restaurant setPhotoBytes(String photoBytes) {
+		this.photoBytes = photoBytes;
+		return this;
 	}
 
 	public Restaurant setRestId(long restId) {

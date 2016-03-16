@@ -1,11 +1,14 @@
 package model.dao;
 
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 import model.Ingredient;
 import model.Meal;
@@ -73,7 +76,9 @@ public class DBRestaurantDAO implements IRestaurantDAO {
 		Long oldID = -1l;
 		while (result.next()) {
 			if (result.getLong(1) != oldID) {
-				r = new Restaurant().setName(result.getString(2)).setRestId(result.getLong(1));
+				Blob blob = result.getBlob(3);
+				byte[] bdata = blob.getBytes(1, (int) blob.length());
+				r = new Restaurant().setName(result.getString(2)).setRestId(result.getLong(1)).setPhotoBytes(Base64.encode(bdata));
 				oldID = result.getLong(1);
 				rv.add(r);
 			}
@@ -154,9 +159,11 @@ public class DBRestaurantDAO implements IRestaurantDAO {
 			if (result != null) {
 				while (result.next()) {
 					if (mealId != result.getInt(1)) {
+						Blob blob = result.getBlob(6);
+						byte[] bdata = blob.getBytes(1, (int) blob.length());
 						mealId = result.getInt(1);
 						temp = new Meal().setName(result.getString(3)).setPrice(result.getDouble(4))
-								.setCategory(result.getString(5)).setMealId(mealId);
+								.setCategory(result.getString(5)).setMealId(mealId).setPhotoBytes(Base64.encode(bdata));
 						rv.add(temp); // TODO: photo
 					}
 					temp.addIngredients(new Ingredient(result.getString(7)));
@@ -186,6 +193,23 @@ public class DBRestaurantDAO implements IRestaurantDAO {
 			e.printStackTrace();
 		}
 		return rv;
+	}
+
+	@Override
+	public Restaurant getRestaurantsById(long id) {
+		String query = String.join("\n",
+				"SELECT r.restaurant_id,r.restaurant_name,r.photo,rt.restaurant_type_id,rt.restaurant_type_name",
+				"FROM restaurant r join restaurant_by_type rbt on(rbt.restaurant_id=r.restaurant_id)",
+				"join restaurant_type rt on (rbt.restaurant_type_id=rt.restaurant_type_id);",
+				"where r.restaurant_id=?");
+		List<Restaurant> rv = new ArrayList<>();
+		try (PreparedStatement pst = manager.getConnection().prepareStatement(query)) {
+			pst.setLong(1, id);
+			rv = getByResultSet(pst.executeQuery(query));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rv.size()==0 ? null : rv.get(0);
 	}
 
 }

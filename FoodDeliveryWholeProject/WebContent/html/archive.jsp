@@ -74,8 +74,8 @@
 					out.println("})()\">");
 			%>
 			<tr>
-				<td class="cartCol1"><img
-					src="images/restaurant_images/don_vito.gif" alt="" width="90"
+				<td class="cartCol1">
+					<img src="data:image/gif;base64,<%o.getRestaurant().getPhotoBytes(); %>" alt="" width="90"
 					height="90" /></td>
 				<td class="cartCol2"><span class="mealName"> Ordered
 						on:<%
@@ -101,7 +101,7 @@
 			<table id="<%out.print("skrit" + orderNumber + mealNumber);%>"
 				class="cartMeal" style="display: none">
 				<tr>
-					<td class="cartCol1"><img src="images/meal_images/meat.jpg"
+					<td class="cartCol1"><img src="data:image/gif;base64,<% m.getPhotoBytes();%>"
 						alt="" width="90" height="90"></td>
 					<td class="cartCol2">
 						<div>

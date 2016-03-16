@@ -116,7 +116,7 @@ public class DBUserDAO implements IUserDAO {
 	@Override
 	public ArrayList<Order> getOrdersArchiveDB(String username) {
 		String query = String.join("\n",
-				"SELECT o.order_id,m.meal_id,i.ingredients_id,order_time,o.total_price,m.meal_name,m.price,m.photo,i.ingredients_name from orders o",
+				"SELECT o.order_id,m.meal_id,i.ingredients_id,order_time,o.total_price,m.meal_name,m.price,m.photo,i.ingredients_name,o.restaurant_id from orders o",
 				"join ordered_meals om on(o.order_id=om.order_id)", "join meal m on(m.meal_id=om.meal_id) ",
 				"join meal_ingredients mi on (m.meal_id=mi.meal_id) ",
 				"join ingredients i on (i.ingredients_id=mi.ingredients_id) ",
@@ -135,7 +135,7 @@ public class DBUserDAO implements IUserDAO {
 				Meal m = null;
 				while (result.next()) {
 					if (lastOrder != result.getInt(1)) {
-						o = new Order().setPrice(result.getDouble(5)).setDate(result.getDate(4));
+						o = new Order().setPrice(result.getDouble(5)).setDate(result.getDate(4)).setRestaurant(DBRestaurantDAO.getInstance().getRestaurantsById(result.getLong(10)));
 						rv.add(o);
 						lastOrder = result.getInt(1);
 					}

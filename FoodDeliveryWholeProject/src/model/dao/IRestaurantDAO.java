@@ -28,6 +28,8 @@ public interface IRestaurantDAO {
 	}
 
 	List<Restaurant> getAllRestaurants();
+	
+	Restaurant getRestaurantsById(long id);
 
 	List<Restaurant> getAllRestaurantsByType(long id);
 

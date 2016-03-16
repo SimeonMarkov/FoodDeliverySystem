@@ -162,7 +162,7 @@ table {
 			<c:forEach var="meal" items="${requestScope.results}">
 				<table class="cartMeal">
 					<tr>
-						<td class="cartCol1"><img src="../images/meat.jpg" alt=""
+						<td class="cartCol1"><img src="data:image/gif;base64,${meal.getPhotoBytes()}"alt=""
 							width="90" height="90"></td>
 						<td class="cartCol2">
 							<div>

@@ -75,7 +75,7 @@
 								style="width: 50%; border: solid #66562F; border-width: 1px; cursor: pointer"
 								onClick="window.location='menu.jsp?restId=${col.getRestId()}';">
 								<div style="float: left; width: 90px;">
-									<img src="../images/restaurant_images/don_vito.gif" alt=""
+									<img src="data:image/gif;base64,${col.getPhotoBytes()}" alt=""
 										width="90" height="90">
 								</div>
 								<div style="float: right; width: 220px">

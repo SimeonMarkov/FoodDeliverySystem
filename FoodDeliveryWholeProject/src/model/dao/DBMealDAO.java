@@ -1,11 +1,14 @@
 package model.dao;
 
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 import model.Ingredient;
 import model.Meal;
@@ -42,9 +45,11 @@ public class DBMealDAO implements IMealDAO {
 			ResultSet result = pst.executeQuery();
 			if (result != null) {
 				while (result.next()) {
+					Blob blob = result.getBlob(4);
+					byte[] bdata = blob.getBytes(1, (int) blob.length());
 					if (rv == null) {
 						rv = new Meal().setMealId(id).setName(result.getString(1)).setPrice(result.getDouble(2))
-								.setCategory(result.getString(5));
+								.setCategory(result.getString(5)).setPhotoBytes(Base64.encode(bdata));
 
 					}
 					rv.addIngredients(new Ingredient(result.getString(7)));
@@ -131,8 +136,10 @@ public class DBMealDAO implements IMealDAO {
 			if (result != null) {
 				while (result.next()) {
 					if (mealId != result.getLong(8)) {
+						Blob blob = result.getBlob(4);
+						byte[] bdata = blob.getBytes(1, (int) blob.length());
 						temp = new Meal().setMealId(result.getLong(8)).setName(result.getString(1))
-								.setPrice(result.getDouble(2)).setCategory(result.getString(5));
+								.setPrice(result.getDouble(2)).setCategory(result.getString(5)).setPhotoBytes(Base64.encode(bdata));
 						rv.add(temp);
 						mealId=result.getLong(8);
 					}
