@@ -70,7 +70,7 @@ public class SignupServlet extends HttpServlet {
 			String fullAddress = request.getParameter("fullAddress");
 			Address choosenAddress = new Address(neighbourhood, fullAddress);
 			request.getSession().setAttribute("loggedUser", newUser);
-			userDao.addUser((User)request.getSession().getAttribute("loggedUser")).setChoosenAddress(choosenAddress);
+			userDao.addUser((User)request.getSession().getAttribute("loggedUser"));
 			userDao.addAddress((User)request.getSession().getAttribute("loggedUser"),neighbourhood,fullAddress);
 			request.getSession().setAttribute("addr", DBUserDAO.getInstance().selectAddresses((User)request.getSession().getAttribute("loggedUser")));
 			System.out.println(request.getSession().getAttribute("loggedUser") + " signed up");

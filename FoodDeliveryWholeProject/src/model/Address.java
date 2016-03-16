@@ -11,6 +11,7 @@ public class Address {
 	}
 
 	public Address(String neighbourhood, String fullAddress) {
+		this();
 		this.setNeighbourhood(neighbourhood);
 		this.setFullAddress(fullAddress);
 	}
