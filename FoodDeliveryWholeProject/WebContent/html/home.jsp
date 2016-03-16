@@ -20,13 +20,33 @@
 	<div id="Container">
 		<div id="Header"></div>
 		<div id="Buttons">
+			<c:choose>
+			<c:when test="${empty sessionScope.loggedUser}">
 			<ul style="float: right">
-				<li><a href="home.html">Home</a></li>
-				<li><a href="search2.html">Search</a></li>
+				<li><a href="home.jsp">Home</a></li>
+				<li><a href="search.jsp">Search</a></li>
 				<li><a href="faq.html">Guide</a></li>
-				<li><a href="sign_up.html">Register</a></li>
-				<li><a href="login.html">Login</a></li>
+				<li><a href="sign_up.jsp">Register</a></li>
+				<li><a href="login.jsp">Login</a></li>
 			</ul>
+			</c:when>
+			<c:otherwise>
+			<ul>
+				<li><a href="home.jsp">Home</a></li>
+				<li><a href="search.jsp">Search</a></li>
+				<li><a href="cart.jsp">Cart [${sessionScope.loggedUser.getCartSize()}] </a></li>
+				<li><a href="archive.jsp">Archive</a>
+					<ul>
+						<li><a href="archive.jsp">My archive</a></li>
+						<li><a href="archive.jsp?type=trending">Site's archive</a></li>
+					</ul></li>
+
+				<li><a href="profile.jsp">Profile</a></li>
+				<li><a href="logout.jsp">Logout</a></li>
+			</ul>
+			</c:otherwise>
+			</c:choose>
+			
 		</div>
 		<div id="Menu">
 			<!--TODO: replace links with rest.types to visualize only that type of rest @ mainbody-->

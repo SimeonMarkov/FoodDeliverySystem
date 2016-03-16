@@ -23,19 +23,19 @@ public class HomeServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// local test
-		ArrayList<User> allUser;
-		try {
-			allUser = (ArrayList<User>) DBUserDAO.getInstance().getAllUsers();
-			User usr = allUser.get(0);
-			usr.refreshAddresses();
-			usr.setChoosenAddress(usr.getAddresses().get(0));
-			request.getSession().setAttribute("loggedUser",usr);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// local test
+//		// local test
+//		ArrayList<User> allUser;
+//		try {
+//			allUser = (ArrayList<User>) DBUserDAO.getInstance().getAllUsers();
+//			User usr = allUser.get(0);
+//			usr.refreshAddresses();
+//			usr.setChoosenAddress(usr.getAddresses().get(0));
+//			request.getSession().setAttribute("loggedUser",usr);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		// local test
 		
 		
 		ArrayList<ArrayList<Restaurant>> rows = new ArrayList<>();

@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+import model.dao.IMealDAO;
 import model.dao.IRestaurantDAO;
 import model.dao.IRestaurantDAO.DataSource;
 
@@ -23,5 +24,8 @@ public class MealType {
 	}
 	public static ArrayList<MealType> getAllMealTypesByRest(long id) {
 		return (ArrayList<MealType>) IRestaurantDAO.getDAO(DataSource.DB).getAllMealTypesByRest(id);
+	}
+	public static ArrayList<MealType> getAllMealTypes() {
+		return IMealDAO.getDAO(IMealDAO.DataSource.DB).getMealTypes();
 	}
 }

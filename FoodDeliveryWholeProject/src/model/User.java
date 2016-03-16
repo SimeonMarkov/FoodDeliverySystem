@@ -71,12 +71,12 @@ public class User {
 		return this.cart.products;
 	}
 
-	void addProductInCart(Meal product) {
+	public void addProductInCart(Meal product) {
 		this.cart.products.add(product);
 		this.cart.totalPrice += product.getPrice();
 	}
 
-	void removeProductFromCart(Meal meal) {
+	public void removeProductFromCart(Meal meal) {
 		this.cart.products.remove(meal);
 		this.cart.totalPrice -= meal.getPrice();
 	}
@@ -183,10 +183,10 @@ public class User {
 		this.favMealsNumber = favMealsNumber;
 	}
 
-	void rateMeal(Meal Meal, int rating) {
-		Meal.setRating(rating);
-		Meal.setTimesRated();
-	}
+//	void rateMeal(Meal Meal, int rating) {
+//		Meal.setRating(rating);
+//		Meal.setTimesRated();
+//	}
 
 	public Cart getCart() {
 		return cart;
