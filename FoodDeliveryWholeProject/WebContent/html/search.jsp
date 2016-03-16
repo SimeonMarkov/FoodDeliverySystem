@@ -82,7 +82,7 @@ table {
 							</ul></li>
 
 						<li><a href="profile.jsp">Profile</a></li>
-						<li><a href="logout.jsp">Logout</a></li>
+						<li><a href="../LogoutServlet">Logout</a></li>
 					</ul>
 				</c:otherwise>
 			</c:choose>
