@@ -449,3 +449,6 @@ INSERT into restaurant_by_type values(3,2);
 INSERT into restaurant_by_type values(3,4);
 INSERT into restaurant_by_type values(3,5);
 
+
+update orders o set total_price=(select sum(price) from meal m join ordered_meals om on (m.meal_id=om.meal_id) where o.order_id=om.order_id);
+
