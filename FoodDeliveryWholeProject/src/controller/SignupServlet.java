@@ -26,6 +26,9 @@ import model.dao.IUserDAO.DataSource;
 @WebServlet("/SignupServlet")
 public class SignupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+	private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@(.+)$";
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -72,6 +75,11 @@ public class SignupServlet extends HttpServlet {
 					response.sendRedirect("html/sign_up.jsp");
 					return;
 				}
+				if(!isPasswordStrong(password)){
+					session.setAttribute("weakPasswordError", true);
+					response.sendRedirect("html/sign_up.jsp");
+					return;
+				}
 			}
 				
 			IUserDAO userDao = DBUserDAO.getInstance();
@@ -86,7 +94,7 @@ public class SignupServlet extends HttpServlet {
 			System.out.println(request.getSession().getAttribute("loggedUser") + " signed up");
 			System.out.println(((User)request.getSession().getAttribute("loggedUser")).getUsername() + " logged in with address " + ((User)request.getSession().getAttribute("loggedUser")).getChoosenAddress());
 			System.out.println(DBUserDAO.getInstance().selectAddresses(newUser));
-			response.sendRedirect("html/chooseaddress.jsp");
+			response.sendRedirect("html/login.jsp");
 			
 			
 		}
@@ -96,18 +104,18 @@ public class SignupServlet extends HttpServlet {
 	}
 	
 	private static boolean isPasswordStrong(String password){
-		String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{5,10}";
-	    return password.matches(pattern);
-	}
-	
-	private static boolean isValidEmailAddress(String email) {
-		   boolean result = true;
-		   try {
-		      InternetAddress emailAddr = new InternetAddress(email);
-		      emailAddr.validate();
-		   } catch (AddressException ex) {
-		      result = false;
-		   }
-		   return result;
+		if(password.length() <= 6){
+			return false;
 		}
+		if (!password.matches(".*[A-Z].*")) {
+			return false;
+		}
+		if (!password.matches(".*[a-z].*")) {
+			return false;
+		}
+		if (!password.matches(".*[0-9].*")) {
+			return false;
+		}
+		return true;
+	}
 }

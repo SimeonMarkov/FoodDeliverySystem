@@ -1,11 +1,14 @@
 package controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import model.User;
 
 /**
  * Servlet implementation class ChooseServlet
@@ -33,11 +36,15 @@ public class ChooseServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String currentAddressSubmitted = request.getParameter("chosenAddress");
+		System.out.println(currentAddressSubmitted);
 		request.getSession().setAttribute("currentUseAddress", currentAddressSubmitted);
-		if(request.getSession().getAttribute("restId") != null){
-			response.sendRedirect("html/menu.jsp?URL=" + request.getSession().getAttribute("restId"));
+		System.out.println("Current address is " + request.getSession().getAttribute("currentUseAddress"));
+		if(request.getSession().getAttribute("URL") != null){
+			response.sendRedirect((String) request.getSession().getAttribute("URL"));
 		}
-		response.sendRedirect("html/layout.html");
+		else{
+			response.sendRedirect("html/home.jsp");
+		}
 		
 	}
 
