@@ -194,21 +194,21 @@
 		<div id="MainBody">
 
 
-
-			<c:forEach var="item" begin="1" end="7">
+			<% //TODO:For upload %>
+			<c:forEach var="meal" items="${sessionScope.loggedUser.getBasket()}">
 				<table class="cartMeal">
 					<tr>
 						<td class="cartCol1"><img src="images/meal_images/meat.jpg"
 							alt="" width="90" height="90"></td>
 						<td class="cartCol2">
 							<div>
-								<span class="mealName"> Име на ястие ${item}</span> <input
+								<span class="mealName"> ${meal.getName()}</span> <input
 									class="closeButton" type="button"
 									style="position: relative; left: 260px; background-color: gold;"
 									value="x" /> <br>
 							</div>
 							<div class="divIngredients">
-								<span class="mealIngredients"> Съставки: ala,bala,nica</span>
+								<span class="mealIngredients"> Съставки: ${meal.getIngredients()}</span>
 							</div>
 
 						</td>
@@ -219,7 +219,7 @@
 								<div class="dec button" style="cursor: pointer;">-</div>
 							</div>
 							<div class="divPrice">
-								<span>Цена: 12.56 </span>
+								<span>Цена: ${meal.getPrice()} </span>
 							</div>
 						</td>
 
@@ -233,9 +233,9 @@
 
 			<div
 				style="width: 600px; margin-left: 25px; margin-top: 5px; border: solid #8C8153; border-width: 1px; background-color: #C9C36D; text-align: center; padding-top: 5px; padding-bottom: 5px">
-				<span>Обща стойност: 37.68</span>
+				<span>Обща стойност: ${session.loggedUser.getTotalPriceOfCart()}</span>
 			</div>
-			<c:forEach var="address" items="${sessionScope.addressesOnLogged}">
+			<c:forEach var="address" items="${sessionScope.currentUseAddress}">
 				<div style="margin-top: 5px; height: 180px; margin-left: 20px; cursor: pointer;">
 					<input style="margin-left: 60px;" type="radio" name="chosenAddress"
 						value="${address.getNeighbourhood()}" /><br> 
@@ -256,8 +256,7 @@
 		</div>
 		<div id="Footer"></div>
 
-		<div id="products"></div>
-		<div id="total"></div>
+		
 
 	</div>
 

@@ -35,10 +35,9 @@
 			<h2>Choose your address:</h2>
 				<c:forEach var="address" items="${sessionScope.addressesOnLogged}">
 					<div style="margin-top: 5px; height: 180px; cursor: pointer;">
-						<input style="margin-left: 60px;" type="radio"
-							name="chosenAddress" value="${address.getNeighbourhood()}"/><br> <label for="kvartal1"
-							class="kvartal">Квартал</label> <input type=text name="kvartal1"
-							value="${address.getNeighbourhood()}" readonly /><br> <br>
+						<input style="margin-left: 60px;" type="radio" name="chosenAddress" value="${address.getNeighbourhood()}"/><br>
+						 <label for="kvartal1" class="kvartal">Квартал</label>
+						  <input type=text name="kvartal1" value="${address.getNeighbourhood()}" readonly /><br> <br>
 						<label for="address1" class="kvartal">Adress</label>
 
 						<textarea class="addressField" name="address1" rows="5" cols="60"

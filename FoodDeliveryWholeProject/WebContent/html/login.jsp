@@ -33,7 +33,7 @@
     </div>  
 	<div id="Menu" style="min-height:950px"></div>
 		<div id="MainBody">
-	
+	<jsp:include page="../LoginServlet"></jsp:include>
 	<fieldset  style="border:0px solid black;">
 		<caption><b>Login</b></caption>
 		<form action="${pageContext.request.contextPath}/LoginServlet" method="post">

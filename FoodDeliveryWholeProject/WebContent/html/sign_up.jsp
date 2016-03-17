@@ -55,7 +55,7 @@
 		<div class="form">	
 			<label for="password"  class="title">Password:</label>
 			<input type="password" name="password" required="required" />
-			<c:if test="${!empty sessionScope.weakPassword}">
+			<c:if test="${!empty sessionScope.weakPasswordError}">
 				<label style="color: red;">*Паролата е слаба</label>
 			</c:if>
 			<c:remove var="weakPassword" scope="session" />
@@ -70,11 +70,6 @@
 				<label style="color: red;">*Имейлът вече е зает</label><br />
 			</c:if>
 			<c:remove var="usedEmailError" scope="session" />
-			
-			<c:if test="${!empty sessionScope.invalidEmailError}">
-				<label style="color: red;">*Имейлът не е валиден</label><br />
-			</c:if>
-			<c:remove var="invalidEmailError" scope="session" />
 		</div>
 		<div class="form">
 			<label for="question"  class="title">Secret question:</label>
