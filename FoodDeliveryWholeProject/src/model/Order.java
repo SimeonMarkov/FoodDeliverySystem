@@ -3,6 +3,9 @@ package model;
 import java.text.*;
 import java.util.*;
 
+import model.dao.DBMealDAO;
+import model.dao.DBUserDAO;
+
 public class Order {
 	private ArrayList<Meal> meals;
 	private Restaurant restaurant;
@@ -26,6 +29,9 @@ public class Order {
 
 	public Restaurant getRestaurant() {
 		return restaurant;
+	}
+	public static ArrayList<Order> getAllOrders() {
+		return DBUserDAO.getInstance().getAllOrdersArchive();
 	}
 
 	public Order setRestaurant(Restaurant restaurant) {

@@ -3,7 +3,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="model.*"%>
 <%@ page import="java.text.*"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html >
 <html>
 <head>
 <link href="../CSS/mainBody.css" rel="stylesheet" type="text/css" />
@@ -28,10 +28,10 @@
 				<li><a href="layout.html">Home</a></li>
 				<li><a href="search.html">Search</a></li>
 				<li><a href="cart.jsp">Cart</a></li>
-				<li><a href="archive.html">Archive</a>
+				<li><a href="archive.jsp?type=user">Archive</a>
 					<ul>
-						<li><a href="#">My archive</a></li>
-						<li><a href="archiveTrending.html">Site's archive</a></li>
+						<li><a href="archive.jsp?type=user">My archive</a></li>
+						<li><a href="archive.jsp?type=trend">Site's archive</a></li>
 					</ul></li>
 
 				<li><a href="profile.html">Profile</a></li>
@@ -45,22 +45,34 @@
 
 
 			<%
-				User u = new User("gosho");
-				session.setAttribute("loggedUser", u);
+				// User u = new User("gosho");
+				// session.setAttribute("loggedUser", u);
 				// logina trqq da e napravil tova
-				User user = (User) session.getAttribute("loggedUser");
-				user.refreshOrders();
+				String tpe = request.getParameter("type");
+				ArrayList<Order> archive = null; 
+				final int rowByPage = 2;
+				if(tpe.equals("user")) {
+					User user = (User) session.getAttribute("loggedUser");
+					user.refreshOrders();
+					archive = user.getOrdersArchive();
+				} else {
+					archive = Order.getAllOrders();
+				}
+				
 				String pageNumberS = request.getParameter("page");
+				
+				
 				int pageNumber = 1;
 				if (pageNumberS != null) {
 					pageNumber = Integer.parseInt(pageNumberS);
 				}
 				pageNumber--;
 				int orderNumber = 0;
-				for (Order o : user.getOrdersArchive()) {
-					if (orderNumber / 6 < pageNumber) {
+				for (Order o : archive) {
+					if (orderNumber / rowByPage < pageNumber) {
+						orderNumber++;
 						continue;
-					} else if (orderNumber / 6 > pageNumber) {
+					} else if (orderNumber / rowByPage > pageNumber) {
 						break;
 					}
 					orderNumber++;
@@ -75,7 +87,7 @@
 			%>
 			<tr>
 				<td class="cartCol1">
-					<img src="data:image/gif;base64,<%o.getRestaurant().getPhotoBytes(); %>" alt="" width="90"
+					<img src="data:image/gif;base64,<% out.print(o.getRestaurant().getPhotoBytes()); %>" alt="" width="90"
 					height="90" /></td>
 				<td class="cartCol2"><span class="mealName"> Ordered
 						on:<%
@@ -101,7 +113,7 @@
 			<table id="<%out.print("skrit" + orderNumber + mealNumber);%>"
 				class="cartMeal" style="display: none">
 				<tr>
-					<td class="cartCol1"><img src="data:image/gif;base64,<% m.getPhotoBytes();%>"
+					<td class="cartCol1"><img src="data:image/gif;base64,<%out.print(m.getPhotoBytes());%>"
 						alt="" width="90" height="90"></td>
 					<td class="cartCol2">
 						<div>
@@ -142,18 +154,31 @@
 
 
 			<div class="pagesSwitcher">
-
-				<a><b>
+						<!--  <a href="url">link text</a>  -->
+				
 						<%
-							out.print(pageNumber + 1);
+							pageNumber++;
+							if(pageNumber>1) {
+							out.println("<a href=\"archive.jsp?type="+ tpe +"&page="+1+"\"><b>&lt;&lt;</b></a>&nbsp;"); 
+							int p = pageNumber==1 ? 1: pageNumber-1;
+							out.println("<a href=\"archive.jsp?type="+ tpe +"&page="+p+"\"><b>&lt;</b></a>&nbsp;"); 
+							} else {
+								out.println("&lt;&lt;&nbsp;&lt;&nbsp;");
+							}
+							out.print(pageNumber+"&nbsp;");
+							if(archive.size()>pageNumber*rowByPage) {
+								int p = archive.size()/rowByPage;
+								if(archive.size()%rowByPage!=0) {
+									p++;
+								}
+								out.println("<a href=\"archive.jsp?type="+ tpe +"&page="+(pageNumber+1)+"\"><b>&gt;</b></a>&nbsp;");
+								out.println("<a href=\"archive.jsp?type="+ tpe +"&page="+p+"\"><b>&gt;&gt;</b></a>&nbsp;"); 
+								
+							} else {
+								out.println("&gt;&nbsp;&gt;&gt;");
+							}
 						%>
-				</b></a> <a href="archive_page_2.html"><b>2</b></a> <a
-					href="archive_page_3.html"><b>3</b></a> <a
-					href="archive_page_4.html"><b>4</b></a> <a
-					href="archive_page_5.html"><b>5</b></a>
-				<%
-					// TODO: dynamic pages
-				%>
+				
 			</div>
 
 		</div>

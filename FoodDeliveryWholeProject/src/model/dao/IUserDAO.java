@@ -31,6 +31,8 @@ public interface IUserDAO {
 	void updateUser(User loggedUser, String newPassword, String email);
 
 	public ArrayList<Order> getOrdersArchiveDB(String username);
+	
+	public ArrayList<Order> getAllOrdersArchive();
 
 	public boolean addAddress(User newUser, String neighbourhood,String fullAddress);
 	

@@ -200,12 +200,12 @@ public class DBRestaurantDAO implements IRestaurantDAO {
 		String query = String.join("\n",
 				"SELECT r.restaurant_id,r.restaurant_name,r.photo,rt.restaurant_type_id,rt.restaurant_type_name",
 				"FROM restaurant r join restaurant_by_type rbt on(rbt.restaurant_id=r.restaurant_id)",
-				"join restaurant_type rt on (rbt.restaurant_type_id=rt.restaurant_type_id);",
+				"join restaurant_type rt on (rbt.restaurant_type_id=rt.restaurant_type_id)",
 				"where r.restaurant_id=?");
 		List<Restaurant> rv = new ArrayList<>();
 		try (PreparedStatement pst = manager.getConnection().prepareStatement(query)) {
 			pst.setLong(1, id);
-			rv = getByResultSet(pst.executeQuery(query));
+			rv = getByResultSet(pst.executeQuery());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

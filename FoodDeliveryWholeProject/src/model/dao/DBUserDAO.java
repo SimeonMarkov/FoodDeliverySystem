@@ -1,5 +1,6 @@
 package model.dao;
 
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 import model.Address;
 import model.Ingredient;
@@ -140,10 +143,12 @@ public class DBUserDAO implements IUserDAO {
 						lastOrder = result.getInt(1);
 					}
 					if (lastMeal != result.getInt(2)) {
-						m = new Meal().setName(result.getString(6)).setPrice(result.getDouble(7));
+						Blob blob = result.getBlob(8);
+						byte[] bdata = blob.getBytes(1, (int) blob.length());
+						m = new Meal().setName(result.getString(6)).setPrice(result.getDouble(7)).setPhotoBytes(Base64.encode(bdata));
 						o.addMeal(m);
 						lastMeal = result.getInt(2);
-						// TODO add photo to meal
+						
 					}
 					m.addIngredients(new Ingredient(result.getString(9)));
 				}
@@ -206,6 +211,51 @@ public class DBUserDAO implements IUserDAO {
 		}
 
 		return rv;
+	}
+
+	@Override
+	public ArrayList<Order> getAllOrdersArchive() {
+		String query = String.join("\n",
+				"SELECT o.order_id,m.meal_id,i.ingredients_id,order_time,o.total_price,m.meal_name,m.price,m.photo,i.ingredients_name,o.restaurant_id from orders o",
+				"join ordered_meals om on(o.order_id=om.order_id)", "join meal m on(m.meal_id=om.meal_id) ",
+				"join meal_ingredients mi on (m.meal_id=mi.meal_id) ",
+				"join ingredients i on (i.ingredients_id=mi.ingredients_id) ",
+				"order by o.order_id,m.meal_id,i.ingredients_id;");
+
+		ArrayList<Order> rv = new ArrayList<>();
+
+		try (PreparedStatement st = manager.getConnection().prepareStatement(query)) {
+			ResultSet result = st.executeQuery();
+			if (result != null) {
+				int lastOrder = -1;
+				int lastMeal = -1;
+				int lastIngredient = -1;
+				Order o = null;
+				Meal m = null;
+				while (result.next()) {
+					if (lastOrder != result.getInt(1)) {
+						o = new Order().setPrice(result.getDouble(5)).setDate(result.getDate(4)).setRestaurant(DBRestaurantDAO.getInstance().getRestaurantsById(result.getLong(10)));
+						rv.add(o);
+						lastOrder = result.getInt(1);
+					}
+					if (lastMeal != result.getInt(2)) {
+						Blob blob = result.getBlob(8);
+						byte[] bdata = blob.getBytes(1, (int) blob.length());
+						m = new Meal().setName(result.getString(6)).setPrice(result.getDouble(7)).setPhotoBytes(Base64.encode(bdata));
+						o.addMeal(m);
+						lastMeal = result.getInt(2);
+						
+					}
+					m.addIngredients(new Ingredient(result.getString(9)));
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return rv;
+		
 	}
 
 }
