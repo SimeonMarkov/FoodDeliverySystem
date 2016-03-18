@@ -25,8 +25,8 @@
 		<div id="Header"></div>
 		<div id="Buttons">
 			<ul>
-				<li><a href="layout.html">Home</a></li>
-				<li><a href="search.html">Search</a></li>
+				<li><a href="home.jsp">Home</a></li>
+				<li><a href="search.jsp">Search</a></li>
 				<li><a href="cart.jsp">Cart</a></li>
 				<%if(session.getAttribute("loggedUser")==null){ %>
 				<li><a href="archive.jsp?type=trend">Archive</a>
@@ -37,8 +37,8 @@
 						<li><a href="archive.jsp?type=trend">Site's archive</a></li>
 					</ul></li>
 				<%} %>
-				<li><a href="profile.html">Profile</a></li>
-				<li><a href="home.html">Logout</a></li>
+				<li><a href="profile.jsp">Profile</a></li>
+				<li><a href="logout.jsp">Logout</a></li>
 			</ul>
 		</div>
 

@@ -14,9 +14,8 @@ public interface INeighbourhoodDAO {
 		DB, JSON, XML, CSV
 	}
 	
-	List<String> getAllNeighbourhoods() throws SQLException;
+	public ArrayList<Neighbourhood> getAllNeighbourhoods() throws SQLException;
 	
-	void loadNeighbourhoods() throws SQLException;
 	
 	static INeighbourhoodDAO getDAO(DataSource ds) {
 		switch (ds) {

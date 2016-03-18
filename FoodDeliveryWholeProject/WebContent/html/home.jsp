@@ -35,9 +35,9 @@
 				<li><a href="home.jsp">Home</a></li>
 				<li><a href="search.jsp">Search</a></li>
 				<li><a href="cart.jsp">Cart [${sessionScope.loggedUser.getCartSize()}] </a></li>
-				<li><a href="archive.jsp">Archive</a>
+				<li><a href="archive.jsp?type=user">Archive</a>
 					<ul>
-						<li><a href="archive.jsp">My archive</a></li>
+						<li><a href="archive.jsp?type=user">My archive</a></li>
 						<li><a href="archive.jsp?type=trending">Site's archive</a></li>
 					</ul></li>
 

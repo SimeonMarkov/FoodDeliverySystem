@@ -19,18 +19,19 @@
 		<div id="Header"></div>
 		<div id="Buttons">
 			<ul>
-				<li><a href="layout.html">Home</a></li>
-				<li><a href="search.html">Search</a></li>
-				<li><a href="cart.jsp">Cart</a></li>
-				<li><a href="archive.html">Archive</a>
-					<ul>
-						<li><a href="archive.html">My archive</a></li>
-						<li><a href="archiveTrending.html">Site's archive</a></li>
-					</ul></li>
+						<li><a href="home.jsp">Home</a></li>
+						<li><a href="search.jsp">Search</a></li>
+						<li><a href="cart.jsp" id="cartButton">Cart
+								[${sessionScope.loggedUser.getCartSize()}] </a></li>
+						<li><a href="archive.jsp?type=user">Archive</a>
+							<ul>
+								<li><a href="archive.jsp?type=user">My archive</a></li>
+								<li><a href="archive.jsp?type=trending">Site's archive</a></li>
+							</ul></li>
 
-				<li><a href="profile.jsp">Profile</a></li>
-				<li><a href="logout.jsp">Logout</a></li>
-			</ul>
+						<li><a href="profile.jsp">Profile</a></li>
+						<li><a href="../LogoutServlet">Logout</a></li>
+					</ul>
 		</div>
 		<div id="Menu" style="min-height: 950px"></div>
 		<div id="MainBody">

@@ -35,7 +35,7 @@ public interface IUserDAO {
 	
 	public ArrayList<Order> getAllOrdersArchive();
 
-	public boolean addAddress(User newUser, String neighbourhood,String fullAddress);
+	public boolean addAddress(User newUser, long nId,String fullAddress);
 	
 	public ArrayList<Address> getAddresses(String username);
 	

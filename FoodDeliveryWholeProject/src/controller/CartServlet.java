@@ -22,7 +22,7 @@ public class CartServlet extends HttpServlet {
 		
 		
 		((User)request.getSession().getAttribute("loggedUser")).saveCartToDB((long)request.getSession().getAttribute("restorantId"));
-		
+		((User)request.getSession().getAttribute("loggedUser")).emptyCart();
 		response.sendRedirect("html/home.jsp");
 	}
 

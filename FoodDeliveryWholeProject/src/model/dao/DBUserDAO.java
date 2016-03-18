@@ -123,11 +123,9 @@ public class DBUserDAO implements IUserDAO {
 	@Override
 	public ArrayList<Order> getOrdersArchiveDB(String username) {
 		String query = String.join("\n",
-				"SELECT o.order_id,m.meal_id,i.ingredients_id,order_time,o.total_price,m.meal_name,m.price,m.photo,i.ingredients_name,o.restaurant_id from orders o",
-				"join ordered_meals om on(o.order_id=om.order_id)", "join meal m on(m.meal_id=om.meal_id) ",
-				"join meal_ingredients mi on (m.meal_id=mi.meal_id) ",
-				"join ingredients i on (i.ingredients_id=mi.ingredients_id) ",
-				"where user_id=? order by o.order_id,m.meal_id,i.ingredients_id;");
+				"SELECT o.order_id,om.meal_id,order_time,o.total_price,o.restaurant_id from orders o" ,
+				"join ordered_meals om on(o.order_id=om.order_id) ",
+				"where user_id=? order by o.order_id,om.meal_id");
 
 		ArrayList<Order> rv = new ArrayList<>();
 
@@ -136,27 +134,15 @@ public class DBUserDAO implements IUserDAO {
 			ResultSet result = st.executeQuery();
 			if (result != null) {
 				int lastOrder = -1;
-				int lastMeal = -1;
-				int lastIngredient = -1;
 				Order o = null;
-				Meal m = null;
 				while (result.next()) {
 					if (lastOrder != result.getInt(1)) {
-						o = new Order().setPrice(result.getDouble(5)).setDate(result.getDate(4))
-								.setRestaurant(DBRestaurantDAO.getInstance().getRestaurantsById(result.getLong(10)));
+						o = new Order().setPrice(result.getDouble(4)).setDate(result.getDate(3))
+								.setRestaurant(DBRestaurantDAO.getInstance().getRestaurantsById(result.getLong(5)));
 						rv.add(o);
 						lastOrder = result.getInt(1);
 					}
-					if (lastMeal != result.getInt(2)) {
-						Blob blob = result.getBlob(8);
-						byte[] bdata = blob.getBytes(1, (int) blob.length());
-						m = new Meal().setName(result.getString(6)).setPrice(result.getDouble(7))
-								.setPhotoBytes(Base64.encode(bdata));
-						o.addMeal(m);
-						lastMeal = result.getInt(2);
-
-					}
-					m.addIngredients(new Ingredient(result.getString(9)));
+					o.addMeal(Meal.getMealByID(result.getLong(2)));
 				}
 			}
 		} catch (SQLException e) {
@@ -168,28 +154,21 @@ public class DBUserDAO implements IUserDAO {
 	}
 
 	@Override
-	public boolean addAddress(User newUser, String neighbourhood, String fullAddress) {
+	public boolean addAddress(User newUser, long nId, String fullAddress) {
 		boolean success = true;
-		String neighbourhoodQuery = "SELECT neighbourhood_id FROM fd_db.neighbourhood WHERE neighbourhood_name = ?";
-		int neighbourhood_id = 0;
-		try (PreparedStatement preparedStatement = manager.getConnection().prepareStatement(neighbourhoodQuery);) {
-			preparedStatement.setString(1, neighbourhood);
-			ResultSet rs = preparedStatement.executeQuery();
-			while (rs.next()) {
-				neighbourhood_id = rs.getInt(1);
-			}
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 
 		String query = "INSERT INTO fd_db.ADDRESS (full_address, neighbourhood_id, user_id) VALUES (?, ?, ?);";
-		try (PreparedStatement st = manager.getConnection().prepareStatement(query);) {
+		try (PreparedStatement st = manager.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);) {
 			st.setString(1, fullAddress);
-			st.setInt(2, neighbourhood_id);
+			st.setLong(2, nId);
 			st.setString(3, newUser.getUsername());
 			st.executeUpdate();
-			newUser.addAddress(new Address(neighbourhood, fullAddress));
+			ResultSet tableKeys = st.getGeneratedKeys();
+			tableKeys.next();
+			int addressId = tableKeys.getInt(1);
+			
+			newUser.addAddress(Address.getAddressByID(addressId));
+			
 		} catch (SQLException e) {
 			success = false;
 		}
@@ -222,39 +201,25 @@ public class DBUserDAO implements IUserDAO {
 	@Override
 	public ArrayList<Order> getAllOrdersArchive() {
 		String query = String.join("\n",
-				"SELECT o.order_id,m.meal_id,i.ingredients_id,order_time,o.total_price,m.meal_name,m.price,m.photo,i.ingredients_name,o.restaurant_id from orders o",
-				"join ordered_meals om on(o.order_id=om.order_id)", "join meal m on(m.meal_id=om.meal_id) ",
-				"join meal_ingredients mi on (m.meal_id=mi.meal_id) ",
-				"join ingredients i on (i.ingredients_id=mi.ingredients_id) ",
-				"order by o.order_id,m.meal_id,i.ingredients_id;");
-
+				"SELECT o.order_id,om.meal_id,order_time,o.total_price,o.restaurant_id from orders o" ,
+				"join ordered_meals om on(o.order_id=om.order_id) ",
+				"order by o.order_id,om.meal_id");
 		ArrayList<Order> rv = new ArrayList<>();
-
 		try (PreparedStatement st = manager.getConnection().prepareStatement(query)) {
 			ResultSet result = st.executeQuery();
 			if (result != null) {
 				int lastOrder = -1;
-				int lastMeal = -1;
-				int lastIngredient = -1;
+			
 				Order o = null;
-				Meal m = null;
+			
 				while (result.next()) {
 					if (lastOrder != result.getInt(1)) {
-						o = new Order().setPrice(result.getDouble(5)).setDate(result.getDate(4))
-								.setRestaurant(DBRestaurantDAO.getInstance().getRestaurantsById(result.getLong(10)));
+						o = new Order().setPrice(result.getDouble(4)).setDate(result.getDate(3))
+								.setRestaurant(DBRestaurantDAO.getInstance().getRestaurantsById(result.getLong(5)));
 						rv.add(o);
 						lastOrder = result.getInt(1);
 					}
-					if (lastMeal != result.getInt(2)) {
-						Blob blob = result.getBlob(8);
-						byte[] bdata = blob.getBytes(1, (int) blob.length());
-						m = new Meal().setName(result.getString(6)).setPrice(result.getDouble(7))
-								.setPhotoBytes(Base64.encode(bdata));
-						o.addMeal(m);
-						lastMeal = result.getInt(2);
-
-					}
-					m.addIngredients(new Ingredient(result.getString(9)));
+					o.addMeal(Meal.getMealByID(result.getLong(2)));
 				}
 			}
 		} catch (SQLException e) {

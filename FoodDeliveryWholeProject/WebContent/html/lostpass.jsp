@@ -23,13 +23,13 @@
   <div id="Header"></div>
 	
    <div id="Buttons">
-    <ul style="float:right">
-        <li><a href="home.html">Home</a></li>
-		<li><a href="search2.html">Search</a></li>
-		<li><a href="faq.html">Guide</a></li>		
-		<li><a href="sign_up.html">Register</a></li>
-		<li><a href="login.html">Login</a></li>
-		</ul>            
+    <ul style="float: right">
+				<li><a href="home.jsp">Home</a></li>
+				<li><a href="search.jsp">Search</a></li>
+				<li><a href="faq.html">Guide</a></li>
+				<li><a href="sign_up.jsp">Register</a></li>
+				<li><a href="login.jsp">Login</a></li>
+			</ul>        
     </div>           
      
 	<div id="Menu" style="min-height:950px"></div>

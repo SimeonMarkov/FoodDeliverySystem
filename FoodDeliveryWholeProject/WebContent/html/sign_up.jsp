@@ -25,13 +25,13 @@
 <div id="Container">
   <div id="Header"></div>
 	<div id="Buttons">
-    <ul style="float:right">
-        <li><a href="home.html">Home</a></li>
-		<li><a href="search2.html">Search</a></li>
-		<li><a href="faq.html">Guide</a></li>		
-		<li><a href="sign_up.html">Register</a></li>
-		<li><a href="login.html">Login</a></li>
-		</ul>            
+    <ul style="float: right">
+				<li><a href="home.jsp">Home</a></li>
+				<li><a href="search.jsp">Search</a></li>
+				<li><a href="faq.html">Guide</a></li>
+				<li><a href="sign_up.jsp">Register</a></li>
+				<li><a href="login.jsp">Login</a></li>
+			</ul>           
     </div> 
 	
 	<div id="Menu">
@@ -92,7 +92,7 @@
     <% request.setAttribute("neighbourhoods", DBNeighbourhoodDAO.getInstance().getAllNeighbourhoods()); %>
     <select name="neighbourhoodOptions">
 		<c:forEach var="n" items="${requestScope.neighbourhoods}">
-		   <option  value="${n}" ><c:out value="${n}"></c:out></option>
+		   <option  value="${n.getId()}" ><c:out value="${n.getName()}"></c:out></option>
 		</c:forEach>
 	</select><br><br>
     <label for="address1" class="kvartal">Adress</label>
