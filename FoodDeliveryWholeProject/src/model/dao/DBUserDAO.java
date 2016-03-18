@@ -137,7 +137,7 @@ public class DBUserDAO implements IUserDAO {
 				Order o = null;
 				while (result.next()) {
 					if (lastOrder != result.getInt(1)) {
-						o = new Order().setPrice(result.getDouble(4)).setDate(result.getDate(3))
+						o = new Order().setPrice(result.getDouble(4)).setDate(result.getTimestamp(3))
 								.setRestaurant(DBRestaurantDAO.getInstance().getRestaurantsById(result.getLong(5)));
 						rv.add(o);
 						lastOrder = result.getInt(1);
@@ -214,7 +214,7 @@ public class DBUserDAO implements IUserDAO {
 			
 				while (result.next()) {
 					if (lastOrder != result.getInt(1)) {
-						o = new Order().setPrice(result.getDouble(4)).setDate(result.getDate(3))
+						o = new Order().setPrice(result.getDouble(4)).setDate(result.getTimestamp(3))
 								.setRestaurant(DBRestaurantDAO.getInstance().getRestaurantsById(result.getLong(5)));
 						rv.add(o);
 						lastOrder = result.getInt(1);
@@ -258,20 +258,30 @@ public class DBUserDAO implements IUserDAO {
 		try (PreparedStatement pst = manager.getConnection()
 				.prepareStatement("INSERT into orders (order_time,order_finished,total_price,address_id,restaurant_id,user_id) VALUES (?,?,?,?,?,?)",
 						Statement.RETURN_GENERATED_KEYS)) {
-			pst.setDate(1, new java.sql.Date(System.currentTimeMillis()));
-			pst.setDate(2, new java.sql.Date(System.currentTimeMillis()));
+			pst.setTimestamp(1, new java.sql.Timestamp(System.currentTimeMillis()));
+			pst.setTimestamp(2, new java.sql.Timestamp(System.currentTimeMillis()));
 			pst.setDouble(3, totalPrice);
 			pst.setLong(4, addressId);
 			pst.setLong(5, restId);
 			pst.setString(6,username);
 
 			pst.executeUpdate();
+//			pst.setDate(1, new java.sql.Date(System.currentTimeMillis()));
+//			pst.setDate(2, new java.sql.Date(System.currentTimeMillis()));
+			
+//			.prepareStatement("INSERT into orders (order_time,order_finished,total_price,address_id,restaurant_id,user_id) VALUES (now(),now(),?,?,?,?)",
+//					Statement.RETURN_GENERATED_KEYS)) {
+//		
+//		pst.setDouble(1, totalPrice);
+//		pst.setLong(2, addressId);
+//		pst.setLong(3, restId);
+//		pst.setString(4,username);
+
+		pst.executeUpdate();
 
 			ResultSet tableKeys = pst.getGeneratedKeys();
 			tableKeys.next();
 			orderId = tableKeys.getInt(1);
-			
-				
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -282,7 +292,6 @@ public class DBUserDAO implements IUserDAO {
 				pst.setLong(2,m.getMealId());
 				pst.executeUpdate();
 			}
-			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
