@@ -26,7 +26,9 @@ public class AddToCartServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
+		System.out.println("addtocart: " + request.getSession().getAttribute("restorantId"));
+		
 		String mealId = request.getParameter("mealId");
 		User u = (User) request.getSession().getAttribute("loggedUser");
 		u.addProductInCart(Meal.getMealByID(Long.parseLong(mealId)));

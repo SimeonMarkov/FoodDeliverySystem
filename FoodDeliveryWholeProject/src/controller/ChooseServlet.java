@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.Address;
 import model.User;
 
 /**
@@ -15,37 +16,25 @@ import model.User;
  */
 @WebServlet("/ChooseServlet")
 public class ChooseServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ChooseServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("Choose URL" + request.getSession().getAttribute("URL"));
+		((User)request.getSession().getAttribute("loggedUser")).setChoosenAddress(Address.getAddressByID(Long.parseLong(request.getParameter("addressId"))));
+		
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String currentAddressSubmitted = request.getParameter("chosenAddress");
-		System.out.println(currentAddressSubmitted);
-		request.getSession().setAttribute("currentUseAddress", currentAddressSubmitted);
-		System.out.println("Current address is " + request.getSession().getAttribute("currentUseAddress"));
-		if(request.getSession().getAttribute("URL") != null){
+		if (request.getSession().getAttribute("URL") != null) {
 			response.sendRedirect((String) request.getSession().getAttribute("URL"));
-		}
-		else{
+		} else {
 			response.sendRedirect("html/home.jsp");
 		}
-		
+
 	}
 
 }

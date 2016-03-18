@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
 
 import model.dao.DBUserDAO;
@@ -68,7 +69,15 @@ public class User {
 	}
 
 	public ArrayList<Meal> getBasket() {
-		return this.cart.products;
+		ArrayList<Meal> rv = new ArrayList<>();
+		HashSet<Long> uniqueMeals = new HashSet<>();
+		for (Meal m : cart.products) {
+			if (!uniqueMeals.contains(m.getMealId())) {
+				rv.add(m);
+				uniqueMeals.add(m.getMealId());
+			}
+		}
+		return rv;
 	}
 
 	public void addProductInCart(Meal product) {
@@ -76,9 +85,43 @@ public class User {
 		this.cart.totalPrice += product.getPrice();
 	}
 
-	public void removeProductFromCart(Meal meal) {
-		this.cart.products.remove(meal);
-		this.cart.totalPrice -= meal.getPrice();
+	public void removeProductFromCart(long id) {
+		Meal mm = null;
+		for (Meal m : cart.products) {
+			if (m.getMealId() == id) {
+				mm = m;
+				break;
+			}
+		}
+		if (mm != null) {
+			this.cart.products.remove(mm);
+			this.cart.totalPrice -= mm.getPrice();
+		}
+	}
+	public void removeAllProductsById(long id) {
+		ArrayList<Meal> temp = new ArrayList<>();
+		for (Meal m : cart.products) {
+			if (m.getMealId() == id) {
+				temp.add(m);
+			}
+		}
+		for(Meal m : temp) {
+			this.cart.products.remove(m);
+			this.cart.totalPrice -= m.getPrice();
+		}
+	}
+	public void saveCartToDB(long restId) {
+		DBUserDAO.getInstance().saveCart(username, cart.products, restId, getTotalPriceOfCart(), choosenAddress.getAddressId());
+	}
+	
+	public int getMealQuantity(long mealId) {
+		int rv = 0;
+		for (Meal m : cart.products) {
+			if (m.getMealId() == mealId) {
+				rv++;
+			}
+		}
+		return rv;
 	}
 
 	public int getCartSize() {
@@ -93,12 +136,12 @@ public class User {
 		this.choosenAddress = choosenAddress;
 	}
 
-	void emptyCart() {
+	public void emptyCart() {
 		this.cart.products.clear();
 		this.cart.totalPrice = 0;
 	}
 
-	double getTotalPriceOfCart() {
+	public double getTotalPriceOfCart() {
 		return cart.totalPrice;
 	}
 
@@ -183,10 +226,10 @@ public class User {
 		this.favMealsNumber = favMealsNumber;
 	}
 
-//	void rateMeal(Meal Meal, int rating) {
-//		Meal.setRating(rating);
-//		Meal.setTimesRated();
-//	}
+	// void rateMeal(Meal Meal, int rating) {
+	// Meal.setRating(rating);
+	// Meal.setTimesRated();
+	// }
 
 	public Cart getCart() {
 		return cart;

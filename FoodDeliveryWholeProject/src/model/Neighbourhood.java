@@ -1,10 +1,30 @@
 package model;
 
-public enum Neighbourhood {
-	BANISHORA, DIANABAD, SUHATA_REKA, KRASNO_SELO, GEO_MILEV, LYULIN, SITNYAKOVO, KRASNA_POLYANA, SERDIKA, LAGERA,
-	ZONA_B5, ZONA_B18, DURVENITSA, SLATINA, HRISTO_SMIRNENSKI, SVETA_TROITSA, TOLSTOY, RAZSADNIKA, MODERNO_PREDGRADIE,
-	NADEZHDA, ORLANDOVTSI, YUZHEN_PARK,	ZAPADEN_PARK, ILINDEN, BENKOVSKI, MOTOPISTA, OBELYA, KVARTAL_FILIPOVTSI,
-	KNYAZHEVO, SIMEONOVO, OVCHA_KUPEL, STRELBISHTE, STUDENTSKI_GRAD, ZAHARNA_FABRIKA, PODUENE, GORNA_BANYA, OBORISHTE,
-	DRAGALEVTSI, MLADOST, BYKSTON, HADZHI_DIMITYR, LOZENETS, FAKULTETA, NOVI_ISKYR
+public class Neighbourhood {
+	
+	private String name;
+	private long id;
+	
+	public Neighbourhood() {
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Neighbourhood setName(String name) {
+		this.name = name;
+		return this;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public Neighbourhood setId(long id) {
+		this.id = id;
+		return this;
+	}
+	
 	
 }

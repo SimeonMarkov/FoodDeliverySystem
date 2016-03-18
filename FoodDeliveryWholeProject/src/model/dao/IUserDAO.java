@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Address;
+import model.Meal;
 import model.Neighbourhood;
 import model.Order;
 import model.User;
@@ -37,5 +38,9 @@ public interface IUserDAO {
 	public boolean addAddress(User newUser, String neighbourhood,String fullAddress);
 	
 	public ArrayList<Address> getAddresses(String username);
+	
+	public Address getAddressByID(long id);
+	
+	public void saveCart(String username,ArrayList<Meal> meals,long restId,double totalPrice,long addressId);
 
 }

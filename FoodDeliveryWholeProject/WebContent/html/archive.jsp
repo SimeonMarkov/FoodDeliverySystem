@@ -28,12 +28,15 @@
 				<li><a href="layout.html">Home</a></li>
 				<li><a href="search.html">Search</a></li>
 				<li><a href="cart.jsp">Cart</a></li>
+				<%if(session.getAttribute("loggedUser")==null){ %>
+				<li><a href="archive.jsp?type=trend">Archive</a>
+				<%} else { %>
 				<li><a href="archive.jsp?type=user">Archive</a>
 					<ul>
 						<li><a href="archive.jsp?type=user">My archive</a></li>
 						<li><a href="archive.jsp?type=trend">Site's archive</a></li>
 					</ul></li>
-
+				<%} %>
 				<li><a href="profile.html">Profile</a></li>
 				<li><a href="home.html">Logout</a></li>
 			</ul>

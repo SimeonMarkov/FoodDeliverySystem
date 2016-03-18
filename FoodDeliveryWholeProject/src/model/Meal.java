@@ -19,7 +19,7 @@ public class Meal implements Comparable<Meal> {
 	//
 	// }
 	//
-
+	
 	private long mealId;
 	private String name;
 	private double price;

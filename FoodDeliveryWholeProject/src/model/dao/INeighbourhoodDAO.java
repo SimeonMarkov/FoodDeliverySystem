@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Neighbourhood;
 import model.Order;
 import model.User;
 import model.dao.INeighbourhoodDAO.DataSource;
@@ -25,6 +26,8 @@ public interface INeighbourhoodDAO {
 			throw new IllegalArgumentException();
 		}
 	}
+	
+	public Neighbourhood getNeighbourhoodByID(long id);
 	
 	
 

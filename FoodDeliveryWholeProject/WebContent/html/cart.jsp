@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!doctype html>
 <html>
 <head>
@@ -11,7 +12,7 @@
 <meta charset="utf-8">
 <title>FoodDelivery Cart</title>
 <style type="text/css">
-#quantity {
+.quantity {
 	width: 30px;
 	height: 20px;
 	text-align: center;
@@ -57,14 +58,39 @@
 </style>
 <script src="../JS/jquery-2.2.0.min.js"></script>
 <script>
-	$(document).ready(function() {
+/*	$(document).ready(function() {
 		$(".inc").click(function() {
 			updateValue(this, 1);
 		});
 		$(".dec").click(function() {
 			updateValue(this, -1);
 		});
-	});
+	});*/
+	function sendToServer(id,quantity) {
+		dataString = {"mealId": id, "qty": quantity}
+		$.ajax({
+			type: "POST",
+			url: "../CartServlet",
+			data: dataString,
+			dataType : "json",
+			
+			success: function(data,textStatus,jqXHR){
+				//alert(data.id +" "+data.qty + " "+data.total+" "+data.count+" "+data.remove);
+				$("#total").text(data.total);
+				$("#cartButton").text("Cart ["+data.count+"]");
+				if(data.remove==0){
+					$("#meal"+data.id).remove();
+				} else {
+					$("#q"+data.id).val(data.qty);
+				}
+				
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				alert("Something really bad happened " + textStatus + " - " + errorThrown);
+			}
+		});
+		
+	}
 
 	function updateValue(obj, delta) {
 		var item = $(obj).parent().find("input");
@@ -72,11 +98,11 @@
 		item.val(Math.max(newValue, 1));
 	}
 
-	$(document).ready(function() {
+	/*$(document).ready(function() {
 		$('.closeButton').on('click', function(e) {
 			removeMeal(this);
 		});
-	});
+	});*/
 
 	function removeMeal(obj) {
 		$(obj).closest('table').remove();
@@ -178,7 +204,7 @@
 			<ul>
 				<li><a href="layout.html">Home</a></li>
 				<li><a href="search.html">Search</a></li>
-				<li><a href="cart.jsp">Cart
+				<li><a id="cartButton" href="cart.jsp">Cart
 						[${sessionScope.loggedUser.getCartSize()}] </a></li>
 				<li><a href="archive.html">Archive</a>
 					<ul>
@@ -194,32 +220,37 @@
 		<div id="MainBody">
 
 
-			<% //TODO:For upload %>
+			
 			<c:forEach var="meal" items="${sessionScope.loggedUser.getBasket()}">
-				<table class="cartMeal">
+				<table class="cartMeal" id="meal${meal.getMealId()}">
+				
 					<tr>
-						<td class="cartCol1"><img src="images/meal_images/meat.jpg"
-							alt="" width="90" height="90"></td>
+						<td class="cartCol1"><img
+							src="data:image/gif;base64,${meal.getPhotoBytes()}" alt=""
+							width="90" height="90"></td>
 						<td class="cartCol2">
 							<div>
 								<span class="mealName"> ${meal.getName()}</span> <input
-									class="closeButton" type="button"
+									class="closeButton" type="button" onclick="sendToServer(${meal.getMealId()},0)"
 									style="position: relative; left: 260px; background-color: gold;"
 									value="x" /> <br>
 							</div>
 							<div class="divIngredients">
-								<span class="mealIngredients"> Съставки: ${meal.getIngredients()}</span>
+								<span class="mealIngredients"> Съставки:
+									${meal.ingradientsToString()}</span>
 							</div>
 
 						</td>
 						<td class="cartCol3">
 							<div class="quantityMenu">
-								<div class="inc button" style="cursor: pointer;">+</div>
-								<input id="quantity" name="quantity" type="text" value="1"></input><br />
-								<div class="dec button" style="cursor: pointer;">-</div>
+								<div class="inc button" style="cursor: pointer;" onclick="sendToServer(${meal.getMealId()},1)">+</div>
+								<input class="quantity" id="q${meal.getMealId()}" name="quantity" type="text" value="${sessionScope.loggedUser.getMealQuantity(meal.getMealId())}"></input><br />
+								<div class="dec button" style="cursor: pointer;" onclick="sendToServer(${meal.getMealId()},-1)">-</div>
 							</div>
 							<div class="divPrice">
-								<span>Цена: ${meal.getPrice()} </span>
+								<span>Цена: <fmt:formatNumber value="${meal.getPrice()}"
+										type="number" minFractionDigits="2" />
+								</span>
 							</div>
 						</td>
 
@@ -233,30 +264,29 @@
 
 			<div
 				style="width: 600px; margin-left: 25px; margin-top: 5px; border: solid #8C8153; border-width: 1px; background-color: #C9C36D; text-align: center; padding-top: 5px; padding-bottom: 5px">
-				<span>Обща стойност: ${session.loggedUser.getTotalPriceOfCart()}</span>
+				<span>Обща стойност:<span id="total"> <fmt:formatNumber
+						value="${sessionScope.loggedUser.getTotalPriceOfCart()}"
+						type="number" minFractionDigits="2" /></span></span>
 			</div>
-			<c:forEach var="address" items="${sessionScope.currentUseAddress}">
-				<div style="margin-top: 5px; height: 180px; margin-left: 20px; cursor: pointer;">
-					<input style="margin-left: 60px;" type="radio" name="chosenAddress"
-						value="${address.getNeighbourhood()}" /><br> 
-						<label
-						for="kvartal1" class="kvartal">Квартал</label>
-						 <input type=text name="kvartal1" value="${address.getNeighbourhood()}" readonly /><br>
-					<br> <label for="address1" class="kvartal">Адрес</label>
 
-					<textarea class="addressField" name="address1" rows="5" cols="60"
-						readonly>${address.getFullAddress()}</textarea>
-					<br>
-				</div>
-				<hr style="margin-left: 25px; margin-right: 25px;">
-			</c:forEach>
-			<input type="button" value="ПОТВЪРДИ ПОРЪЧКА" name="order"
+			<div
+				style="width: 600px; margin-left: 25px; margin-right: 25px; margin-top: 10px; border: solid #8C8153; border-width: 1px; background: #ECE08C; text-align: center;">
+
+				<p>Квартал: ${sessionScope.loggedUser.getChoosenAddress().getNeighbourhood()}</p>
+				<p>Адрес: ${sessionScope.loggedUser.getChoosenAddress().getFullAddress()}</p>
+
+			</div>
+
+			<hr style="margin-left: 25px; margin-right: 25px;">
+			<form action="../CartServlet" method="get">
+			<input type="submit" value="ПОТВЪРДИ ПОРЪЧКА" name="order"
 				style="width: 602px; margin-left: 25px; margin-right: 25px; margin-top: 10px; border: solid #8C8153; border-width: 1px; padding-top: 10px; padding-bottom: 10px; background-color: #C16845; color: #F0EFDF; cursor: pointer;">
+			</form>
 
 		</div>
 		<div id="Footer"></div>
 
-		
+
 
 	</div>
 

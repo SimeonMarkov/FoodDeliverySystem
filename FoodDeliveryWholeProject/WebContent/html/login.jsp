@@ -19,7 +19,7 @@
 </head>
 
 <body>
-
+<!--<jsp:include page="../LoginServlet"></jsp:include>-->
 <div id="Container">
   <div id="Header"></div>
 	<div id="Buttons">
@@ -33,11 +33,11 @@
     </div>  
 	<div id="Menu" style="min-height:950px"></div>
 		<div id="MainBody">
-	<jsp:include page="../LoginServlet"></jsp:include>
+	
 	<fieldset  style="border:0px solid black;">
 		<caption><b>Login</b></caption>
 		<form action="${pageContext.request.contextPath}/LoginServlet" method="post">
-		<c:set var="restId" scope="session" value="${param.restId}"/>
+		
 		<c:if test="${!empty sessionScope.loginError}">
 			<p style="color: red;">Грешно потребителско име или парола! </p>
 		</c:if>

@@ -50,7 +50,9 @@ public class Restaurant {
 		return (ArrayList<Meal>) IRestaurantDAO.getDAO(DataSource.DB).getAllRestaurantMeals(id);
 	}
 	
-
+	public void refreshServedRegion(){
+		
+	}
 	public String getTypes() {
 		return String.join(", ", types);
 	}

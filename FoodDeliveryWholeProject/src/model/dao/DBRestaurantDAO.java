@@ -177,7 +177,7 @@ public class DBRestaurantDAO implements IRestaurantDAO {
 
 	@Override
 	public List<MealType> getAllMealTypesByRest(long id) {
-		String query = String.join("\n", "SELECT mt.meal_type_name,mt.meal_type_id from meal_type mt",
+		String query = String.join("\n", "SELECT DISTINCT mt.meal_type_name,mt.meal_type_id from meal_type mt",
 				"join meal m on (mt.meal_type_id = m.meal_type_id)",
 				"join restaurant_menu rm on (m.meal_id = rm.meal_id)", "where rm.restaurant_id = ?;");
 		List<MealType> rv = new ArrayList<>();

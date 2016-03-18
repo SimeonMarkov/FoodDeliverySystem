@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.sql.Date;
 import java.util.List;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
@@ -14,6 +16,7 @@ import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import model.Address;
 import model.Ingredient;
 import model.Meal;
+import model.Neighbourhood;
 import model.Order;
 import model.User;
 import model.db.DBManager;
@@ -34,17 +37,18 @@ public class DBUserDAO implements IUserDAO {
 		return instance;
 	}
 
-	public List<Address> selectAddresses(User user){
+	public List<Address> selectAddresses(User user) {
 		List<Address> addresses = new ArrayList<Address>();
-		String query = String.join("\n", "SELECT neighbourhood_name,full_address FROM fd_db.Neighbourhood N",
-										"INNER JOIN fd_db.Address A ON N.neighbourhood_id = A.neighbourhood_id",
-										"INNER JOIN fd_db.Users U ON A.user_id = U.user_id",
-										"WHERE U.user_id = ?");
-		try(PreparedStatement stmt = manager.getConnection().prepareStatement(query)){
+		String query = String.join("\n",
+				"SELECT neighbourhood_name,full_address,A.address_id,N.neighbourhood_id FROM fd_db.Neighbourhood N",
+				"INNER JOIN fd_db.Address A ON N.neighbourhood_id = A.neighbourhood_id",
+				"INNER JOIN fd_db.Users U ON A.user_id = U.user_id", "WHERE U.user_id = ?");
+		try (PreparedStatement stmt = manager.getConnection().prepareStatement(query)) {
 			stmt.setString(1, user.getUsername());
 			ResultSet result = stmt.executeQuery();
-			while(result.next()){
-				addresses.add(new Address(result.getString(1), result.getString(2)));
+			while (result.next()) {
+				addresses.add(new Address(result.getString(1), result.getString(2)).setAddressId(result.getLong(3))
+						.setNeighbourhoodId(result.getLong(4)));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -52,7 +56,7 @@ public class DBUserDAO implements IUserDAO {
 		}
 		return addresses;
 	}
-	
+
 	@Override
 	public boolean addUser(User newUser) {
 		boolean success = true;
@@ -138,17 +142,19 @@ public class DBUserDAO implements IUserDAO {
 				Meal m = null;
 				while (result.next()) {
 					if (lastOrder != result.getInt(1)) {
-						o = new Order().setPrice(result.getDouble(5)).setDate(result.getDate(4)).setRestaurant(DBRestaurantDAO.getInstance().getRestaurantsById(result.getLong(10)));
+						o = new Order().setPrice(result.getDouble(5)).setDate(result.getDate(4))
+								.setRestaurant(DBRestaurantDAO.getInstance().getRestaurantsById(result.getLong(10)));
 						rv.add(o);
 						lastOrder = result.getInt(1);
 					}
 					if (lastMeal != result.getInt(2)) {
 						Blob blob = result.getBlob(8);
 						byte[] bdata = blob.getBytes(1, (int) blob.length());
-						m = new Meal().setName(result.getString(6)).setPrice(result.getDouble(7)).setPhotoBytes(Base64.encode(bdata));
+						m = new Meal().setName(result.getString(6)).setPrice(result.getDouble(7))
+								.setPhotoBytes(Base64.encode(bdata));
 						o.addMeal(m);
 						lastMeal = result.getInt(2);
-						
+
 					}
 					m.addIngredients(new Ingredient(result.getString(9)));
 				}
@@ -234,17 +240,19 @@ public class DBUserDAO implements IUserDAO {
 				Meal m = null;
 				while (result.next()) {
 					if (lastOrder != result.getInt(1)) {
-						o = new Order().setPrice(result.getDouble(5)).setDate(result.getDate(4)).setRestaurant(DBRestaurantDAO.getInstance().getRestaurantsById(result.getLong(10)));
+						o = new Order().setPrice(result.getDouble(5)).setDate(result.getDate(4))
+								.setRestaurant(DBRestaurantDAO.getInstance().getRestaurantsById(result.getLong(10)));
 						rv.add(o);
 						lastOrder = result.getInt(1);
 					}
 					if (lastMeal != result.getInt(2)) {
 						Blob blob = result.getBlob(8);
 						byte[] bdata = blob.getBytes(1, (int) blob.length());
-						m = new Meal().setName(result.getString(6)).setPrice(result.getDouble(7)).setPhotoBytes(Base64.encode(bdata));
+						m = new Meal().setName(result.getString(6)).setPrice(result.getDouble(7))
+								.setPhotoBytes(Base64.encode(bdata));
 						o.addMeal(m);
 						lastMeal = result.getInt(2);
-						
+
 					}
 					m.addIngredients(new Ingredient(result.getString(9)));
 				}
@@ -255,6 +263,65 @@ public class DBUserDAO implements IUserDAO {
 		}
 
 		return rv;
+
+	}
+
+	@Override
+	public Address getAddressByID(long id) {
+		String query = "select address_id,full_address,a.neighbourhood_id,n.neighbourhood_name from address a join neighbourhood n on(a.neighbourhood_id=n.neighbourhood_id) where address_id=?;";
+		Address rv = null;
+		try (PreparedStatement pst = manager.getConnection().prepareStatement(query)) {
+			pst.setLong(1, id);
+			ResultSet result = pst.executeQuery();
+			if (result != null) {
+				while (result.next()) {
+					rv = new Address().setAddressId(result.getLong(1)).setFullAddress(result.getString(2))
+							.setNeighbourhoodId(result.getLong(3)).setNeighbourhood(result.getString(4));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rv;
+
+	}
+
+	@Override
+	public void saveCart(String username, ArrayList<Meal> meals, long restId, double totalPrice, long addressId) {
+		
+		int orderId=0;
+		try (PreparedStatement pst = manager.getConnection()
+				.prepareStatement("INSERT into orders (order_time,order_finished,total_price,address_id,restaurant_id,user_id) VALUES (?,?,?,?,?,?)",
+						Statement.RETURN_GENERATED_KEYS)) {
+			pst.setDate(1, new java.sql.Date(System.currentTimeMillis()));
+			pst.setDate(2, new java.sql.Date(System.currentTimeMillis()));
+			pst.setDouble(3, totalPrice);
+			pst.setLong(4, addressId);
+			pst.setLong(5, restId);
+			pst.setString(6,username);
+
+			pst.executeUpdate();
+
+			ResultSet tableKeys = pst.getGeneratedKeys();
+			tableKeys.next();
+			orderId = tableKeys.getInt(1);
+			
+				
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try(PreparedStatement pst = manager.getConnection().prepareStatement("INSERT into ordered_meals values (?,?)")) {
+			pst.setLong(1, orderId);
+			for(Meal m : meals) {
+				pst.setLong(2,m.getMealId());
+				pst.executeUpdate();
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 

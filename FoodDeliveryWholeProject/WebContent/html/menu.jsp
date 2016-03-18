@@ -12,7 +12,7 @@
 <link href="../CSS/menuButtons.css" rel="stylesheet" type="text/css" />
 <link href="../CSS/meals.css" rel="stylesheet" type="text/css" />
 <meta charset="utf-8">
-<title>Food Delivery Риби</title>
+<title>Food Delivery Menu</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script>
 function callAddToCart(p) {
@@ -24,13 +24,12 @@ function callAddToCart(p) {
 		dataType : "json",
 		
 		success: function(data,textStatus,jqXHR){
-			alert("success ludnica" + " " + data.count);
+			$("#cartNumber").text('Cart [' + data.count + ']');
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			alert("Something really bad happened " + textStatus + " - " + errorThrown);
 		}
 	});
-		
 	
 }
 </script>
@@ -38,22 +37,22 @@ function callAddToCart(p) {
 
 <body>
 	<jsp:include page="../MenuServlet"></jsp:include>
-	<c:if test="${empty sessionScope.loggeUser}">
+	<c:if test="${empty sessionScope.loggedUser}">
 		<c:redirect url="login.jsp">
-			<c:param name="URL" value="${requestScope.U}?restId=${param.restId}"/>
+			<!--<c:param name="URL" value="${requestScope.U}?restId=${param.restId}"/>-->
 		</c:redirect>
 	</c:if>
 	<div id="Container">
 		<div id="Header"></div>
 		<div id="Buttons">
 			<ul>
-				<li><a href="layout.html">Home</a></li>
-				<li><a href="search.html">Search</a></li>
-				<li><a href="cart.html">Cart</a></li>
-				<li><a href="archive.html">Archive</a>
+				<li><a href="home.jsp">Home</a></li>
+				<li><a href="search.jsp">Search</a></li>
+				<li><a id="cartNumber" href="cart.jsp">Cart</a></li>
+				<li><a href="archive.jsp?type=user">Archive</a>
 					<ul>
-						<li><a href="archive.html">My archive</a></li>
-						<li><a href="archiveTrending.html">Site's archive</a></li>
+						<li><a href="archive.jsp?type=user">My archive</a></li>
+						<li><a href="archive.jsp?type=trending">Site's archive</a></li>
 					</ul></li>
 
 				<li><a href="profile.jsp">Profile</a></li>
@@ -82,7 +81,7 @@ function callAddToCart(p) {
 			<c:forEach var="meal" items="${requestScope.menu}">
 				<table class="cartMeal">
 					<tr>
-						<td class="cartCol1"><img src="data:image/gif;base64,${meal.getPhotoBytes()}"alt=""
+						<td class="cartCol1"><img src="data:image/gif;base64,${meal.getPhotoBytes()}" alt=""
 							width="90" height="90"></td>
 						<td class="cartCol2">
 							<div>

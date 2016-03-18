@@ -1,5 +1,7 @@
 package model;
 
+import model.dao.DBUserDAO;
+
 public class Address {
 	private long addressId;
 	private long neighbourhoodId;
@@ -24,7 +26,9 @@ public class Address {
 		this.neighbourhood = neighbourhood;
 		return this;
 	}
-
+	public static Address getAddressByID(long id) {
+		return DBUserDAO.getInstance().getAddressByID(id);
+	}
 	public String getFullAddress() {
 		return fullAddress;
 	}
