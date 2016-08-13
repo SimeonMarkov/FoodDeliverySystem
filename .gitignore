@@ -17,3 +17,13 @@ FoodDeliveryWholeProject/.metadata/.plugins/org.eclipse.m2e.logback.configuratio
 *.gif
 *.png
 *.jpg
+FoodDeliverySystem/target/FoodDeliverySystem-0.0.1-SNAPSHOT.jar
+FoodDeliverySystem/target/classes/META-INF/MANIFEST.MF
+FoodDeliverySystem/target/classes/META-INF/maven/com.epam.fooddelivery/FoodDeliverySystem/pom.properties
+FoodDeliverySystem/target/classes/META-INF/maven/com.epam.fooddelivery/FoodDeliverySystem/pom.xml
+FoodDeliverySystem/target/maven-archiver/pom.properties
+FoodDeliverySystem/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+FoodDeliverySystem/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+FoodDeliveryWholeProject/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
+FoodDeliveryWholeProject/target/m2e-wtp/web-resources/META-INF/maven/FoodDeliveryWholeProject/FoodDeliveryWholeProject/pom.properties
+FoodDeliveryWholeProject/target/m2e-wtp/web-resources/META-INF/maven/FoodDeliveryWholeProject/FoodDeliveryWholeProject/pom.xml
