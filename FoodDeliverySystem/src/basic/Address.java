@@ -1,5 +1,9 @@
 package basic;
+<<<<<<< HEAD
 //comment in Address class this is intellij here gi4og fre
+=======
+//comment in Address class this is intellij here gi4og
+>>>>>>> 4952cf3... changed line 2
 //comment in addressBranch
 public class Address {
 	private Neighbourhood neighbourhood;
