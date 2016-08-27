@@ -1,5 +1,5 @@
 package basic;
-
+//comment in Address class
 public class Address {
 	private Neighbourhood neighbourhood;
 	private String fullAddress;

@@ -27,3 +27,5 @@ FoodDeliverySystem/target/maven-status/maven-compiler-plugin/compile/default-com
 FoodDeliveryWholeProject/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
 FoodDeliveryWholeProject/target/m2e-wtp/web-resources/META-INF/maven/FoodDeliveryWholeProject/FoodDeliveryWholeProject/pom.properties
 FoodDeliveryWholeProject/target/m2e-wtp/web-resources/META-INF/maven/FoodDeliveryWholeProject/FoodDeliveryWholeProject/pom.xml
+.idea/
+*.iml
