@@ -1,5 +1,5 @@
 package basic;
-//comment in Address class
+//comment in Address class this is intellij here
 public class Address {
 	private Neighbourhood neighbourhood;
 	private String fullAddress;
