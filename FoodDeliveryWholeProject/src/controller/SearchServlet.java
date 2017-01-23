@@ -75,5 +75,11 @@ public class SearchServlet extends HttpServlet {
 		request.setAttribute("ingredients", sortedIngredients);
 
 	}
+	
+	@Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		super.doPut(req, resp);
+	}
 
 }
